@@ -63,12 +63,12 @@
 </template>
 
 <script>
-import OgmaVue from "../src/components/Ogma.vue";
-import StyleRule from "../src/components/styles/StyleRule.vue";
-import NodeGrouping from "../src/components/transformations/NodeGrouping.vue";
-import Tooltip from "../src/components/layers/Overlay.vue";
-import NodeFilter from "../src/components/transformations/NodeFilter.vue";
-import Canvas from "../src/components/layers/Canvas.vue";
+import OgmaVue from "../../src/components/Ogma.vue";
+import StyleRule from "../../src/components/styles/StyleRule.vue";
+import NodeGrouping from "../../src/components/transformations/NodeGrouping.vue";
+import Tooltip from "../../src/components/layers/Overlay.vue";
+import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
+import Canvas from "../../src/components/layers/Canvas.vue";
 
 import Ogma from "@linkurious/ogma";
 

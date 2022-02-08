@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": " serve",
+    "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name lib src/main.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
