@@ -9,7 +9,7 @@
 import omgaEvents from "../mixins/OgmaEventsMixin.js";
 import { provide } from "vue";
 /**
- * The only true button.
+ * Ogma vue component.
  * @displayName Ogma
  */
 export default {

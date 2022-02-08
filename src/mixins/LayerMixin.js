@@ -2,8 +2,15 @@
 export default {
   name: "Layer",
   props: {
+    /**
+     * Wether the layer is visible or not. See [Layer show/hide](https://doc.linkurio.us/ogma/latest/api.html#Layer)
+     */
     visible: { default: true },
-    index: { default: 0 },
+    /**
+    * Level of the layer. See [Layer setLevel](https://doc.linkurio.us/ogma/latest/api.html#Layer)
+    * Infinity and -Infinity triggers moveToTop and moveToBottom.
+    */
+    level: { default: 0 },
   },
   inject: ["ogma"],
   data() {
@@ -12,7 +19,7 @@ export default {
     };
   },
   watch: {
-    index: function (newValue) {
+    level: function (newValue) {
       if (newValue === Infinity) {
         this.layer.moveToTop();
       } else if (value == -Infinity) {

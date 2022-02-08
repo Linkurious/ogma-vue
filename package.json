@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --target lib --name lib src/main.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "docg": "vue-docgen src/components/Ogma.vue docs/components",
+    "docg": "vue-docgen src/components/ docs -w",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
     "help": "vue-cli-service help build"

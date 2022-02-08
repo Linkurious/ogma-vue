@@ -1,4 +1,4 @@
-# Ogma Vue 3
+# Home
 
 Ogma Vue 3 is a full integration of [Ogma](https://doc.linkurio.us/ogma/latest/) in Vue.js.
 
@@ -56,3 +56,26 @@ That's it ! You have a fully functionnal Ogma instance within your app.
 To go further, we encourage you reading the [components](./components/Ogma.md) section to see how to add transformations, styles and more. You should check out as well the [Events]() section
 See the Components documentation to see how you can add style rules, 
 
+### Register to events
+
+You might want to use vue `@` syntax to register to Ogma events. You can. By default, `OgmaVue` will emit all events sent by `Ogma`. You can then write
+
+```vue
+    <OgmaVue
+      ...props
+      :@addNodes="onAddNodes"
+    />
+```
+
+If you want to optimize performances, you can pass as a prop the list of events you want to register to: 
+```vue
+    <OgmaVue
+      ...props
+      :events="[addNodes, addEdges]"
+      :@addNodes="onAddNodes"
+      :@addEdges="onAddEdges"
+    />
+```
+
+
+Other components triger events too. Tranformations
