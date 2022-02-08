@@ -15,11 +15,11 @@ export default {
     /**
      * The NodeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
      */
-    nodes: { default: () => ({}), type: Object },
+    nodes: { default: () => (null), type: Object },
     /**
      * The EdgeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
      */
-    edges: { default: () => ({}), type: Object },
+    edges: { default: () => (null), type: Object },
   },
   inject: ["ogma"],
   data() {
