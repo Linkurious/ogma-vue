@@ -1,9 +1,8 @@
 module.exports = {
   // site config
   lang: 'en-US',
-  title: 'Hello, VuePress!',
-  description: 'This is my first VuePress site',
-
+  title: 'Ogma-vue',
+  description: 'Documentation for the Ogma-vue library',
   // theme and its config
   theme: '@vuepress/theme-default',
   themeConfig: {
