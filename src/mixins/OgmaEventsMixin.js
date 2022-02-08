@@ -55,7 +55,12 @@ const ogmaEvents = [
 ];
 
 export default {
-  props: {events: { default: "all"}},
+  props: {
+    /**
+    * The Ogma events list you want the component to emit. Default is all, you can pass and array: ['addEdges', 'addNodes']
+    */
+    events: { default: "all", type: [String, Array] }
+  },
   data() {
     return {
       _ogmaListenners: []
@@ -64,7 +69,7 @@ export default {
   mounted() {
     this.registerEvents();
   },
-  beforeDestroyed(){
+  beforeDestroyed() {
     this.unregisterEvents();
   },
   watch: {
@@ -80,12 +85,17 @@ export default {
       if (!this.events) return;
       const ogma = this.ogma;
       let eventsToregister = this.events;
-      if(this.events === "all") {
+      if (this.events === "all") {
         eventsToregister = ogmaEvents;
       }
       eventsToregister
         .forEach((event) => {
           const handler = (evt) => {
+            /**
+             * Ogma event. Please refer to the list of Ogma events [here](https://doc.linkurio.us/ogma/latest/api.html#Event:-addEdges)
+             *
+             * @event ogma-event
+             */
             this.$emit(event, evt)
           };
           this._ogmaListenners.push(handler);
