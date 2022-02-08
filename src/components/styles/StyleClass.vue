@@ -1,11 +1,30 @@
 <script>
+/**
+ * Add a StyleClass to Ogma.
+ * See [StyleClass](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-createClass)
+ * @displayName StyleClass
+ *
+ */
 export default {
   name: "StyleClass",
-  props: ["options", "nodes", "edges"],
+  props: {
+    /**
+     * The Options to pass to the styleClass.
+     */
+    options: { default: () => ({}), type: Object },
+    /**
+     * The NodeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
+     */
+    nodes: { default: () => ({}), type: Object },
+    /**
+     * The EdgeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
+     */
+    edges: { default: () => ({}), type: Object },
+  },
   inject: ["ogma"],
   data() {
     return {
-      styleClass: null
+      styleClass: null,
     };
   },
   watch: {
@@ -22,7 +41,7 @@ export default {
       const toRemove = oldValue.subtract(newValue);
       this.styleClass.add(toAdd);
       this.styleClass.remove(toRemove);
-    }
+    },
   },
   render() {
     return null;
@@ -46,7 +65,7 @@ export default {
       }
       toAdd = newValue.subtract(oldValue);
       return { toAdd, toRemove };
-    }
-  }
+    },
+  },
 };
 </script>

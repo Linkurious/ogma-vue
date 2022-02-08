@@ -14,11 +14,19 @@ module.exports = {
       '/src/components/Ogma',
       {
         title: 'Layers',
-        sidebarDepth: 10,
         children: [
           '/src/components/layers/Canvas',
           '/src/components/layers/Layer',
           '/src/components/layers/Overlay',
+        ]
+      },
+      {
+        title: 'Styles',
+        children: [
+          '/src/components/styles/EdgeRule',
+          '/src/components/styles/NodeRule',
+          '/src/components/styles/StyleRule',
+          '/src/components/styles/StyleClass',
         ]
       },
       {

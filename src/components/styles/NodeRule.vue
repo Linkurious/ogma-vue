@@ -4,7 +4,7 @@ import StyleMixin from "../../mixins/StyleMixin.js";
 const ruleMixin = StyleMixin(
   {
     selector: () => true,
-    rule: {}
+    rule: {},
   },
   ({ ogma, selector, rule }) => {
     return ogma.styles.addNodeRule(selector, rule);
@@ -12,12 +12,30 @@ const ruleMixin = StyleMixin(
   ({ styleRule, options }) => {
     styleRule.update({
       nodeSelector: options.selector,
-      nodeAttributes: options.rule
+      nodeAttributes: options.rule,
     });
   }
 );
+/**
+ * Add an NodeRule to Ogma.
+ * See [addNodeRule](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-addNodeRule)
+ * @displayName NodeRule
+ *
+ */
 export default {
   name: "NodeRule",
-  mixins: [ruleMixin]
+  props: {
+    /**
+     * The Options to pass to the styleRule: selector and rule.
+     */
+    options: {
+      default: () => ({
+        selector: () => true,
+        rule: {},
+      }),
+      type: Object,
+    },
+  },
+  mixins: [ruleMixin],
 };
 </script>
