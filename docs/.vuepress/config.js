@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 module.exports = {
   // site config
   lang: 'en-US',

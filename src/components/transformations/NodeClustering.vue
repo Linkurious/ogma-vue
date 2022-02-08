@@ -6,6 +6,12 @@ const nodeClusteringMixin = transformationMixin("addNodeClustering", {
   nodeGenerator: () => ({}),
   selector: () => true
 });
+
+/**
+ * Creates an NodeClustering tranformation
+ * See [NodeClustering](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addNodeClustering)
+ * @displayName NodeClustering
+ */
 export default {
   name: "NodeClustering",
   inject: ["ogma"],

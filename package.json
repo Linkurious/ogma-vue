@@ -8,8 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "docg": "vue-docgen src/components/ docs -w",
-    "docs:build": "vuepress build docs",
-    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs --clean-temp --clean-cache",
+    "docs:dev": "vuepress dev docs --clean-temp --clean-cache --debug",
     "help": "vue-cli-service help build"
   },
   "main": "dist/lib.umd.min.js",

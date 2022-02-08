@@ -5,6 +5,12 @@ const edgeGroupingMixin = transformationMixin("addEdgeGrouping", {
   generator: () => ({}),
   groupIdFunction: () => ""
 });
+
+/**
+ * Creates an EdgeGrouping tranformation
+ * See [EdgeGrouping](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addEdgeGrouping)
+ * @displayName EdgeGrouping
+ */
 export default {
   name: "EdgeGrouping",
   inject: ["ogma"],
