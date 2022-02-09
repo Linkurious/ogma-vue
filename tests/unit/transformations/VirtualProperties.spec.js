@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import VirtualProperties from "@/components/transformations/VirtualProperties.vue";
-const mountVirtualProperties = createWrapper(VirtualProperties, { params: { duration: 0, enabled: false } });
+const mountVirtualProperties = createWrapper(VirtualProperties, { options: { duration: 0, enabled: false } });
 
 let ogma, graph, wrapper;
 describe("VirtualProperties.vue", () => {
@@ -26,7 +26,7 @@ describe("VirtualProperties.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountVirtualProperties(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -38,7 +38,7 @@ describe("VirtualProperties.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountVirtualProperties(ogma, {
-      params: {
+      options: {
         nodeSelector: (node) => node.getId() === 1,
         nodeDataFunction: () => ({data: "data"}),
         duration: 10,
@@ -50,7 +50,7 @@ describe("VirtualProperties.vue", () => {
       expect(ogma.getNodes().getData("data")).to.have.members([undefined, "data",undefined, undefined]);
 
       wrapper.setProps({
-        params: {
+        options: {
           nodeSelector: () => false,
           duration: 20,
           enabled: true,

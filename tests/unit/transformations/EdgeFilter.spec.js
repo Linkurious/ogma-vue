@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import EdgeFilter from "@/components/transformations/EdgeFilter.vue";
-const mountEdgeFilter = createWrapper(EdgeFilter, { params: { duration: 0, enabled: false } });
+const mountEdgeFilter = createWrapper(EdgeFilter, { options: { duration: 0, enabled: false } });
 
 let ogma, graph, wrapper;
 describe("EdgeFilter.vue", () => {
@@ -26,7 +26,7 @@ describe("EdgeFilter.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountEdgeFilter(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -38,7 +38,7 @@ describe("EdgeFilter.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountEdgeFilter(ogma, {
-      params: {
+      options: {
         criteria: () => true,
         duration: 10,
         enabled: true
@@ -48,7 +48,7 @@ describe("EdgeFilter.vue", () => {
     return transformation.whenApplied().then(() => {
       expect(ogma.getEdges().size).to.equal(3);
       wrapper.setProps({
-        params: {
+        options: {
           enabled: true,
           duration: 20,
           criteria: () => false,
