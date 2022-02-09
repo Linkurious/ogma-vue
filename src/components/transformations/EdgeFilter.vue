@@ -1,8 +1,8 @@
 <script>
-import transformationMixin from "../../mixins/TransformationMixin.js";
-const edgeFilterMixin = transformationMixin("addEdgeFilter", {
-  criteria: () => true,
-});
+import transformationMixin from "../../mixins/TransformationMixin2.js";
+// const edgeFilterMixin = transformationMixin("addEdgeFilter", {
+//   criteria: () => true,
+// });
 
 /**
  * Creates an EdgeFilter tranformation
@@ -12,6 +12,19 @@ const edgeFilterMixin = transformationMixin("addEdgeFilter", {
 export default {
   name: "EdgeFilter",
   inject: ["ogma"],
-  mixins: [edgeFilterMixin],
+  mixins: [transformationMixin],
+  props: {
+    params: {
+      default: () => ({
+        criteria: () => true,
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(params) {
+      return this.ogma.transformations.addEdgeFilter(params);
+    },
+  },
 };
 </script>
