@@ -1,0 +1,1 @@
+const t={key:"v-f07c43ec",path:"/src/components/transformations/EdgeFilter.html",title:"EdgeFilter",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/EdgeFilter.md"};export{t as data};

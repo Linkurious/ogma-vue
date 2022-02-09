@@ -1,0 +1,1 @@
+const e={key:"v-e3b2e40c",path:"/src/components/styles/StyleClass.html",title:"StyleClass",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/styles/StyleClass.md"};export{e as data};

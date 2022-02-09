@@ -1,0 +1,1 @@
+const t={key:"v-28e83ad8",path:"/src/components/tools/Snapping.html",title:"Snapping",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/tools/Snapping.md"};export{t as data};

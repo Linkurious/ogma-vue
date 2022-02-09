@@ -1,0 +1,1 @@
+const t={key:"v-29aac60c",path:"/src/components/transformations/NodeGrouping.html",title:"NodeGrouping",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NodeGrouping.md"};export{t as data};

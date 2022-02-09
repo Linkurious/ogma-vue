@@ -1,0 +1,1 @@
+const t={key:"v-ea4c1f9a",path:"/src/components/transformations/NodeCollapsing.html",title:"NodeCollapsing",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NodeCollapsing.md"};export{t as data};
