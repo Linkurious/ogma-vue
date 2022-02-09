@@ -1,8 +1,7 @@
 
 
-export default function styleMixin(defaultOptions = {}, creationFunction=null, updateFunction= null) {
-  return{
-    props: ["options"],
+export default function styleMixin(defaultOptions = {}, creationFunction = null, updateFunction = null) {
+  return {
     inject: ["ogma"],
     data() {
       return {
@@ -15,18 +14,18 @@ export default function styleMixin(defaultOptions = {}, creationFunction=null, u
           ...defaultOptions,
           ...newValue,
         };
-        updateFunction({options, styleRule: this.styleRule})
+        updateFunction({ options, styleRule: this.styleRule })
       }
     },
-    render(){},
+    render() { },
     mounted() {
       const options = {
         ...defaultOptions,
         ...this.options,
       };
-      this.styleRule = creationFunction({...options, ogma: this.ogma});
+      this.styleRule = creationFunction({ ...options, ogma: this.ogma });
     },
-    beforeUnmount(){
+    beforeUnmount() {
       this.styleRule.destroy();
     },
   }

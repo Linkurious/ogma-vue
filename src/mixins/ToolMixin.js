@@ -1,7 +1,10 @@
 
 export default function(type, defaultOptions) {
   return {
-    props: ["enabled", "options"],
+    props: {
+      enabled: {type: Boolean, default: false}, 
+      options: {type: Object, default: () => ({})}
+    },
     inject: ["ogma"],
     watch: {
       enabled(newValue) {

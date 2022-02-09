@@ -6,6 +6,12 @@ const geoClusteringMixin = transformationMixin("addGeoClustering", {
   nodeGenerator: () => ({}),
   onCreated: () => {}
 });
+
+/**
+ * Creates an GeoClustering tranformation
+ * See [GeoClustering](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addGeoClustering)
+ * @displayName GeoClustering
+ */
 export default {
   name: "GeoClustering",
   inject: ["ogma"],

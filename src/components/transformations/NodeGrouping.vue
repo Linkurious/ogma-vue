@@ -9,6 +9,12 @@ const nodeGroupingMixin = transformationMixin("addNodeGrouping", {
   edgeGenerator: () => ({}),
   groupIdFunction: () => ""
 });
+
+/**
+ * Creates an NodeGrouping tranformation
+ * See [NodeGrouping](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addNodeGrouping)
+ * @displayName NodeGrouping
+ */
 export default {
   name: "NodeGrouping",
   inject: ["ogma"],

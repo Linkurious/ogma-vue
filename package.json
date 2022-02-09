@@ -2,16 +2,17 @@
   "name": "ogma-vue3",
   "version": "0.0.1",
   "private": true,
-  "main": "dist/lib.umd.min.js",
   "scripts": {
-    "serve": " serve",
-    "help": "vue-cli-service help build",
-    "build": "vue-cli-service build --target lib --name lib src/main.js ",
+    "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name lib src/main.js",
     "test:unit": "vue-cli-service test:unit",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "docg": "vue-docgen src/components/ docs -w",
+    "docs:build": "vuepress build docs --clean-temp --clean-cache",
+    "docs:dev": "vuepress dev docs --clean-temp --clean-cache --debug",
+    "help": "vue-cli-service help build"
   },
+  "main": "dist/lib.umd.min.js",
   "dependencies": {
     "@linkurious/ogma": "^4.0.7",
     "vue": "^3.0.0"
@@ -21,7 +22,6 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-unit-mocha": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
-    "@vue/compiler-sfc": "^3.0.0",
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "canvas": "^2.9.0",
@@ -29,7 +29,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0",
-    "vue-styleguidist": "^4.44.15",
+    "vue-cli-plugin-vuepress": "~0.1.1",
+    "vue-docgen-cli": "^4.44.15",
     "vuepress": "^2.0.0-beta.35"
   },
   "eslintConfig": {
