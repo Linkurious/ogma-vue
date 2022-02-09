@@ -2,13 +2,6 @@
 
 export default function styleMixin(defaultOptions = {}, creationFunction = null, updateFunction = null) {
   return {
-
-    props: {
-      /**
-       * The options to pass to the styleRule. 
-       */
-      options: { default: () => { }, type: Object }
-    },
     inject: ["ogma"],
     data() {
       return {
