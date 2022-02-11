@@ -235,3 +235,47 @@ Let's have a look at the transformations you will most likelly use:
     }
   }
 ```
+See [component reference](src/components/transformations/NodeGrouping)  and [addNodeGrouping API](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addNodeGrouping) for more details.
+
+#### Node Filter
+
+```vue
+    <NodeFilter
+      :options="filterOptions"
+    />
+```
+
+```javascript
+  data() {
+    return {
+      filterOptions: {
+        enabled: true,
+        criteria: () => true,
+        duration: 1000,
+       }
+    }
+  }
+```
+See [component reference](src/components/transformations/NodeFilter)  and [addNodeFilter API](https://doc.linkurio.us/ogma/latest/api.html#Ogma-transformations-addNodeFilter) for more details.
+
+#### Advices on tranformations
+
+ - Do not use conditional rendering to enable/disable your transformation, use the `enabled` prop instead. 
+ - Check out Ogma [examples](https://doc.linkurio.us/ogma/latest/examples/filter-nodes.html) and read the Ogma [grouping tutorial](https://doc.linkurio.us/ogma/latest/tutorials/grouping/index.html). 
+ - To layout the graph properly after a transformation has run, you can register to `@refreshed` events.
+ - The functions are not reactive because Ogma does not allow it. It will be fixed in a further version. In the meanwhile, just keep the same function and modify its behaviour if needed.
+
+
+### Using Tools
+
+Ogma provides different tools to interract with the graph. You can use thoose tools simply by adding componenents to your app.
+
+```vue
+    <Lasso
+      :enabled="enabled"
+      :options="lassoOptions"
+    />
+```
+See [component reference](src/components/tools/Lasso)  and [lasso API](https://doc.linkurio.us/ogma/latest/api.html#Ogma-tools-lasso) for more details.
+
+

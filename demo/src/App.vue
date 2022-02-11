@@ -19,12 +19,12 @@
           <div class="tooltip">{{ tooltip.content }}</div>
         </Tooltip>
         <NodeGrouping
-          :params="grouping.params"
+          :options="grouping.options"
           :events="grouping.events"
           @enabled="onGroupingEnabled"
         />
         <NodeFilter
-          :params="filter.params"
+          :options="filter.options"
           :events="filter.events"
           @enabled="onFilterEnabled"
         />
@@ -40,23 +40,23 @@
     <div class="ui">
       <button
         @click="
-          grouping.params = {
-            ...grouping.params,
-            enabled: !grouping.params.enabled
+          grouping.options = {
+            ...grouping.options,
+            enabled: !grouping.options.enabled
           }
         "
       >
-        {{ grouping.params.enabled ? 'disable grouping' : 'enable grouping' }}
+        {{ grouping.options.enabled ? 'disable grouping' : 'enable grouping' }}
       </button>
       <button
         @click="
-          filter.params = {
-            ...filter.params,
-            enabled: !filter.params.enabled
+          filter.options = {
+            ...filter.options,
+            enabled: !filter.options.enabled
           }
         "
       >
-        {{ filter.params.enabled ? 'disable filter' : 'enable filter' }}
+        {{ filter.options.enabled ? 'disable filter' : 'enable filter' }}
       </button>
     </div>
   </div>
@@ -99,7 +99,7 @@ export default {
         }
       },
       grouping: {
-        params: {
+        options: {
           nodeSelector: () => true,
           duration: 1000,
           groupIdFunction: (node) => node.getId() % 2,
@@ -109,7 +109,7 @@ export default {
         events: ["enabled", "destroyed"]
       },
       filter: {
-        params: {
+        options: {
           selector: (node) => node.getId() % 2,
           duration: 1000,
           enabled: false
