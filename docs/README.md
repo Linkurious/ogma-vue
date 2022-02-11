@@ -33,7 +33,7 @@ npm i @linkurious/ogma @linkurious/ogma-vue3
 </template>
 
 <script>
-import { Ogma as Ogmavue, StyleRule } from "ogma-vue3";
+import { Ogma as Ogmavue, StyleRule } from "@linkurious/ogma-vue";
 import Ogma from "@linkurious/ogma";
 
 const ogma = new Ogma();
@@ -279,3 +279,43 @@ Ogma provides different tools to interract with the graph. You can use thoose to
 See [component reference](src/components/tools/Lasso)  and [lasso API](https://doc.linkurio.us/ogma/latest/api.html#Ogma-tools-lasso) for more details.
 
 
+### Custom components
+
+Ogma vue uses `provide`/`inject` to pass on Ogma instance to the elements in its slots.
+This means you can write things like this:
+
+```vue
+<template>
+  <div>
+    My super UX
+    <StyleRule :options="rule" />
+  </div>
+</template>
+
+<script>
+import { StyleRule } from "@linkurious/ogma-vue";
+import { provide } from "vue";
+
+export default {
+  name: "UX",
+  props: ["ogma"],
+  setup(props) {
+    provide("ogma", props.ogma);
+  },
+  data() {
+    return {
+      rule: {
+        nodeSelector: () => true,
+        nodeAttributes: {
+          color: "blue",
+        },
+      },
+    };
+  },
+  components: {
+    StyleRule,
+  },
+};
+</script>
+```
+It allows you to use composition API, create UI/UX which contains the styles or transformations it handles. 
