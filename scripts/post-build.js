@@ -12,6 +12,7 @@ fs.readFile("./package.json", "utf8", (err, data) => {
     scripts: undefined,
     eslintConfig: undefined,
     browserslist: undefined,
+    private: undefined,
     files: [
       "./lib.umd.js",
       "./lib.umd.js.map",
