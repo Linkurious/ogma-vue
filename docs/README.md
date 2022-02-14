@@ -14,7 +14,7 @@ cd my-vue-ogma-app
 
 #### Install Ogma and Ogma-vue3
 ```bash
-npm i @linkurious/ogma @linkurious/ogma-vue3
+npm i @linkurious/ogma @linkurious/ogma-vue
 ```
 
 #### Use Ogma-vue3 in your App
