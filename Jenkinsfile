@@ -2,18 +2,8 @@
 
 nodeJob {
   // General
-  projectName = "linkurious/ogma"
+  projectName = "linkurious/ogma-vue"
   runBenchTests = true
   runPreReleaseOnUpload = false
   npmPackPath = './dist'
-
-  //documentation
-  binaries = ['./dist/ogma.tgz']
-  groupId = 'com.linkurious.documentation'
-  createGitTag = true
-
-  //Deployement
-  runDeploy = true
-  playbookAppName = "documentation"
-  ansibleTags = "playbook::infra::docker::up"
 }
