@@ -2,6 +2,10 @@
   "name": "@linkurious/ogma-vue",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "14.16.1",
+    "npm": "6.14.12"
+  },
   "scripts": {
     "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name lib src/main.js",
