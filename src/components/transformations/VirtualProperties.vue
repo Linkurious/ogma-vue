@@ -1,11 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const virtualPropertiesMixin = transformationMixin("addVirtualProperties", {
-  edgeDataFunction: () => ({}),
-  edgeSelector: () => true,
-  nodeDataFunction: () => ({}),
-  nodeSelector: () => true,
-});
 
 /**
  * Creates an VirtualProperties tranformation
@@ -15,6 +9,25 @@ const virtualPropertiesMixin = transformationMixin("addVirtualProperties", {
 export default {
   name: "VirtualProperties",
   inject: ["ogma"],
-  mixins: [virtualPropertiesMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the virtual properties.
+     */
+    options: {
+      default: () => ({
+        edgeDataFunction: () => ({}),
+        edgeSelector: () => true,
+        nodeDataFunction: () => ({}),
+        nodeSelector: () => true,
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addVirtualProperties(options);
+    },
+  },
 };
 </script>

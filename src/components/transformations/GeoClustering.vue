@@ -1,11 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const geoClusteringMixin = transformationMixin("addGeoClustering", {
-  selector: () => true,
-  edgeGenerator: () => ({}),
-  nodeGenerator: () => ({}),
-  onCreated: () => {}
-});
 
 /**
  * Creates an GeoClustering tranformation
@@ -15,6 +9,25 @@ const geoClusteringMixin = transformationMixin("addGeoClustering", {
 export default {
   name: "GeoClustering",
   inject: ["ogma"],
-  mixins: [geoClusteringMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the geo clustering.
+     */
+    options: {
+      default: () => ({
+        selector: () => true,
+        edgeGenerator: () => ({}),
+        nodeGenerator: () => ({}),
+        onCreated: () => {},
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addGeoClustering(options);
+    },
+  },
 };
 </script>

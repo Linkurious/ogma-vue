@@ -1,11 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const neighborGenerationMixin = transformationMixin("addNeighborGeneration", {
-  selector: () => true,
-  edgeGenerator: () => ({}),
-  neighborIdFunction: () => "",
-  nodeGenerator: () => ({}),
-});
 
 /**
  * Creates an NeighborGeneration tranformation
@@ -15,6 +9,25 @@ const neighborGenerationMixin = transformationMixin("addNeighborGeneration", {
 export default {
   name: "NeighborGeneration",
   inject: ["ogma"],
-  mixins: [neighborGenerationMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the neighbor generation.
+     */
+    options: {
+      default: () => ({
+        selector: () => true,
+        edgeGenerator: () => ({}),
+        neighborIdFunction: () => "",
+        nodeGenerator: () => ({}),
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addNeighborGeneration(options);
+    },
+  },
 };
 </script>

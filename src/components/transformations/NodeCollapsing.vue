@@ -1,9 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const nodeCollapsingMixin = transformationMixin("addNodeCollapsing", {
-  edgeGenerator: () => ({}),
-  selector: () => true
-});
 
 /**
  * Creates an NodeCollapsing tranformation
@@ -13,6 +9,23 @@ const nodeCollapsingMixin = transformationMixin("addNodeCollapsing", {
 export default {
   name: "NodeCollapsing",
   inject: ["ogma"],
-  mixins: [nodeCollapsingMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the node collapsing.
+     */
+    options: {
+      default: () => ({
+        edgeGenerator: () => ({}),
+        selector: () => true,
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addNodeCollapsing(options);
+    },
+  },
 };
 </script>
