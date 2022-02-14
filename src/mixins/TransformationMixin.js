@@ -1,8 +1,8 @@
-export default function (type, defaultParams = {}) {
-  let reactiveParams = { ...defaultParams };
+export default function (type, defaultOptions = {}) {
+  let reactiveOptions = { ...defaultOptions };
   return {
     props: {
-      events: { default: "all" }, params: { default: {} }
+      events: { default: "all" }, options: { default: {} }
     },
     data() {
       return {
@@ -11,11 +11,11 @@ export default function (type, defaultParams = {}) {
       }
     },
     watch: {
-      params: {
+      options: {
         handler(newValue, oldValue) {
           Object.entries(newValue)
           .forEach(([key, value]) => {
-            reactiveParams[key] = value;
+            reactiveOptions[key] = value;
           }, {})
 
           this.transformation.setDuration(newValue.duration || 0);
@@ -30,11 +30,11 @@ export default function (type, defaultParams = {}) {
       }
     },
     mounted() {
-      Object.entries(this.params)
+      Object.entries(this.options)
         .forEach(([key, value]) => {
-          reactiveParams[key] = value;
+          reactiveOptions[key] = value;
         }, {})
-      this.transformation = this.ogma.transformations[type](reactiveParams);
+      this.transformation = this.ogma.transformations[type](reactiveOptions);
       this.registerEvents();
     },
     beforeUnmount() {

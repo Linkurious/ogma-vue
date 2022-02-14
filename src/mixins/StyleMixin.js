@@ -9,12 +9,15 @@ export default function styleMixin(defaultOptions = {}, creationFunction = null,
       };
     },
     watch: {
-      options(newValue) {
-        const options = {
-          ...defaultOptions,
-          ...newValue,
-        };
-        updateFunction({ options, styleRule: this.styleRule })
+      options: {
+        handler(newValue) {
+          const options = {
+            ...defaultOptions,
+            ...newValue,
+          };
+          updateFunction({ options, styleRule: this.styleRule })
+        },
+        deep: true
       }
     },
     render() { },

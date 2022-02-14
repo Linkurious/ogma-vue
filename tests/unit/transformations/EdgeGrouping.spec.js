@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import EdgeGrouping from "@/components/transformations/EdgeGrouping.vue";
-const mountEdgeGrouping = createWrapper(EdgeGrouping, { params: { duration: 0, enabled: false } });
+const mountEdgeGrouping = createWrapper(EdgeGrouping, { options: { duration: 0, enabled: false } });
 
 let ogma, graph, wrapper;
 describe("EdgeGrouping.vue", () => {
@@ -26,7 +26,7 @@ describe("EdgeGrouping.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountEdgeGrouping(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -38,7 +38,7 @@ describe("EdgeGrouping.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountEdgeGrouping(ogma, {
-      params: {
+      options: {
         selector: () => true,
         duration: 10,
         enabled: true
@@ -48,7 +48,7 @@ describe("EdgeGrouping.vue", () => {
     return transformation.whenApplied().then(() => {
       expect(ogma.getEdges().filter(e => e.isVirtual()).size).to.equal(3);
       wrapper.setProps({
-        params: {
+        options: {
           selector: () => false,
           duration: 20,
           enabled: true,

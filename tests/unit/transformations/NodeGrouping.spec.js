@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import NodeGrouping from "@/components/transformations/NodeGrouping.vue";
-const mountNodeGrouping = createWrapper(NodeGrouping, { params: { duration: 0, enabled: false } });
+const mountNodeGrouping = createWrapper(NodeGrouping, { options: { duration: 0, enabled: false } });
 
 let ogma, graph, wrapper;
 describe("NodeGrouping.vue", () => {
@@ -26,7 +26,7 @@ describe("NodeGrouping.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountNodeGrouping(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -38,7 +38,7 @@ describe("NodeGrouping.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountNodeGrouping(ogma, {
-      params: {
+      options: {
         selector: () => true,
         groupIdFunction: (node) => node.getId() % 2,
         duration: 10,
@@ -50,7 +50,7 @@ describe("NodeGrouping.vue", () => {
       expect(ogma.getNodes().filter(n => n.isVirtual()).size).to.equal(2);
       expect(ogma.getEdges().filter(e => e.isVirtual()).size).to.equal(1);
       wrapper.setProps({
-        params: {
+        options: {
           selector: () => false,
           groupIdFunction: () => "group2",
           duration: 20,
