@@ -2,7 +2,7 @@
 
 const fs = require("fs")
 
-fs.readFile("./package.json", "utf8", (err, data) => {
+fs.readFile("package.json", "utf8", (err, data) => {
   if (err) {
     throw err
   }
@@ -14,10 +14,10 @@ fs.readFile("./package.json", "utf8", (err, data) => {
     browserslist: undefined,
     private: undefined,
     files: [
-      "./lib.umd.js",
-      "./lib.umd.js.map",
+      "lib.umd.js",
+      "lib.umd.js.map",
     ],
-    main: './lib.umd.js'
+    main: 'lib.umd.js'
   }
   fs.writeFile('./dist/package.json', JSON.stringify({ ...base, ...overwrite }, null, 2), (err) => {
     if (err) {
