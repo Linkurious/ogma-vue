@@ -1,3 +1,0 @@
-# Styles
-
-Ogma styles
