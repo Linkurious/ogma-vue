@@ -1,1 +1,0 @@
-const t={key:"v-5b8e2a95",path:"/src/components/transformations/VirtualProperties.html",title:"VirtualProperties",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/VirtualProperties.md"};export{t as data};

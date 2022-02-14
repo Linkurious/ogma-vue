@@ -1,0 +1,1 @@
+const e={key:"v-05f5dfac",path:"/examples/style-class.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1644846999e3,contributors:[{name:"Leo Nicolle",email:"leo@linkurio.us",commits:1}]},filePathRelative:"examples/style-class.md"};export{e as data};

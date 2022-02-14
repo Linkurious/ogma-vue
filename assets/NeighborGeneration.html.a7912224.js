@@ -1,1 +1,0 @@
-const t={key:"v-5c20c715",path:"/src/components/transformations/NeighborGeneration.html",title:"NeighborGeneration",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NeighborGeneration.md"};export{t as data};

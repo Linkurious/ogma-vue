@@ -1,0 +1,1 @@
+const e={key:"v-2ed41f60",path:"/examples/ogma.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1644848025e3,contributors:[{name:"Leo Nicolle",email:"leo@linkurio.us",commits:1}]},filePathRelative:"examples/ogma.md"};export{e as data};

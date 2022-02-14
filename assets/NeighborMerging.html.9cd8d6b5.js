@@ -1,1 +1,0 @@
-const t={key:"v-32f1ff30",path:"/src/components/transformations/NeighborMerging.html",title:"NeighborMerging",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NeighborMerging.md"};export{t as data};

@@ -1,1 +1,0 @@
-const t={key:"v-3056053a",path:"/src/components/transformations/GeoClustering.html",title:"GeoClustering",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/GeoClustering.md"};export{t as data};

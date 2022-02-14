@@ -1,0 +1,1 @@
+const e={key:"v-fbb82ad4",path:"/src/components/styles/StyleRule%20copy.html",title:"StyleRule",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/styles/StyleRule copy.md"};export{e as data};
