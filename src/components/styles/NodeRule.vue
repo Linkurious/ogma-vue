@@ -1,21 +1,6 @@
 <script>
 import StyleMixin from "../../mixins/StyleMixin.js";
 
-const ruleMixin = StyleMixin(
-  {
-    selector: () => true,
-    rule: {},
-  },
-  ({ ogma, selector, rule }) => {
-    return ogma.styles.addNodeRule(selector, rule);
-  },
-  ({ styleRule, options }) => {
-    styleRule.update({
-      nodeSelector: options.selector,
-      nodeAttributes: options.rule,
-    });
-  }
-);
 /**
  * Add an NodeRule to Ogma.
  * See [addNodeRule](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-addNodeRule)
@@ -36,6 +21,17 @@ export default {
       type: Object,
     },
   },
-  mixins: [ruleMixin],
+  mixins: [StyleMixin],
+  methods: {
+    creationFunction({ ogma, selector, rule }) {
+      return ogma.styles.addNodeRule(selector, rule);
+    },
+    updateFunction({ styleRule, options }) {
+      styleRule.update({
+        nodeSelector: options.selector,
+        nodeAttributes: options.rule,
+      });
+    },
+  },
 };
 </script>
