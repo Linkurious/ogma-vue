@@ -14,6 +14,7 @@
     "predocs:publish": "npm run docs:build",
     "docs:publish": "gh-pages -d docs/.vuepress/dist",
     "docs:dev": "vuepress dev docs",
+    "postversion": "sync_versions",
     "help": "vue-cli-service help build"
   },
   "main": "dist/lib.umd.min.js",
@@ -22,6 +23,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@linkurious/code-tools": "0.0.6",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-unit-mocha": "^4.5.15",
