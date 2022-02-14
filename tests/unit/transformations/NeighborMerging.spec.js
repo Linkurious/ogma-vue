@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import NeighborMerging from "@/components/transformations/NeighborMerging.vue";
-const mountNeighborMerging = createWrapper(NeighborMerging, { params: { duration: 0, enabled: false } });
+const mountNeighborMerging = createWrapper(NeighborMerging, { options: { duration: 0, enabled: false } });
 
 let ogma, graph, wrapper;
 describe("NeighborMerging.vue", () => {
@@ -26,7 +26,7 @@ describe("NeighborMerging.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountNeighborMerging(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -38,7 +38,7 @@ describe("NeighborMerging.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountNeighborMerging(ogma, {
-      params: {
+      options: {
         selector: (node) => node.getId() === 1,
         duration: 10,
         enabled: true
@@ -49,7 +49,7 @@ describe("NeighborMerging.vue", () => {
       expect(ogma.getNodes().size).to.equal(3);
 
       wrapper.setProps({
-        params: {
+        options: {
           selector: () => false,
           duration: 20,
           enabled: true,

@@ -1,16 +1,10 @@
 <template>
-  <div>
-    <h1>Ogma</h1>
-    <OgmaVue
-      :ogma="ogma"
-      :graph="graph"
-      :width="width"
-      :height="height"
-      @addNodes="onAddNodes"
-      @nodesSelected="onNodesSelected"
+  <div id="app">
+    <OgmaVue :ogma="ogma" :graph="graph" :width="width" :height="height"
+    @nodesSelected="onNodesSelected"
     >
       <template>
-        <StyleRule :rule="rule" />
+        <StyleRule :options="rule" />
         <Tooltip
           :visible="tooltip.visible"
           :size="tooltip.size"
@@ -19,16 +13,16 @@
           <div class="tooltip">{{ tooltip.content }}</div>
         </Tooltip>
         <NodeGrouping
-          :params="grouping.params"
+          :options="grouping.options"
           :events="grouping.events"
           @enabled="onGroupingEnabled"
         />
         <NodeFilter
-          :params="filter.params"
+          :options="filter.options"
           :events="filter.events"
           @enabled="onFilterEnabled"
         />
-        <Canvas 
+        <Canvas
           :visible="canvas.visible"
           :draw="canvas.draw"
           :opacity="canvas.opacity"
@@ -37,28 +31,7 @@
         />
       </template>
     </OgmaVue>
-    <div class="ui">
-      <button
-        @click="
-          grouping.params = {
-            ...grouping.params,
-            enabled: !grouping.params.enabled
-          }
-        "
-      >
-        {{ grouping.params.enabled ? 'disable grouping' : 'enable grouping' }}
-      </button>
-      <button
-        @click="
-          filter.params = {
-            ...filter.params,
-            enabled: !filter.params.enabled
-          }
-        "
-      >
-        {{ filter.params.enabled ? 'disable filter' : 'enable filter' }}
-      </button>
-    </div>
+    <UX :ogma="ogma" @tooltipToggle="onTooltipToggle"/>
   </div>
 </template>
 
@@ -68,8 +41,9 @@ import StyleRule from "../../src/components/styles/StyleRule.vue";
 import NodeGrouping from "../../src/components/transformations/NodeGrouping.vue";
 import Tooltip from "../../src/components/layers/Overlay.vue";
 import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
-import Canvas from "../../src/components/layers/Canvas.vue";
-
+// import Canvas from "../../src/components/layers/Canvas.vue";
+import UX from "./UX.vue";
+import {computed} from "vue";
 import Ogma from "@linkurious/ogma";
 
 const ogma = new Ogma();
@@ -79,78 +53,72 @@ export default {
   data() {
     return {
       ogma,
-      width: window.innerWidth/2,
-      height: (window.innerHeight - +(this.$el && this.offsetTop))/2,
+      width: window.innerWidth,
+      height: window.innerHeight,
       canvas: {
         draw: (ctx) => {
           const node = ogma.getNodes().get(4);
-          if(!node)return;
-          const pos =  node.getPosition(); 
-          ctx.fillRect(pos.x,pos.y, 10, 10)
+          if (!node) return;
+          const pos = node.getPosition();
+          ctx.fillRect(pos.x, pos.y, 10, 10);
         },
         opacity: 1,
         index: 1,
-        options: {}
+        options: {},
       },
       rule: {
-        nodeSelector: () => true,
         nodeAttributes: {
-          color: "blue"
-        }
+          color: "rgba(74, 160, 100, 1)",
+        },
       },
       grouping: {
-        params: {
+        options: {
           nodeSelector: () => true,
           duration: 1000,
           groupIdFunction: (node) => node.getId() % 2,
           showContents: true,
-          enabled: false
+          enabled: false,
         },
-        events: ["enabled", "destroyed"]
+        events: ["enabled", "destroyed"],
       },
       filter: {
-        params: {
-          selector: (node) => node.getId() % 2,
+        options: {
+          criteria: (node) => node.getId() % 2,
           duration: 1000,
-          enabled: false
+          enabled: false,
         },
-        events: ["enabled", "destroyed"]
+        events: ["enabled", "destroyed"],
       },
       tooltip: {
         visible: false,
+        enabled: false,
         position: {
           x: 0,
-          y: 0
+          y: 0,
         },
         size: {
-          width: 0,
-          height: 0
+          width: "unset",
+          height: "unset",
         },
-        content: ""
+        content: "",
       },
       graph: {
         nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-        edges: []
-      }
+        edges: [],
+      },
     };
   },
-  mounted(){
+  provide() {
+    return {
+      grouping: this.grouping,
+      filter: this.filter,
+      rule: this.rule,
+      tooltip: computed(() => this.tooltip)
+    };
+  },
+  mounted() {
     window.addEventListener("resize", this.onResize);
     window.ogma = ogma;
-    // setTimeout(() => {
-    //   this.canvas = {
-    //     ...this.canvas,
-    //     options: {noClear: true},
-    //   };
-    //   console.log({...this.canvas});
-    // }, 100)
-
-        setTimeout(() => {
-      this.canvas = {
-        ...this.canvas,
-        opacity: 0.5
-      };
-    }, 3000)
   },
   methods: {
     onGroupingEnabled(grouping) {
@@ -159,7 +127,10 @@ export default {
     onFilterEnabled(filter) {
       console.log("filter enabled", filter);
     },
-    onNodesSelected({ nodes })  {
+    onTooltipToggle(e) {
+      this.tooltip.enabled = e;
+    },
+    onNodesSelected({ nodes }) {
       this.tooltip = {
         ...this.tooltip,
         position: {
@@ -167,17 +138,12 @@ export default {
             nodes.get(0).getAttribute("x") +
             5 +
             nodes.get(0).getAttribute("radius"),
-          y: nodes.get(0).getAttribute("y")
+          y: nodes.get(0).getAttribute("y"),
         },
         content: `${nodes.get(0).getId()} is selected`,
-        visible: true
+        visible: true && this.tooltip.enabled,
       };
     },
-    onResize(){
-      this.width = window.innerWidth /2;
-      this.height = (
-        window.innerHeight - +(this.$el && this.offsetTop))/2;
-    }
   },
   components: {
     OgmaVue,
@@ -185,8 +151,9 @@ export default {
     NodeGrouping,
     NodeFilter,
     Tooltip,
-    Canvas
-  }
+    // Canvas,
+    UX,
+  },
 };
 </script>
 
@@ -197,23 +164,20 @@ export default {
 
 <style>
 #app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
   align-content: space-around;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   overflow: hidden;
+  border: 1px solid blue;
 }
-body {
-  /* overflow: hidden; */
-}
-#app canvas { 
-  border: 1px solid red;
+#app canvas {
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid green;
 }
 .tooltip {
   background-color: #ddd;

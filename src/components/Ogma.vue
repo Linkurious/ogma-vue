@@ -10,6 +10,7 @@ import omgaEvents from "../mixins/OgmaEventsMixin.js";
 import { provide } from "vue";
 /**
  * Ogma vue component.
+ * @example ../../docs/examples/ogma.md
  * @displayName Ogma
  */
 export default {

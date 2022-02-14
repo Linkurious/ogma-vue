@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { createWrapper } from "../utils"
 import Ogma from "@linkurious/ogma"
 import NodeFilter from "@/components/transformations/NodeFilter.vue";
-const mountNodeFilter = createWrapper(NodeFilter, { params: { duration: 0, enabled: false } });
+const mountNodeFilter = createWrapper(NodeFilter, { options: { duration: 0, enabled: false } });
 let ogma, graph, wrapper;
 describe("NodeFilter.vue", () => {
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe("NodeFilter.vue", () => {
 
   it("should respect passed options to transformation", () => {
     wrapper = mountNodeFilter(ogma, {
-      params: {
+      options: {
         duration: 1000,
         enabled: false
       }
@@ -37,7 +37,7 @@ describe("NodeFilter.vue", () => {
 
   it("should be reactive to props change", () => {
     wrapper = mountNodeFilter(ogma, {
-      params: {
+      options: {
         criteria: () => true,
         duration: 10,
         enabled: true
@@ -47,7 +47,7 @@ describe("NodeFilter.vue", () => {
     return transformation.whenApplied().then(() => {
       expect(ogma.getNodes().size).to.equal(4);
       wrapper.setProps({
-        params: {
+        options: {
           enabled: true,
           duration: 20,
           criteria: () => false,

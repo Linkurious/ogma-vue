@@ -1,11 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const nodeClusteringMixin = transformationMixin("addNodeClustering", {
-  edgeGenerator: () => ({}),
-  groupIdFunction: () => "",
-  nodeGenerator: () => ({}),
-  selector: () => true
-});
 
 /**
  * Creates an NodeClustering tranformation
@@ -15,6 +9,25 @@ const nodeClusteringMixin = transformationMixin("addNodeClustering", {
 export default {
   name: "NodeClustering",
   inject: ["ogma"],
-  mixins: [nodeClusteringMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the node clustering.
+     */
+    options: {
+      default: () => ({
+        edgeGenerator: () => ({}),
+        groupIdFunction: () => "",
+        nodeGenerator: () => ({}),
+        selector: () => true,
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addNodeClustering(options);
+    },
+  },
 };
 </script>

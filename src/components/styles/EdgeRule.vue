@@ -1,27 +1,12 @@
 <script>
 import StyleMixin from "../../mixins/StyleMixin.js";
 
-const ruleMixin = StyleMixin(
-  {
-    selector: () => true,
-    rule: {},
-  },
-  ({ ogma, selector, rule }) => {
-    return ogma.styles.addEdgeRule(selector, rule);
-  },
-  ({ styleRule, options }) => {
-    styleRule.update({
-      edgeSelector: options.selector,
-      edgeAttributes: options.rule,
-    });
-  }
-);
-
 /**
  * Add an EdgeRule to Ogma.
  * See [addEdgeRule](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-addEdgeRule)
+ * @example ../../../docs/examples/edge-rule.md
  * @displayName EdgeRule
- * 
+ *
  */
 export default {
   name: "EdgeRule",
@@ -37,6 +22,17 @@ export default {
       type: Object,
     },
   },
-  mixins: [ruleMixin],
+  mixins: [StyleMixin],
+  methods: {
+    creationFunction({ ogma, selector, rule }) {
+      return ogma.styles.addEdgeRule(selector, rule);
+    },
+    updateFunction({ styleRule, options }) {
+      styleRule.update({
+        edgeSelector: options.selector,
+        edgeAttributes: options.rule,
+      });
+    },
+  },
 };
 </script>

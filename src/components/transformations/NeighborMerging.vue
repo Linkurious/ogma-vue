@@ -1,9 +1,5 @@
 <script>
 import transformationMixin from "../../mixins/TransformationMixin.js";
-const neighborMergingMixin = transformationMixin("addNeighborMerging", {
-  dataFunction: () => undefined,
-  selector: () => true,
-});
 
 /**
  * Creates an NeighborMerging tranformation
@@ -13,6 +9,23 @@ const neighborMergingMixin = transformationMixin("addNeighborMerging", {
 export default {
   name: "NeighborMerging",
   inject: ["ogma"],
-  mixins: [neighborMergingMixin],
+  mixins: [transformationMixin],
+  props: {
+    /**
+     * The options to pass to the neighbor merging.
+     */
+    options: {
+      default: () => ({
+        dataFunction: () => undefined,
+        selector: () => true,
+      }),
+      type: Object,
+    },
+  },
+  methods: {
+    createTransformation(options) {
+      return this.ogma.transformations.addNeighborMerging(options);
+    },
+  },
 };
 </script>

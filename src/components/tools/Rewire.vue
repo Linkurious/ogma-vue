@@ -5,7 +5,7 @@ const rewire = toolMixin("rewire", {});
 /**
  * Handles rewire tool
  * See [rewire](https://doc.linkurio.us/ogma/latest/api.html#Ogma-tools-rewire)
- * @displayName rewire
+ * @displayName Rewire
  */
 export default {
   name: "Rewire",
