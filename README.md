@@ -9,12 +9,17 @@ You need an Ogma licence to use it. Please [contact us](https://doc.linkurio.us/
 
 Please visit the documentation of Ogma-vue [here](https://linkurious.github.io/ogma-vue/).
 
+## How to contribute
+
+Some parts of this repo belongs to Linkurious internal infrastructure and CI. 
+When developing, you can remove `.version` `.bumpversion.cfg` `Jenkinsfile`  files.
+
 ### Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads DEMO for development
+### Compiles and hot-reloads DEMO
 ```
 npm run serve
 ```
