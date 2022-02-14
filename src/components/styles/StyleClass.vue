@@ -2,6 +2,7 @@
 /**
  * Add a StyleClass to Ogma.
  * See [StyleClass](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-createClass)
+ * @example ../../../docs/examples/style-class.md
  * @displayName StyleClass
  *
  */

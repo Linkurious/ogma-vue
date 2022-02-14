@@ -4,6 +4,7 @@ import StyleMixin from "../../mixins/StyleMixin.js";
 /**
  * Add a StyleRule to Ogma.
  * See [addRule](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-addRule)
+ * @example ../../../docs/examples/style-rule.md
  * @displayName StyleRule
  *
  */

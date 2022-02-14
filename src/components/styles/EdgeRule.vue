@@ -4,6 +4,7 @@ import StyleMixin from "../../mixins/StyleMixin.js";
 /**
  * Add an EdgeRule to Ogma.
  * See [addEdgeRule](https://doc.linkurio.us/ogma/latest/api.html#Ogma-styles-addEdgeRule)
+ * @example ../../../docs/examples/edge-rule.md
  * @displayName EdgeRule
  *
  */
