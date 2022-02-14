@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name lib src/main.js",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
     "lint": "vue-cli-service lint",
     "docg:dev": "vue-docgen src/components/ docs -w",
     "docg:build": "vue-docgen src/components/ docs",
@@ -35,6 +35,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0",
     "gh-pages": "^3.2.3",
+    "mocha-junit-reporter": "^2.0.2",
+    "mocha-multi-reporters": "^1.5.1",
     "naive-ui": "^2.25.2",
     "vfonts": "0.0.3",
     "vue-cli-plugin-vuepress": "~0.1.1",
