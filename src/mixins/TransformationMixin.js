@@ -14,20 +14,17 @@ export default {
   watch: {
     options: {
       handler(newValue, oldValue) {
-        Object.entries(newValue)
-          .forEach(([key, value]) => {
-            oldValue[key] = value;
-          }, {})
-
+        const shouldEnable = newValue.enabled && !oldValue.enabled;
+        const shouldDisable =  !newValue.enabled && oldValue.enabled;
         this.transformation.setDuration(newValue.duration || 0);
-        if (newValue.enabled && !oldValue.enabled) {
+        if (shouldEnable) {
           this.transformation.enable(newValue.duration || 0);
         }
-        if (!newValue.enabled && oldValue.enabled) {
+        if (shouldDisable) {
           this.transformation.disable(newValue.duration || 0);
         }
       },
-      // deep: true
+      deep: true
     }
   },
   mounted() {

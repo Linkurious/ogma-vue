@@ -39,12 +39,13 @@ export default {
   },
   methods: {
     onToggleGrouping() {
-      this.grouping.options = this.grouping.options = {
+        this.grouping.options = this.grouping.options = {
         ...this.grouping.options,
         enabled: !this.grouping.options.enabled,
       };
+
     },
-    onToggleFilter() {
+    onToggleFilter() {      
       this.filter.options = this.filter.options = {
         ...this.filter.options,
         enabled: !this.filter.options.enabled,
