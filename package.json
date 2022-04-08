@@ -23,6 +23,7 @@
   },
   "main": "dist/lib.umd.min.js",
   "dependencies": {
+    "@linkurious/ogma": "^4.0.9",
     "vue": "^3.2.31"
   },
   "devDependencies": {
