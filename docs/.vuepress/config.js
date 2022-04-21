@@ -7,7 +7,7 @@ module.exports = {
   base: "/ogma-vue/",
   theme: '@vuepress/theme-default',
   themeConfig: {
-    logo: 'https://vuejs.org/images/logo.png',
+    logo: '/logo-small.svg',
     sidebar: [
       '/',
       {
