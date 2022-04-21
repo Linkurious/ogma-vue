@@ -41,7 +41,6 @@ import StyleRule from "../../src/components/styles/StyleRule.vue";
 import NodeGrouping from "../../src/components/transformations/NodeGrouping.vue";
 import Tooltip from "../../src/components/layers/Overlay.vue";
 import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
-// import Canvas from "../../src/components/layers/Canvas.vue";
 import UX from "./UX.vue";
 import {computed} from "vue";
 import Ogma from "@linkurious/ogma";
