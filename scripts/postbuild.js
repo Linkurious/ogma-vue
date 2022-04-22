@@ -14,18 +14,12 @@ fs.readFile("package.json", "utf8")
       "jest-junit": undefined,
       peerDependencies: base.peerDependencies,
       private: undefined,
-      files: base.files.map((f) => f.replace("dist/", "")),
-      exports: {},
+      files: base.files.map((f) => f.replace("dist/", ""))
     };
     ["jsdelivr", "browser", "main", "module", "typings"].forEach((field) => {
       if(!base[field]) return;
       overwrite[field] = base[field].replace("dist/", "");
     });
-    if(base.exports){
-      Object.keys(base.exports).forEach((key) => {
-        overwrite.exports[key] = base.exports[key].replace("./dist/", "./");
-      });
-    }
     return { ...base, ...overwrite };
   })
   .then((data) =>
