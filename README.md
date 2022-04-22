@@ -1,6 +1,6 @@
 # `@linkurious/ogma-vue`
 
-![logo](/docs/.vuepress/public/logo.svg)
+![logo](/logo.svg)
 
 
 Wrapper to use [Ogma](https://doc.linkurio.us/ogma/latest/) with [Vue3](https://vuejs.org/about/releases.html).
