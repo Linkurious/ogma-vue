@@ -26,7 +26,8 @@
   "files": [
     "dist/lib.umd.js",
     "dist/lib.umd.min.js",
-    "dist/lib.commin.js"
+    "dist/lib.commin.js",
+    "dist/*.md"
   ],
   "publishConfig": {
     "access": "public"
