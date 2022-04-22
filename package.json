@@ -1,6 +1,6 @@
 {
   "name": "@linkurious/ogma-vue",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "engines": {
     "node": "14.16.1",
     "npm": "6.14.12"
@@ -17,8 +17,8 @@
     "docgen:build": "vue-docgen src/components/ docs",
     "predoc:build": "npm run docgen:build --clean-temp --clean-cache",
     "doc:build": "vuepress build docs",
-    "predoc:prod": "npm run doc:build",
-    "doc:prod": "gh-pages -d docs/.vuepress/dist",
+    "predoc:publish": "npm run doc:build",
+    "doc:publish": "gh-pages -d docs/.vuepress/dist",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build"
   },
