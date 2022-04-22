@@ -3,7 +3,6 @@
 nodeJob {
   // General
   projectName = "linkurious/ogma-vue"
-  runBenchTests = true
   runPreReleaseOnUpload = false
   npmPackPath = './dist'
   gitTagPrefix = 'v'
