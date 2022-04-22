@@ -33,10 +33,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@linkurious/ogma": "4.0.9",
-    "vue": "3.2.31"
+    "@linkurious/ogma": "4.0.9"
   },
   "devDependencies": {
+    "vue": "3.2.31",
     "@linkurious/code-tools": "0.0.6",
     "@vue/cli-plugin-babel": "4.5.17",
     "@vue/cli-plugin-eslint": "4.5.17",
