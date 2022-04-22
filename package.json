@@ -17,8 +17,8 @@
     "docgen:build": "vue-docgen src/components/ docs",
     "predoc:build": "npm run docgen:build --clean-temp --clean-cache",
     "doc:build": "vuepress build docs",
-    "predoc:prod": "npm run doc:build",
-    "doc:prod": "gh-pages -d docs/.vuepress/dist",
+    "predoc:publish": "npm run doc:build",
+    "doc:publish": "gh-pages -d docs/.vuepress/dist",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build"
   },
