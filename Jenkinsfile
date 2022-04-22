@@ -6,4 +6,6 @@ nodeJob {
   runBenchTests = true
   runPreReleaseOnUpload = false
   npmPackPath = './dist'
+  gitTagPrefix = 'v'
+  runNpmPublish = true
 }
