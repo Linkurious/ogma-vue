@@ -23,6 +23,14 @@
     "help": "vue-cli-service help build"
   },
   "main": "dist/lib.umd.min.js",
+  "files": [
+    "dist/lib.umd.js",
+    "dist/lib.umd.min.js",
+    "dist/lib.commin.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@linkurious/ogma": "4.0.9",
     "vue": "3.2.31"
