@@ -1,13 +1,13 @@
 {
   "name": "@linkurious/ogma-vue",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "node": "14.16.1",
     "npm": "6.14.12"
   },
   "scripts": {
     "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
-    "postbuild": "node scripts/post-build.js",
+    "postbuild": "node scripts/postbuild.js && cp README.md dist",
     "build": "vue-cli-service build --target lib --name lib src/main.js",
     "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
     "lint": "vue-cli-service lint",
