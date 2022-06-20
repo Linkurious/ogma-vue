@@ -130,6 +130,11 @@ export default {
     },
     onTooltipToggle(e) {
       this.tooltip.enabled = e;
+      const selectedNodes =this.ogma.getSelectedNodes();
+      if(selectedNodes.size){
+        // show the tooltip if some nodes are selected
+        this.onNodesSelected({nodes: selectedNodes})
+      }
     },
     onNodesUnselected(){
       const selectedNodes = this.ogma.getSelectedNodes();
