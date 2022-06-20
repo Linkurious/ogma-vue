@@ -32,6 +32,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "private": false,
   "peerDependencies": {
     "@linkurious/ogma": ">4.0.9"
   },
