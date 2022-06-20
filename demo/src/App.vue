@@ -2,6 +2,8 @@
   <div id="app">
     <OgmaVue :ogma="ogma" :graph="graph" :width="width" :height="height"
     @nodesSelected="onNodesSelected"
+    @nodesUnselected="onNodesUnselected"
+
     >
       <template>
         <StyleRule :options="rule" />
@@ -128,6 +130,19 @@ export default {
     },
     onTooltipToggle(e) {
       this.tooltip.enabled = e;
+      const selectedNodes =this.ogma.getSelectedNodes();
+      if(selectedNodes.size){
+        // show the tooltip if some nodes are selected
+        this.onNodesSelected({nodes: selectedNodes})
+      }
+    },
+    onNodesUnselected(){
+      const selectedNodes = this.ogma.getSelectedNodes();
+      if(selectedNodes.size) return;
+      this.tooltip = {
+        ...this.tooltip,
+        visible: false,
+      };
     },
     onNodesSelected({ nodes }) {
       this.tooltip = {
