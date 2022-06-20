@@ -32,8 +32,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@linkurious/ogma": "4.0.9"
+  "peerDependencies": {
+    "@linkurious/ogma": ">4.0.9"
   },
   "devDependencies": {
     "vue": "3.2.31",
