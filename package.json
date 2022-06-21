@@ -20,7 +20,8 @@
     "predoc:publish": "npm run doc:build",
     "doc:publish": "gh-pages -d docs/.vuepress/dist",
     "postversion": "sync_versions",
-    "help": "vue-cli-service help build"
+    "help": "vue-cli-service help build",
+    "bump:patch": "npm version patch --no-git-tag-version"
   },
   "main": "dist/lib.umd.min.js",
   "files": [
