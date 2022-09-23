@@ -4,12 +4,16 @@ module.exports = {
   title: 'Ogma-vue',
   description: 'Documentation for the Ogma-vue library',
   // theme and its config
-  base: "/ogma-vue/",
+  // base: "/ogma-vue/",
   theme: '@vuepress/theme-default',
   themeConfig: {
     logo: '/logo-small.svg',
     sidebar: [
       '/',
+      {
+        text: 'Demo',
+        link: '/examples/demo'
+      },
       {
         text: 'API',
         collapsible: true,
