@@ -1,12 +1,9 @@
 <template>
   <div id="OgmaDemo">
-    <OgmaVue :ogma="ogma" :graph="graph" :width="width" :height="height"
-    @nodesSelected="onNodesSelected"
-    @nodesUnselected="onNodesUnselected"
-
-    >
+    <OgmaVue :ogma="ogma" :graph="graph" :width="width" :height="height">
       <template>
         <StyleRule :options="rule" />
+        <NodeFilter :options="filter.options" />
         <Tooltip
           :visible="tooltip.visible"
           :size="tooltip.size"
@@ -14,30 +11,21 @@
         >
           <div class="tooltip">{{ tooltip.content }}</div>
         </Tooltip>
-        <NodeGrouping
-          :options="grouping.options"
-          :events="grouping.events"
-          @enabled="onGroupingEnabled"
-        />
-       
       </template>
     </OgmaVue>
-    <UX :ogma="ogma" @tooltipToggle="onTooltipToggle"/>
+    <UX :ogma="ogma" />
   </div>
 </template>
 
 <script>
+import UX from "./UX.vue";
 import OgmaVue from "../../src/components/Ogma.vue";
-import StyleRule from "../../src/components/styles/StyleRule.vue";
-import NodeGrouping from "../../src/components/transformations/NodeGrouping.vue";
 import Tooltip from "../../src/components/layers/Overlay.vue";
 import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
-import UX from "./UX.vue";
 import {computed} from "vue";
 import Ogma from "@linkurious/ogma";
 
 const ogma = new Ogma();
-
 export default {
   name: "OgmaDemo",
   data() {
@@ -45,32 +33,26 @@ export default {
       ogma,
       width: 850,
       height: 512,
-      rule: {
+       rule: {
         nodeSelector: (node) => !node.isVirtual(),
         nodeAttributes: {
           color: "rgba(74, 160, 100, 1)",
         },
       },
-      grouping: {
-        options: {
-          nodeSelector: () => true,
-          groupIdFunction: (node) => node.getId() % 2,
-          showContents: true,
-          enabled: false,
-        },
-        events: ["enabled", "destroyed"],
-      },
       filter: {
         options: {
-          criteria: (node) => node.getId() % 2,
-          duration: 1000,
+          criteria: (node) => {
+            const a = node.getId() % 3
+            console.log(a);
+            return a;
+            },
           enabled: false,
         },
         events: ["enabled", "destroyed"],
       },
-      tooltip: {
-        visible: false,
-        enabled: false,
+       tooltip: {
+        visible: true,
+        enabled: true,
         position: {
           x: 0,
           y: 0,
@@ -83,7 +65,12 @@ export default {
       },
       graph: {
         nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-        edges: [],
+        edges: [
+          { source: 0, target: 1 },
+          { source: 1, target: 2 },
+          { source: 2, target: 3 },
+          { source: 3, target: 4 },
+        ],
       },
     };
   },
@@ -92,28 +79,13 @@ export default {
       grouping: this.grouping,
       filter: this.filter,
       rule: this.rule,
-      tooltip: computed(() => this.tooltip)
+      tooltip: computed(() => this.tooltip),
     };
   },
   mounted() {
-    window.addEventListener("resize", this.onResize);
     window.ogma = ogma;
   },
   methods: {
-    onGroupingEnabled(grouping) {
-      console.log("grouping enabled", grouping);
-    },
-    onFilterEnabled(filter) {
-      console.log("filter enabled", filter);
-    },
-    onTooltipToggle(e) {
-      this.tooltip.enabled = e;
-      const selectedNodes =this.ogma.getSelectedNodes();
-      if(selectedNodes.size){
-        // show the tooltip if some nodes are selected
-        this.onNodesSelected({nodes: selectedNodes})
-      }
-    },
     onNodesUnselected(){
       const selectedNodes = this.ogma.getSelectedNodes();
       if(selectedNodes.size) return;
@@ -139,11 +111,9 @@ export default {
   },
   components: {
     OgmaVue,
-    StyleRule,
-    NodeGrouping,
     NodeFilter,
     Tooltip,
-    UX,
+    UX
   },
 };
 </script>

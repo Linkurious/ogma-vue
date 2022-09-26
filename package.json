@@ -34,7 +34,7 @@
   },
   "private": false,
   "peerDependencies": {
-    "@linkurious/ogma": ">4.0.9"
+    "@linkurious/ogma": ">=4.3.0"
   },
   "devDependencies": {
     "vue": "3.2.31",
