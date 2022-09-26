@@ -4,13 +4,6 @@
       <template>
         <StyleRule :options="rule" />
         <NodeFilter :options="filter.options" />
-        <Tooltip
-          :visible="tooltip.visible"
-          :size="tooltip.size"
-          :position="tooltip.position"
-        >
-          <div class="tooltip">{{ tooltip.content }}</div>
-        </Tooltip>
       </template>
     </OgmaVue>
     <UX :ogma="ogma" />
@@ -20,9 +13,8 @@
 <script>
 import UX from "./UX.vue";
 import OgmaVue from "../../src/components/Ogma.vue";
-import Tooltip from "../../src/components/layers/Overlay.vue";
 import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
-import {computed} from "vue";
+import { computed } from "vue";
 import Ogma from "@linkurious/ogma";
 
 const ogma = new Ogma();
@@ -33,7 +25,7 @@ export default {
       ogma,
       width: 850,
       height: 512,
-       rule: {
+      rule: {
         nodeSelector: (node) => !node.isVirtual(),
         nodeAttributes: {
           color: "rgba(74, 160, 100, 1)",
@@ -42,15 +34,15 @@ export default {
       filter: {
         options: {
           criteria: (node) => {
-            const a = node.getId() % 3
+            const a = node.getId() % 3;
             console.log(a);
             return a;
-            },
+          },
           enabled: false,
         },
         events: ["enabled", "destroyed"],
       },
-       tooltip: {
+      tooltip: {
         visible: true,
         enabled: true,
         position: {
@@ -82,38 +74,11 @@ export default {
       tooltip: computed(() => this.tooltip),
     };
   },
-  mounted() {
-    window.ogma = ogma;
-  },
-  methods: {
-    onNodesUnselected(){
-      const selectedNodes = this.ogma.getSelectedNodes();
-      if(selectedNodes.size) return;
-      this.tooltip = {
-        ...this.tooltip,
-        visible: false,
-      };
-    },
-    onNodesSelected({ nodes }) {
-      this.tooltip = {
-        ...this.tooltip,
-        position: {
-          x:
-            nodes.get(0).getAttribute("x") +
-            5 +
-            nodes.get(0).getAttribute("radius"),
-          y: nodes.get(0).getAttribute("y"),
-        },
-        content: `${nodes.get(0).getId()} is selected`,
-        visible: true && this.tooltip.enabled,
-      };
-    },
-  },
+  methods: {},
   components: {
     OgmaVue,
     NodeFilter,
-    Tooltip,
-    UX
+    UX,
   },
 };
 </script>

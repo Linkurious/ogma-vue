@@ -3,6 +3,10 @@
  <OgmaDemo />
 </div>
 
+@[code{1-11}](../components/OgmaDemo.vue)
+
+@[code{20-83} js](../components/OgmaDemo.vue)
+
 
 <script setup>
 
