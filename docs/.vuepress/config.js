@@ -11,6 +11,10 @@ module.exports = {
     sidebar: [
       '/',
       {
+        text: 'Demo',
+        link: '/examples/demo'
+      },
+      {
         text: 'API',
         collapsible: true,
         children: [

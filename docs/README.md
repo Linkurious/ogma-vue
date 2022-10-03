@@ -2,6 +2,7 @@
 
 Ogma Vue 3 is a full integration of [Ogma](https://doc.linkurio.us/ogma/latest/) in Vue.js.
 
+[demo](/examples/demo)
 ### Getting started.
 
 First, you need to own a valid **Ogma** licence. Reach out [Ogma sales](https://doc.linkurio.us/ogma/latest/support.html) for more details.
