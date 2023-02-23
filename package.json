@@ -2,8 +2,7 @@
   "name": "@linkurious/ogma-vue",
   "version": "0.1.11",
   "engines": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "18.13.0"
   },
   "scripts": {
     "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
@@ -38,7 +37,7 @@
     "@linkurious/ogma": ">=4.3.0"
   },
   "devDependencies": {
-    "@linkurious/code-tools": "^0.0.8",
+    "@linkurious/code-tools": "^0.0.12",
     "@vue/cli-plugin-babel": "4.5.17",
     "@vue/cli-plugin-eslint": "4.5.17",
     "@vue/cli-plugin-unit-mocha": "5.0.8",
