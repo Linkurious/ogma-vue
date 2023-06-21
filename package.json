@@ -5,10 +5,12 @@
     "node": "16.15.0",
     "npm": "8.5.5"
   },
+  "license": "Apache-2.0",
   "scripts": {
     "serve": "VUE_CLI_SERVICE_CONFIG_PATH=demo-vue.config.js vue-cli-service serve",
     "postbuild": "node scripts/postbuild.js && cp README.md dist",
     "build": "vue-cli-service build --target lib --name lib src/main.js",
+    "test": "npm run test:unit",
     "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
     "lint": "vue-cli-service lint",
     "docgen:dev": "vue-docgen src/components/ docs -w",
@@ -61,31 +63,6 @@
     "vue-cli-plugin-vuepress": "0.1.1",
     "vue-docgen-cli": "4.44.23",
     "vuepress": "2.0.0-beta.38"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {},
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "mocha": true
-        }
-      }
-    ]
   },
   "browserslist": [
     "> 1%",
