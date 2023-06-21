@@ -51,20 +51,20 @@ const ogmaEvents = [
   "transformationSetIndex",
   "updateEdgeData",
   "updateNodeData",
-  "viewChanged"
+  "viewChanged",
 ];
 
 export default {
   props: {
     /**
-    * The Ogma events list you want the component to emit. Default is all, you can pass and array: ['addEdges', 'addNodes']
-    */
-    events: { default: "all", type: [String, Array] }
+     * The Ogma events list you want the component to emit. Default is all, you can pass and array: ['addEdges', 'addNodes']
+     */
+    events: { default: "all", type: [String, Array] },
   },
   data() {
     return {
-      _ogmaListenners: []
-    }
+      _ogmaListeners: [],
+    };
   },
   mounted() {
     this.registerEvents();
@@ -77,8 +77,8 @@ export default {
       handler() {
         this.unRegisterEvents();
         this.registerEvents();
-      }
-    }
+      },
+    },
   },
   methods: {
     registerEvents() {
@@ -88,25 +88,25 @@ export default {
       if (this.events === "all") {
         eventsToregister = ogmaEvents;
       }
-      eventsToregister
-        .forEach((event) => {
-          const handler = (evt) => {
-            /**
-             * Ogma event. Please refer to the list of Ogma events [here](https://doc.linkurio.us/ogma/latest/api.html#Event:-addEdges)
-             *
-             * @event ogma-event
-             */
-            this.$emit(event, evt)
-          };
-          this._ogmaListenners.push(handler);
-          ogma.events.on(event, handler);
-        })
+      eventsToregister.forEach((event) => {
+        const handler = (evt) => {
+          /**
+           * Ogma event. Please refer to the list of Ogma events [here](https://doc.linkurio.us/ogma/latest/api.html#Event:-addEdges)
+           *
+           * @event ogma-event
+           */
+          this.$emit(event, evt);
+        };
+        this._ogmaListeners.push(handler);
+        ogma.events.on(event, handler);
+      });
     },
     unregisterEvents() {
-      this._ogmaListenners.forEach(listenner => {
+      const ogma = this.ogma;
+      this._ogmaListeners.forEach((listenner) => {
         ogma.events.off(listenner);
       });
-      this._ogmaListenners = [];
-    }
-  }
-}
+      this._ogmaListeners = [];
+    },
+  },
+};
