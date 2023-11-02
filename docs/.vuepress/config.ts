@@ -1,12 +1,14 @@
-module.exports = {
+import { defineUserConfig, defaultTheme} from 'vuepress'
+import {searchPlugin} from '@vuepress/plugin-search';
+export default defineUserConfig({
   // site config
   lang: 'en-US',
   title: 'Ogma-vue',
-  description: 'Documentation for the Ogma-vue library',
+ description: 'Documentation for the Ogma-vue library',
   // theme and its config
   base: "/ogma-vue/",
-  theme: '@vuepress/theme-default',
-  themeConfig: {
+  // theme: '@vuepress/theme-default',
+  theme: defaultTheme({
     logo: '/logo-small.svg',
     sidebar: [
       '/',
@@ -69,17 +71,14 @@ module.exports = {
       }
     ],
     repo: 'linkurious/ogma-vue',
-  },
+  }),
   plugins: [
-    [
-      '@vuepress/plugin-search',
-      {
-        locales: {
-          '/': {
-            placeholder: 'Search',
-          },
+    searchPlugin({
+      locales: {
+        '/': {
+          placeholder: 'Search',
         },
-      },
-    ],
+      }
+    })
   ],
-}
+});
