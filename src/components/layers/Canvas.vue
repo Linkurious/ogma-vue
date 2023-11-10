@@ -1,6 +1,4 @@
-<template>
-  
-</template>
+<template></template>
 <script setup lang="ts">
 import { withDefaults } from "vue";
 import type { DrawingFunction, Point } from "@linkurious/ogma";
@@ -18,6 +16,9 @@ const props = withDefaults(
     noClear?: boolean;
     level?: number;
     visible?: boolean;
+    /**
+     * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
+     */
     render: DrawingFunction;
   }>(),
   {
@@ -29,7 +30,7 @@ const props = withDefaults(
 );
 const layer = useLayer("canvas", container, props);
 watch([props], () => {
-  if(!layer.value) return;
+  if (!layer.value) return;
   layer.value.setOpacity(props.opacity);
 });
 
@@ -57,8 +58,6 @@ watch([props], () => {
      * Opacity of the layer [0; 1]
      
     opacity: { default: 1 },
-    /**
-     * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
      
     draw: { default: () => {} },
   },

@@ -1,7 +1,11 @@
 import { watch, onBeforeUnmount, onMounted, ref, inject, } from "vue";
 import type { Ref } from 'vue';
-import Ogma, { Layer, Overlay, DrawingFunction } from '@linkurious/ogma';
+import Ogma, { Layer, Overlay, DrawingFunction, CanvasLayer } from '@linkurious/ogma';
 
+export type CanvasLayerOptions = {
+  isStatic: boolean;
+  noClear: boolean;
+};
 export type Props<T, P> = {
   type: T;
   props: P;
@@ -17,10 +21,9 @@ export type OverlayP = Props<'overlay', {
 } & LayerP['props']>;
 
 export type CanvasP = Props<'canvas', {
-  isStatic: boolean;
-  noClear: boolean;
   render: DrawingFunction;
-} & LayerP['props']>;
+  opacity?: number;
+} & CanvasLayerOptions & LayerP['props']>;
 
 export type Layers = LayerP | OverlayP | CanvasP;
 function isLayerP(type: string, props: Layers['props']): props is LayerP['props'] {
@@ -35,8 +38,16 @@ function isCanvasP(type: string, props: Layers['props']): props is CanvasP['prop
 
 export function useLayer<L extends Layers>(type: L['type'], container: Ref<HTMLElement | undefined>, props: L['props']) {
   // type of layer is Layer if type is 'layer' or Overlay if type is 'overlay'
-  const layer = ref<L['type'] extends 'layer' ? Layer : Overlay>();
-  const ogma = inject<Ogma>('ogma');
+  const layer = ref<L['type'] extends 'layer'
+    ? Layer
+    : L['type'] extends 'overlay'
+    ? Overlay
+    : CanvasLayer>();
+  const ogma = inject<Ogma>('ogma') as Ogma;
+  const options: CanvasLayerOptions = {
+    isStatic: false,
+    noClear: false,
+  };
   function moveTo(level: number) {
     if (!layer.value || isNaN(level)) return;
     if (level === Infinity) {
@@ -48,27 +59,76 @@ export function useLayer<L extends Layers>(type: L['type'], container: Ref<HTMLE
     }
   }
 
+  function destroyLayer() {
+    if (!layer.value) return;
+    layer.value.destroy();
+  }
+
   function createLayer() {
+    destroyLayer();
     if (isCanvasP(type, props)) {
-      return ogma?.layers.addCanvasLayer(props.render, {
-        isStatic: props.isStatic,
-        noClear: props.noClear,
-      });
+      options.isStatic = props.isStatic;
+      options.noClear = props.noClear;
+      const canvasLayer = ogma.layers.addCanvasLayer(props.render, options);
+      canvasLayer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
+      return canvasLayer;
     }
-    if (!container.value) return;
+    const ctnr = container.value as HTMLElement;
     if (isOverlayP(type, props)) {
       return ogma?.layers.addOverlay({
-        element: container.value,
+        element: ctnr,
         position: props.position,
         size: props.size,
       });
     }
 
     if (isLayerP(type, props)) {
-      return ogma?.layers.addLayer(container.value);
+      return ogma?.layers.addLayer(ctnr);
     }
   }
-  watch([props.level], () => {
+
+  watch(props, (old, curr) => {
+    if (!layer.value) return;
+    const lv = layer.value;
+    const { level } = curr;
+    if (old.level !== level) {
+      if (level === - Infinity) {
+        lv.moveToBottom();
+      }
+      else if (level === Infinity) {
+        lv.moveToTop();
+      } else {
+        lv.moveTo(level);
+      }
+    }
+    if (old.visible !== curr.visible) {
+      if (curr.visible) lv.show();
+      else lv.hide();
+    }
+    if (isCanvasP(type, old) && isCanvasP(type, curr)) {
+      const l = layer.value as CanvasLayer;
+      if (old.isStatic !== curr.isStatic) {
+        options.isStatic = curr.isStatic;
+      }
+      if (old.noClear !== curr.noClear) {
+        options.noClear = curr.noClear;
+      }
+      if (old.opacity !== curr.opacity) {
+        l.setOpacity(curr.opacity === undefined ? 1 : curr.opacity);
+      }
+      if (old.render !== curr.render) {
+        l.refresh(curr.render);
+      }
+    }
+    if (isOverlayP(type, old) && isOverlayP(type, curr)) {
+      const l = layer.value as Overlay;
+      if (old.position !== curr.position) {
+        l.setPosition(curr.position);
+      }
+      if (old.size !== curr.size) {
+        l.setSize(curr.size);
+      }
+    }
     moveTo(props.level);
   })
   watch([props.visible], () => {
@@ -78,6 +138,7 @@ export function useLayer<L extends Layers>(type: L['type'], container: Ref<HTMLE
   })
   onMounted(() => {
     if (layer.value) return;
+    // @ts-ignore
     layer.value = createLayer();
     moveTo(props.level);
   });
