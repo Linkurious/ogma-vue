@@ -1,6 +1,5 @@
 <template>
     <div ref="container">
-    <!-- @slot Use this slot to display your Layer -->
     <slot v-if="visible"></slot>
   </div>
 </template>
@@ -15,7 +14,7 @@ const container = ref<HTMLDivElement>();
  */
 const props = defineProps({
   /**
-   * CoWether the layer is visible or not. See [Layer show/hide](https://doc.linkurio.us/ogma/latest/api.html#Layer)
+   * Wether the layer is visible or not. See [Layer show/hide](https://doc.linkurio.us/ogma/latest/api.html#Layer)
    */
   visible: { type: Boolean, default: true },
   /**
@@ -25,5 +24,5 @@ const props = defineProps({
   level: { type: Number, default: 0 },
 });
 
-useLayer('layer', container, props);
+const layer = useLayer('layer', container, props);
 </script>
