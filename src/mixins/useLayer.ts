@@ -1,14 +1,11 @@
 import { watch, onBeforeUnmount, onMounted, ref, inject, } from "vue";
 import type { Ref } from 'vue';
 import Ogma, { Layer, Overlay, DrawingFunction, CanvasLayer } from '@linkurious/ogma';
+import { Props } from "./types";
 
 export type CanvasLayerOptions = {
   isStatic: boolean;
   noClear: boolean;
-};
-export type Props<T, P> = {
-  type: T;
-  props: P;
 };
 export type LayerP = Props<'layer', {
   visible: boolean;
@@ -21,6 +18,9 @@ export type OverlayP = Props<'overlay', {
 } & LayerP['props']>;
 
 export type CanvasP = Props<'canvas', {
+  /**
+    * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
+    */
   render: DrawingFunction;
   opacity?: number;
 } & CanvasLayerOptions & LayerP['props']>;
@@ -130,11 +130,6 @@ export function useLayer<L extends Layers>(type: L['type'], container: Ref<HTMLE
       }
     }
     moveTo(props.level);
-  })
-  watch([props.visible], () => {
-    if (!layer.value) return;
-    if (props.visible) return layer.value?.hide();
-    if (!props.visible) return layer.value?.show();
   })
   onMounted(() => {
     if (layer.value) return;

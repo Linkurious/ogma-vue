@@ -1,12 +1,14 @@
 <template>
     <div ref="container">
+       docgen documentation for the slot
+    <!-- @slot Put your layer here -->   
     <slot v-if="visible"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps, ref } from "vue";
-import { useLayer } from "../../mixins/LayerMixin";
+import { useLayer } from "../../mixins/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)

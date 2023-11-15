@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <OgmaVue :ogma="ogma" :graph="graph" :width="width" :height="height"
-    @nodesSelected="onNodesSelected"
-    @nodesUnselected="onNodesUnselected"
-
-    >
+    <Ogma @addEdges="e => e" />
+    <Ogma :ogma="ogma" :graph="graph" :width="width" :height="height">
       <template>
-        <StyleRule :options="rule" />
+        <Layer :level="1" :visible="true">
+          <p>hello</p>
+        </Layer>
+        <!-- <StyleRule :options="rule" />
         <Tooltip
           :visible="tooltip.visible"
           :size="tooltip.size"
@@ -23,32 +23,76 @@
           :options="filter.options"
           :events="filter.events"
           @enabled="onFilterEnabled"
-        />
-        <Canvas
-          :visible="canvas.visible"
-          :draw="canvas.draw"
-          :opacity="canvas.opacity"
-          :index="canvas.index"
-          :options="canvas.options"
-        />
+        />-->
+        <Canvas :visible="canvas.visible" :render="canvas.draw" :draw="canvas.draw" :opacity="canvas.opacity"
+          :level="canvas.level" :options="canvas.options" />
+        <EdgeFilter :enabled="true" :duration="1000" :options="{
+          criteria: (edge) => edge.getData(),
+        }" />
       </template>
-    </OgmaVue>
-    <UX :ogma="ogma" @tooltipToggle="onTooltipToggle"/>
+    </Ogma>
+    <!-- <UX :ogma="ogma" @tooltipToggle="onTooltipToggle" /> -->
   </div>
 </template>
 
-<script>
-import OgmaVue from "../../src/components/Ogma.vue";
+<script setup lang="ts">
+import Ogma from "../../src/components/Ogma.vue";
+// import { Ogma } from "../../dist/ogma-vue.js";
+import Layer from "../../src/components/layers/Layer.vue";
+import Canvas from "../../src/components/layers/Canvas.vue";
+
 import StyleRule from "../../src/components/styles/StyleRule.vue";
 import NodeGrouping from "../../src/components/transformations/NodeGrouping.vue";
 import Tooltip from "../../src/components/layers/Overlay.vue";
 import NodeFilter from "../../src/components/transformations/NodeFilter.vue";
+import EdgeFilter from "../../src/components/transformations/EdgeFilter.vue";
+
 import UX from "./UX.vue";
-import {computed} from "vue";
-import Ogma from "@linkurious/ogma";
+import { computed, ref, provide } from "vue";
+import OgmaTs from "@linkurious/ogma";
 
-const ogma = new Ogma();
+type ND = { id: number; };
+type ED = { source: number; target: number; };
+const ogma = new OgmaTs<ND, ED>();
+provide("ogma", ogma);
+const width = ref(window.innerWidth);
+const height = ref(window.innerHeight);
+const canvas = ref({
+  draw: (ctx) => {
+    const node = ogma.getNodes().get(4);
+    if (!node) return;
+    const pos = node.getPosition();
+    ctx.fillRect(pos.x, pos.y, 10, 10);
+  },
+  visible: true,
+  opacity: 1,
+  level: -Infinity,
+  options: {},
+});
+const graph = ref({
+  nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+  edges: [{ source: 0, target: 1 }],
+});
+const filter = ref({
+  options: {
+    criteria: () => true,
+  },
+  events: ["enabled", "destroyed"],
+});
+const rule = ref({
+  nodeAttributes: {
+    color: "rgba(74, 160, 100, 1)",
+  },
+});
+setTimeout(() => {
+  canvas.value = {
+    ...canvas.value,
+    level: 2
+  };
+  console.log(canvas.value.level);
+}, 2000)
 
+/*
 export default {
   name: "App",
   data() {
@@ -63,9 +107,6 @@ export default {
           const pos = node.getPosition();
           ctx.fillRect(pos.x, pos.y, 10, 10);
         },
-        opacity: 1,
-        index: 1,
-        options: {},
       },
       rule: {
         nodeAttributes: {
@@ -82,14 +123,7 @@ export default {
         },
         events: ["enabled", "destroyed"],
       },
-      filter: {
-        options: {
-          criteria: (node) => node.getId() % 2,
-          duration: 1000,
-          enabled: false,
-        },
-        events: ["enabled", "destroyed"],
-      },
+     
       tooltip: {
         visible: false,
         enabled: false,
@@ -114,7 +148,7 @@ export default {
       grouping: this.grouping,
       filter: this.filter,
       rule: this.rule,
-      tooltip: computed(() => this.tooltip)
+      tooltip: computed(() => this.tooltip),
     };
   },
   mounted() {
@@ -130,15 +164,15 @@ export default {
     },
     onTooltipToggle(e) {
       this.tooltip.enabled = e;
-      const selectedNodes =this.ogma.getSelectedNodes();
-      if(selectedNodes.size){
+      const selectedNodes = this.ogma.getSelectedNodes();
+      if (selectedNodes.size) {
         // show the tooltip if some nodes are selected
-        this.onNodesSelected({nodes: selectedNodes})
+        this.onNodesSelected({ nodes: selectedNodes });
       }
     },
-    onNodesUnselected(){
+    onNodesUnselected() {
       const selectedNodes = this.ogma.getSelectedNodes();
-      if(selectedNodes.size) return;
+      if (selectedNodes.size) return;
       this.tooltip = {
         ...this.tooltip,
         visible: false,
@@ -168,12 +202,11 @@ export default {
     // Canvas,
     UX,
   },
-};
+};*/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
 
 
 <style>
@@ -188,11 +221,13 @@ export default {
   overflow: hidden;
   border: 1px solid blue;
 }
+
 #app canvas {
   width: 100vw;
   height: 100vh;
   border: 1px solid green;
 }
+
 .tooltip {
   background-color: #ddd;
   border-radius: 1px;

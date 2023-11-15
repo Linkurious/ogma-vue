@@ -1,9 +1,9 @@
 <template></template>
 <script setup lang="ts">
 import { withDefaults } from "vue";
-import type { DrawingFunction, Point } from "@linkurious/ogma";
-import { defineProps, ref, watch } from "vue";
-import { useLayer, CanvasP } from "../../mixins/LayerMixin";
+import type { DrawingFunction } from "@linkurious/ogma";
+import { defineProps, ref } from "vue";
+import { useLayer } from "../../mixins/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)

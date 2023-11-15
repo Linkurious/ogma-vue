@@ -6,10 +6,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, withDefaults } from "vue";
+import { withDefaults } from "vue";
 import type { Point } from "@linkurious/ogma";
 import { defineProps, ref, watch } from "vue";
-import { useLayer } from "../../mixins/LayerMixin";
+import { useLayer } from "../../mixins/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)

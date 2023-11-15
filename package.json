@@ -2,17 +2,20 @@
   "name": "@linkurious/ogma-vue",
   "version": "0.1.12",
   "license": "Apache-2.0",
+  "type": "module",
   "scripts": {
     "serve": "vite -c demo/vite.config.ts",
-    "postbuild": "node scripts/postbuild.js && cp README.md dist",
+    "postbuild1": "node scripts/postbuild.js && cp README.md dist",
+    "types": "vue-tsc --declaration --emitDeclarationOnly --outFile dist/ogma-vue.d.ts",
     "build": "vite build",
-    "test": "npm run test:unit",
+    "test": "vitest -c tests/unit/vitest.config.ts",
     "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
     "lint": "vue-cli-service lint",
     "docgen:dev": "vue-docgen src/components/ docs -w",
     "vuepress:dev": "vuepress dev docs",
     "doc:dev": "concurrently 'npm run docgen:dev' 'npm run vuepress:dev'",
     "docgen:build": "vue-docgen src/components/ docs",
+    "docgen:test": "vue-docgen src/components/layers/Test-Compo.vue docs",
     "predoc:build": "npm run docgen:build --clean-temp --clean-cache",
     "doc:build": "vuepress build docs",
     "predoc:publish": "npm run doc:build",
@@ -21,39 +24,59 @@
     "help": "vue-cli-service help build",
     "bump:patch": "npm version patch --no-git-tag-version"
   },
-  "main": "dist/lib.umd.min.js",
+  "main": "dist/ogma-vue.js",
   "files": [
     "dist/lib.umd.js",
     "dist/lib.umd.min.js",
     "dist/lib.commin.js",
+    "dist/**/*.d.ts",
     "dist/*.md"
   ],
+  "types": "dist/ogma-vue.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/ogma-vue.js",
+      "require": "./dist/ogma-vue.umd.cjs"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
   "private": false,
   "peerDependencies": {
-    "@linkurious/ogma": ">=4.3.0"
+    "@linkurious/ogma": ">=4.5.5"
   },
   "devDependencies": {
     "@linkurious/code-tools": "^0.0.8",
-    "@vue/test-utils": "2.4.1",
+    "@vitejs/plugin-vue": "^4.4.1",
+    "@vue/test-utils": "^2.4.1",
     "@vuepress/plugin-search": "2.0.0-beta.67",
+    "canvas": "^2.11.2",
     "concurrently": "^7.1.0",
     "eslint": "^8.52.0",
     "eslint-plugin-import": "2.29.0",
     "eslint-plugin-vue": "^9.18.1",
     "gh-pages": "3.2.3",
+    "happy-dom": "^12.10.3",
+    "jsdom": "^22.1.0",
     "naive-ui": "2.35.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.2.2",
     "vite": "4.5.0",
+    "vite-plugin-dts": "^3.6.3",
+    "vitest": "^0.34.6",
     "vue": "3.3.7",
     "vue-cli-plugin-vuepress": "0.1.1",
-    "vue-docgen-cli": "4.67.0",
+    "vue-docgen-cli": "file:../vue-styleguidist/packages/vue-docgen-cli",
+    "vue-tsc": "^1.8.22",
     "vuepress": "2.0.0-beta.67"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "dependencies": {
+    "vue-docgen-api": "file:../vue-styleguidist/packages/vue-docgen-api"
+  }
 }
