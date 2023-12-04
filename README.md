@@ -6,7 +6,7 @@
 Wrapper to use [Ogma](https://doc.linkurio.us/ogma/latest/) with [Vue3](https://vuejs.org/about/releases.html).
 It allows you to create graph visualisations easilly, with both the power of Ogma and the reactivity of Vue. 
 
-You need an Ogma licence to use it. Please [contact us](https://doc.linkurio.us/ogma/latest/support.html) for more info.
+You need an Ogma licence to use it. Please [contact us](https://doc.linkurious.com/ogma/latest/contact.html) for more info.
 
 ## Documentation
 
