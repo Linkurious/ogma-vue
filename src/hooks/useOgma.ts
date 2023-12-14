@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Ogma, { EventTypes, RawGraph, Options } from "@linkurious/ogma";
-import { defineComponent, h, PropType } from "vue";
+import { defineComponent, h, PropType, SlotsType } from "vue";
 
 
 export interface OgmaProps<ND = unknown, ED = unknown> {
@@ -71,6 +71,9 @@ const allEvents = [
 export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
   const ogma = og || new Ogma<ND, ED>() as Ogma<ND, ED>;
   return defineComponent({
+    slots: Object as SlotsType<{
+      default: unknown;
+    }>,
     provide() {
       return {
         ogma
@@ -79,12 +82,9 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
     props: {
       options: {
         type: Object as PropType<OgmaProps<ND, ED>['options']>,
-        required: false
+        required: false,
+        default: () => ({})
       },
-      // ogma: {
-      //   type: Object as PropType<OgmaProps<ND, ED>['ogma']>,
-      //   required: true
-      // },
       width: {
         type: Number,
         default: 600
@@ -219,7 +219,7 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
       return h("div", {
         ref: "container",
         class: 'ogma-container'
-      });
+      }, this.$slots.default?.());
     },
   });
 
