@@ -10,6 +10,7 @@ import StyleMixin from "../../mixins/StyleMixin.js";
  */
 export default {
   name: "EdgeRule",
+  mixins: [StyleMixin],
   props: {
     /**
      * The Options to pass to the styleRule: selector and rule.
@@ -22,7 +23,6 @@ export default {
       type: Object,
     },
   },
-  mixins: [StyleMixin],
   methods: {
     creationFunction({ ogma, selector, rule }) {
       return ogma.styles.addEdgeRule(selector, rule);

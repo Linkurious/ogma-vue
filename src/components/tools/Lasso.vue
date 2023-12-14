@@ -3,10 +3,10 @@ import toolMixin from "../../mixins/ToolMixin";
 const lasso = toolMixin("lasso", {
   strokeWidth: 1,
   bothExtremities: false,
-  callback: evt => {
+  callback: (evt) => {
     evt.nodes.setSelected(true);
     evt.edges.setSelected(true);
-  }
+  },
 });
 
 /**
@@ -16,6 +16,7 @@ const lasso = toolMixin("lasso", {
  */
 export default {
   name: "Lasso",
+  mixins: [lasso],
   props: {
     /**
      * Wether the tool is enabled or not.
@@ -26,6 +27,5 @@ export default {
      */
     options: { type: Object, default: () => ({}) },
   },
-  mixins: [lasso]
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
-    <div ref="container">
-       docgen documentation for the slot
-    <!-- @slot Put your layer here -->   
-    <slot v-if="visible"></slot>
+  <div ref="container">
+    docgen documentation for the slot
+    <!-- @slot Put your layer here -->
+    <slot v-if="visible" />
   </div>
 </template>
 
@@ -26,5 +26,5 @@ const props = defineProps({
   level: { type: Number, default: 0 },
 });
 
-const layer = useLayer('layer', container, props);
+const layer = useLayer("layer", container, props);
 </script>

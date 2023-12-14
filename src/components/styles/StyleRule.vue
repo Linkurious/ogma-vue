@@ -10,7 +10,8 @@ import StyleMixin from "../../mixins/StyleMixin.js";
  */
 export default {
   name: "StyleRule",
-    props: {
+  mixins: [StyleMixin],
+  props: {
     /**
      * The Options to pass to the styleRule: selector and rule.
      */
@@ -24,13 +25,12 @@ export default {
       type: Object,
     },
   },
-  mixins: [StyleMixin],
-   methods: {
+  methods: {
     creationFunction(options) {
-    return options.ogma.styles.addRule(options);
+      return options.ogma.styles.addRule(options);
     },
     updateFunction({ styleRule, options }) {
-      styleRule.update(options)
+      styleRule.update(options);
     },
   },
 };

@@ -8,14 +8,14 @@ export default {
   data() {
     return {
       transformation: null,
-      listenners: []
-    }
+      listenners: [],
+    };
   },
   watch: {
     options: {
       handler(newValue, oldValue) {
         const shouldEnable = newValue.enabled && !oldValue.enabled;
-        const shouldDisable =  !newValue.enabled && oldValue.enabled;
+        const shouldDisable = !newValue.enabled && oldValue.enabled;
         this.transformation.setDuration(newValue.duration || 0);
         if (shouldEnable) {
           this.transformation.enable(newValue.duration || 0);
@@ -24,8 +24,8 @@ export default {
           this.transformation.disable(newValue.duration || 0);
         }
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     this.transformation = this.createTransformation(this.options);
@@ -35,30 +35,29 @@ export default {
     this.unRegisterEvents();
     this.transformation.destroy();
   },
-  render() { },
+  render() {},
   methods: {
     /**
-     * Dummy method to generate the events doc 
+     * Dummy method to generate the events doc
      */
     __dummyTriggerEvents() {
-
       /**
-      * Triggered when enabled. [transformationEnabled](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationEnabled) 
-      * @property {Object} transformation The transformation object
-      * @event enabled 
-      */
+       * Triggered when enabled. [transformationEnabled](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationEnabled)
+       * @property {Object} transformation The transformation object
+       * @event enabled
+       */
       this.$emit("enabled", this.transformation);
       /**
-      * Triggered when disabled. [transformationDisabled](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationDisabled) 
-      * @property {Object} transformation The transformation object
-      * @event disabled 
-      */
+       * Triggered when disabled. [transformationDisabled](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationDisabled)
+       * @property {Object} transformation The transformation object
+       * @event disabled
+       */
       this.$emit("disabled", this.transformation);
-     /** 
-      * Triggered when refreshed. [transformationRefreshed](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationRefreshed) 
-      * @property {Object} transformation The transformation object
-      * @event refreshed 
-      */
+      /**
+       * Triggered when refreshed. [transformationRefreshed](https://doc.linkurio.us/ogma/latest/api.html#Event:-transformationRefreshed)
+       * @property {Object} transformation The transformation object
+       * @event refreshed
+       */
       this.$emit("refreshed", this.transformation);
     },
     registerEvents() {
@@ -67,26 +66,26 @@ export default {
         disabled: "transformationDisabled",
         refreshed: "transformationRefresh",
         indexChanged: "transformationSetIndex",
-        destroyed: "transformationDestroyed"
+        destroyed: "transformationDestroyed",
       };
-      const events = this.events === "all" ? Object.keys(validEvents) : this.events;
-      events
-        .forEach((event) => {
-          const ogmaEvent = validEvents[event];
-          if (!ogmaEvent) return;
-          const listenner = ({ target }) => {
-            if (target !== this.transformation) return;
-            
-            this.$emit(event, this.transformation);
-          }
-          this.listenners.push(listenner);
-          this.ogma.events.on(ogmaEvent, listenner);
-        });
+      const events =
+        this.events === "all" ? Object.keys(validEvents) : this.events;
+      events.forEach((event) => {
+        const ogmaEvent = validEvents[event];
+        if (!ogmaEvent) return;
+        const listenner = ({ target }) => {
+          if (target !== this.transformation) return;
+
+          this.$emit(event, this.transformation);
+        };
+        this.listenners.push(listenner);
+        this.ogma.events.on(ogmaEvent, listenner);
+      });
     },
     unRegisterEvents() {
-      this.listenners.forEach(listenner => {
+      this.listenners.forEach((listenner) => {
         this.ogma.events.off(listenner);
-      })
-    }
+      });
+    },
   },
-}
+};

@@ -8,6 +8,7 @@
  */
 export default {
   name: "StyleClass",
+  inject: ["ogma"],
   props: {
     /**
      * The Options to pass to the styleClass.
@@ -16,13 +17,12 @@ export default {
     /**
      * The NodeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
      */
-    nodes: { default: () => (null), type: Object },
+    nodes: { default: () => null, type: Object },
     /**
      * The EdgeList to apply the class to. See [reference](https://doc.linkurio.us/ogma/latest/api.html#StyleClass)
      */
-    edges: { default: () => (null), type: Object },
+    edges: { default: () => null, type: Object },
   },
-  inject: ["ogma"],
   data() {
     return {
       styleClass: null,
@@ -44,9 +44,6 @@ export default {
       this.styleClass.remove(toRemove);
     },
   },
-  render() {
-    return null;
-  },
   mounted() {
     this.styleClass = this.ogma.styles.createClass(this.options);
     if (this.nodes) {
@@ -67,6 +64,9 @@ export default {
       toAdd = newValue.subtract(oldValue);
       return { toAdd, toRemove };
     },
+  },
+  render() {
+    return null;
   },
 };
 </script>

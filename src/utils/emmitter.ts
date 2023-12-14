@@ -1,4 +1,4 @@
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance } from "vue";
 
 export default function useEmitter<T extends Record<string, any>>() {
   const instance = getCurrentInstance();

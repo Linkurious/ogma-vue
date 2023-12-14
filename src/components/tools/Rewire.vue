@@ -9,6 +9,7 @@ const rewire = toolMixin("rewire", {});
  */
 export default {
   name: "Rewire",
+  mixins: [rewire],
   props: {
     /**
      * Wether the tool is enabled or not.
@@ -19,6 +20,5 @@ export default {
      */
     options: { type: Object, default: () => ({}) },
   },
-  mixins: [rewire]
 };
 </script>

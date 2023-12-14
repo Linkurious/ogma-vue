@@ -9,6 +9,7 @@ const snapping = toolMixin("snapping", {});
  */
 export default {
   name: "Snapping",
+  mixins: [snapping],
   props: {
     /**
      * Wether the tool is enabled or not.
@@ -19,6 +20,5 @@ export default {
      */
     options: { type: Object, default: () => ({}) },
   },
-  mixins: [snapping],
 };
 </script>

@@ -1,14 +1,13 @@
 <template>
   <div ref="container">
     <!-- @slot Use this slot to display your Layer -->
-    <slot v-if="visible"></slot>
+    <slot v-if="visible" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { withDefaults } from "vue";
 import type { Point } from "@linkurious/ogma";
-import { defineProps, ref, watch } from "vue";
+import { withDefaults, defineProps, ref, watch } from "vue";
 import { useLayer } from "../../mixins/useLayer";
 const container = ref<HTMLDivElement>();
 /**
@@ -40,7 +39,7 @@ const props = withDefaults(
      * Infinity and -Infinity triggers moveToTop and moveToBottom.
      */
     level: 0,
-  }
+  },
 );
 const layer = useLayer("overlay", container, props);
 watch([props.position], () => {

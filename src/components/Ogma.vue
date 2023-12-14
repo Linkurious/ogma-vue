@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Ogma, { RawGraph, EventTypes } from "@linkurious/ogma";
 import {
   provide,
   defineProps,
@@ -8,7 +9,6 @@ import {
   watch,
   defineEmits,
 } from "vue";
-import Ogma, { RawGraph, EventTypes, AddEdgesEvent } from "@linkurious/ogma";
 interface Emits {
   /**
    * See [addEdges](https://doc.linkurious.com/ogma/latest/api.html#Event:-addEdges)
@@ -25,11 +25,17 @@ interface Emits {
   /**
    * See [beforeRemoveEdges](https://doc.linkurious.com/ogma/latest/api.html#Event:-beforeRemoveEdges)
    */
-  (e: "beforeRemoveEdges", evt: EventTypes<any, any>["beforeRemoveEdges"]): void;
+  (
+    e: "beforeRemoveEdges",
+    evt: EventTypes<any, any>["beforeRemoveEdges"],
+  ): void;
   /**
    * See [beforeRemoveNodes](https://doc.linkurious.com/ogma/latest/api.html#Event:-beforeRemoveNodes)
    */
-  (e: "beforeRemoveNodes", evt: EventTypes<any, any>["beforeRemoveNodes"]): void;
+  (
+    e: "beforeRemoveNodes",
+    evt: EventTypes<any, any>["beforeRemoveNodes"],
+  ): void;
   /**
    * See [clearGraph](https://doc.linkurious.com/ogma/latest/api.html#Event:-clearGraph)
    */
@@ -145,7 +151,10 @@ interface Emits {
   /**
    * See [nodesDragProgress](https://doc.linkurious.com/ogma/latest/api.html#Event:-nodesDragProgress)
    */
-  (e: "nodesDragProgress", evt: EventTypes<any, any>["nodesDragProgress"]): void;
+  (
+    e: "nodesDragProgress",
+    evt: EventTypes<any, any>["nodesDragProgress"],
+  ): void;
   /**
    * See [nodesDragStart](https://doc.linkurious.com/ogma/latest/api.html#Event:-nodesDragStart)
    */
@@ -169,7 +178,10 @@ interface Emits {
   /**
    * See [rendererStateChange](https://doc.linkurious.com/ogma/latest/api.html#Event:-rendererStateChange)
    */
-  (e: "rendererStateChange", evt: EventTypes<any, any>["rendererStateChange"]): void;
+  (
+    e: "rendererStateChange",
+    evt: EventTypes<any, any>["rendererStateChange"],
+  ): void;
   /**
    * See [resize](https://doc.linkurious.com/ogma/latest/api.html#Event:-resize)
    */
@@ -189,23 +201,38 @@ interface Emits {
   /**
    * See [transformationDestroyed](https://doc.linkurious.com/ogma/latest/api.html#Event:-transformationDestroyed)
    */
-  (e: "transformationDestroyed", evt: EventTypes<any, any>["transformationDestroyed"]): void;
+  (
+    e: "transformationDestroyed",
+    evt: EventTypes<any, any>["transformationDestroyed"],
+  ): void;
   /**
    * See [transformationDisabled](https://doc.linkurious.com/ogma/latest/api.html#Event:-transformationDisabled)
    */
-  (e: "transformationDisabled", evt: EventTypes<any, any>["transformationDisabled"]): void;
+  (
+    e: "transformationDisabled",
+    evt: EventTypes<any, any>["transformationDisabled"],
+  ): void;
   /**
    * See [transformationEnabled](https://doc.linkurious.com/ogma/latest/api.html#Event:-transformationEnabled)
    */
-  (e: "transformationEnabled", evt: EventTypes<any, any>["transformationEnabled"]): void;
+  (
+    e: "transformationEnabled",
+    evt: EventTypes<any, any>["transformationEnabled"],
+  ): void;
   /**
    * See [transformationRefresh](https://doc.linkurious.com/ogma/latest/api.html#Event:-transformationRefresh)
    */
-  (e: "transformationRefresh", evt: EventTypes<any, any>["transformationRefresh"]): void;
+  (
+    e: "transformationRefresh",
+    evt: EventTypes<any, any>["transformationRefresh"],
+  ): void;
   /**
    * See [transformationSetIndex](https://doc.linkurious.com/ogma/latest/api.html#Event:-transformationSetIndex)
    */
-  (e: "transformationSetIndex", evt: EventTypes<any, any>["transformationSetIndex"]): void;
+  (
+    e: "transformationSetIndex",
+    evt: EventTypes<any, any>["transformationSetIndex"],
+  ): void;
   /**
    * See [updateEdgeData](https://doc.linkurious.com/ogma/latest/api.html#Event:-updateEdgeData)
    */
@@ -219,7 +246,7 @@ interface Emits {
    */
   (e: "viewChanged", evt: EventTypes<any, any>["viewChanged"]): void;
 }
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 const allEvents = [
   "addEdges",
   "addGraph",
@@ -303,46 +330,43 @@ function unregisterEvents() {
  */
 const container = ref<HTMLDivElement>();
 
+const props = withDefaults(
+  defineProps<{
+    /**
+     * The width of Ogma container
+     */
+    width?: number;
+    /**
+     * The height of Ogma container
+     */
+    height?: number;
+    /**
+     * The graph Ogma should render
+     * @default empty graph
+     */
+    graph?: RawGraph;
+    /**
+     * The instance of Ogma linked to the component
+     */
+    ogma: Ogma<string, number>;
+    /**
+     * layoutOnMounted
+     */
+    layoutOnMounted?: boolean;
 
-const props =
-  withDefaults(
-    defineProps<{
-      /**
-       * The width of Ogma container
-       */
-      width?: number;
-      /**
-       * The height of Ogma container
-       */
-      height?: number;
-      /**
-       * The graph Ogma should render
-       * @default empty graph
-       */
-      graph?: RawGraph;
-      /**
-       * The instance of Ogma linked to the component
-       */
-      ogma: Ogma<string, number>;
-      /**
-       * layoutOnMounted
-       */
-      layoutOnMounted?: boolean;
-
-      events: (keyof EventTypes<any, any>)[] | "all";
-    }>()
-    ,
-    {
-      width: 512,
-      height: 512,
-      layoutOnMounted: true,
-      events: "all",
-      graph: () => ({
-        nodes: [],
-        edges: [],
-      }),
-    }
-  );
+    events: (keyof EventTypes<any, any>)[] | "all";
+  }>(),
+  {
+    width: 512,
+    height: 512,
+    layoutOnMounted: true,
+    events: "all",
+    graph: () => ({
+      nodes: [],
+      edges: [],
+    }),
+  },
+);
 
 watch(
   () => props.graph,
@@ -350,7 +374,7 @@ watch(
     if (newGraph) {
       props.ogma.setGraph(newGraph);
     }
-  }
+  },
 );
 
 watch([props.width, props.height], ([width, height]) => {
@@ -361,7 +385,7 @@ watch(
   () => {
     unregisterEvents();
     registerEvents();
-  }
+  },
 );
 
 onMounted(() => {
@@ -378,8 +402,8 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <div ref="container" class="ogma-container"></div>
+    <div ref="container" class="ogma-container" />
     <!-- @slot Put your Ogma components here -->
-    <slot></slot>
+    <slot />
   </div>
 </template>

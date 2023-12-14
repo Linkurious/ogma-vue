@@ -4,7 +4,8 @@ import Ogma, {
   DrawingFunction,
   CanvasLayer,
 } from "@linkurious/ogma";
-import { watch, onBeforeUnmount, onMounted, ref, inject, Ref } from "vue";
+import { watch, onBeforeUnmount, onMounted, ref, inject } from "vue";
+import type { Ref } from "vue";
 import { Props } from "./types";
 
 export type CanvasLayerOptions = {
@@ -22,8 +23,8 @@ export type LayerP = Props<
 export type OverlayP = Props<
   "overlay",
   {
-    position: { x: number; y: number; };
-    size: { width: number; height: number; };
+    position: { x: number; y: number };
+    size: { width: number; height: number };
   } & LayerP["props"]
 >;
 
@@ -36,7 +37,7 @@ export type CanvasP = Props<
     render: DrawingFunction;
     opacity?: number;
   } & CanvasLayerOptions &
-  LayerP["props"]
+    LayerP["props"]
 >;
 
 export type Layers = LayerP | OverlayP | CanvasP;
@@ -68,10 +69,10 @@ export function useLayer<L extends Layers>(
   const layer =
     ref<
       L["type"] extends "layer"
-      ? Layer
-      : L["type"] extends "overlay"
-      ? Overlay
-      : CanvasLayer
+        ? Layer
+        : L["type"] extends "overlay"
+          ? Overlay
+          : CanvasLayer
     >();
   const ogma = inject<Ogma>("ogma") as Ogma;
   const options: CanvasLayerOptions = {

@@ -1,4 +1,4 @@
-export { default as Ogma } from "./components/Ogma.vue"
+export { default as Ogma } from "./components/Ogma.vue";
 // export { default as Canvas } from "./components/layers/Canvas.vue"
 // export { default as Layer } from "./components/layers/Layer.vue"
 // export { default as Overlay } from "./components/layers/Overlay.vue"
@@ -11,7 +11,7 @@ export { default as Ogma } from "./components/Ogma.vue"
 // export { default as Legend } from "./components/tools/Legend.vue"
 // export { default as Rewire } from "./components/tools/Rewire.vue"
 // export { default as Snapping } from "./components/tools/Snapping.vue"
-export { default as EdgeFilter } from "./components/transformations/EdgeFilter.vue"
+export { default as EdgeFilter } from "./components/transformations/EdgeFilter.vue";
 // export { default as NodeFilter } from "./components/transformations/NodeFilter.vue"
 // export { default as GeoClustering } from "./components/transformations/GeoClustering.vue"
 // export { default as NeighborGeneration } from "./components/transformations/NeighborGeneration.vue"
@@ -21,9 +21,3 @@ export { default as EdgeFilter } from "./components/transformations/EdgeFilter.v
 // export { default as NodeGrouping } from "./components/transformations/NodeGrouping.vue"
 // export { default as EdgeGrouping } from "./components/transformations/EdgeGrouping.vue"
 // export { default as VirtualProperties } from "./components/transformations/VirtualProperties.vue"
-
-
-
-
-
-

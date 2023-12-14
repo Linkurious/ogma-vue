@@ -8,6 +8,7 @@ const connectNodes = toolMixin("connectNodes", {});
  */
 export default {
   name: "ConnectNodes",
+  mixins: [connectNodes],
   props: {
     /**
      * Wether the tool is enabled or not.
@@ -18,6 +19,5 @@ export default {
      */
     options: { type: Object, default: () => ({}) },
   },
-  mixins: [connectNodes],
 };
 </script>

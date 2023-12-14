@@ -17,6 +17,11 @@ import Overlay from "./Overlay.vue";
  */
 export default {
   name: "Tooltip",
+  components: {
+    Overlay,
+  },
+  inject: ["ogma"],
+  props: {},
   data() {
     return {
       visible: false,
@@ -24,8 +29,6 @@ export default {
       placement: { type: String, default: () => "right" },
     };
   },
-  inject: ["ogma"],
-  props: {},
   watch: {
     coords: function (newValue) {
       this.placement = this.getAdjustedPlacement(newValue);
@@ -70,9 +73,6 @@ export default {
 
       return res;
     },
-  },
-  components: {
-    Overlay,
   },
 };
 </script>

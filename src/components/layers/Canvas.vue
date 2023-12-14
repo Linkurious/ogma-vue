@@ -1,8 +1,7 @@
 <template></template>
 <script setup lang="ts">
-import { withDefaults } from "vue";
 import type { DrawingFunction } from "@linkurious/ogma";
-import { defineProps, ref } from "vue";
+import { withDefaults, defineProps, ref } from "vue";
 import { useLayer } from "../../mixins/useLayer";
 const container = ref<HTMLDivElement>();
 /**
@@ -41,7 +40,7 @@ const props = withDefaults(
     noClear: false,
     opacity: 1,
     visible: true,
-  }
+  },
 );
 const layer = useLayer("canvas", container, props);
 </script>

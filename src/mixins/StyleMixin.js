@@ -1,5 +1,3 @@
-
-
 export default {
   inject: ["ogma"],
   data() {
@@ -10,14 +8,20 @@ export default {
   watch: {
     options: {
       handler(newValue, oldValue) {
-        this.updateFunction({ options: { ...oldValue, ...newValue }, styleRule: this.styleRule })
+        this.updateFunction({
+          options: { ...oldValue, ...newValue },
+          styleRule: this.styleRule,
+        });
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
-  render() { },
+  render() {},
   mounted() {
-    this.styleRule = this.creationFunction({ ...this.options, ogma: this.ogma });
+    this.styleRule = this.creationFunction({
+      ...this.options,
+      ogma: this.ogma,
+    });
   },
   beforeUnmount() {
     this.styleRule.destroy();

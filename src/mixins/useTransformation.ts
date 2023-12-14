@@ -1,18 +1,19 @@
-import { inject, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import Ogma, { Transformation } from "@linkurious/ogma";
+import { inject, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
-
-export type Events = 'all' | {
-  enabled?: boolean;
-  disabled?: boolean;
-  refreshed?: boolean;
-  indexChanged?: boolean;
-  destroyed?: boolean;
-}
+export type Events =
+  | "all"
+  | {
+      enabled?: boolean;
+      disabled?: boolean;
+      refreshed?: boolean;
+      indexChanged?: boolean;
+      destroyed?: boolean;
+    };
 export type BaseOptions = {
   duration?: number;
   enabled?: boolean;
-}
+};
 export type PropOptions<O> = Omit<O, keyof BaseOptions>;
 export type PropsTransformations<O> = BaseOptions & {
   events?: Events;
@@ -21,18 +22,18 @@ export type PropsTransformations<O> = BaseOptions & {
 };
 
 export type EmitType<T> = {
-  (e: 'enabled', transformation: T): void
-  (e: 'disabled', transformation: T): void
-  (e: 'refreshed', transformation: T): void
-  (e: 'indexChanged', transformation: T, index: number): void
-  (e: 'destroyed', transformation: T): void
+  (e: "enabled", transformation: T): void;
+  (e: "disabled", transformation: T): void;
+  (e: "refreshed", transformation: T): void;
+  (e: "indexChanged", transformation: T, index: number): void;
+  (e: "destroyed", transformation: T): void;
 };
-export function useTransformation<ND, ED,
+export function useTransformation<
+  ND,
+  ED,
   O extends BaseOptions,
-  T extends Transformation<ND, ED, O>>(
-    props: PropsTransformations<O>,
-    create: (opts: O) => T,
-    emit: EmitType<T>) {
+  T extends Transformation<ND, ED, O>,
+>(props: PropsTransformations<O>, create: (opts: O) => T, emit: EmitType<T>) {
   let transformation: T;
   let index = 0;
   const listenners: ((a: unknown) => unknown)[] = [];
@@ -43,7 +44,7 @@ export function useTransformation<ND, ED,
     transformation = create({
       ...(props.options || {}),
       enabled: props.enabled,
-      duration: props.duration
+      duration: props.duration,
     });
     if (props.index !== undefined) {
       transformation.setIndex(props.index);
@@ -59,29 +60,28 @@ export function useTransformation<ND, ED,
       disabled: "transformationDisabled",
       refreshed: "transformationRefresh",
       indexChanged: "transformationSetIndex",
-      destroyed: "transformationDestroyed"
+      destroyed: "transformationDestroyed",
     };
-    Object.keys(events === "all" ? validEvents : events)
-      .forEach((event) => {
+    Object.keys(events === "all" ? validEvents : events).forEach((event) => {
+      // @ts-ignore
+      const ogmaEvent = validEvents[event];
+      if (!ogmaEvent) return;
+      // @ts-ignore
+      const listenner = ({ target, index }) => {
+        if (target !== transformation) return;
         // @ts-ignore
-        const ogmaEvent = validEvents[event];
-        if (!ogmaEvent) return;
-        // @ts-ignore
-        const listenner = ({ target, index }) => {
-          if (target !== transformation) return;
-          // @ts-ignore
-          emit(event, transformation, index);
-        }
-        // @ts-ignore
-        listenners.push(listenner);
-        ogma.events.on(ogmaEvent, listenner);
-      });
+        emit(event, transformation, index);
+      };
+      // @ts-ignore
+      listenners.push(listenner);
+      ogma.events.on(ogmaEvent, listenner);
+    });
   }
   function unRegisterEvents() {
     if (!ogma) return;
-    listenners.forEach(listenner => {
+    listenners.forEach((listenner) => {
       ogma.events.off(listenner);
-    })
+    });
   }
   watch(props, (old, curr) => {
     if (!transformation) return;
@@ -105,7 +105,7 @@ export function useTransformation<ND, ED,
       unRegisterEvents();
       registerEvents(curr.events || "all");
     }
-  })
+  });
   onMounted(() => {
     createTranformation();
     registerEvents(props.events || "all");

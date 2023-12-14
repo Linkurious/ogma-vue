@@ -9,6 +9,7 @@ const legend = toolMixin("legend", {});
  */
 export default {
   name: "Legend",
+  mixins: [legend],
   props: {
     /**
      * Wether the tool is enabled or not.
@@ -19,6 +20,5 @@ export default {
      */
     options: { type: Object, default: () => ({}) },
   },
-  mixins: [legend],
 };
 </script>
