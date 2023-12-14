@@ -1,80 +1,61 @@
 <template>
-  <Overlay
-    :visible="visible"
-    :position="coords"
-    :size="{ width: 100, height: 10 }"
-    :class="`ogma-tooltip ogma-tooltip--${placement}`"
-  >
-    COUCOU
+  <Overlay :visible="visible" :position="coords" :size="{ width: 100, height: 10 }"
+    :class="`ogma-tooltip ogma-tooltip--${placement}`">
+    Tooltip
   </Overlay>
 </template>
 
-<script>
+<script setup lang="ts">
+import { inject, onMounted, ref, watch } from "vue";
 import Overlay from "./Overlay.vue";
+import Ogma, { Point } from "@linkurious/ogma";
 /**
  * Creates a tooltip on nodes using ovrlay
  * @displayName Toolip
  */
-export default {
-  name: "Tooltip",
-  components: {
-    Overlay,
-  },
-  inject: ["ogma"],
-  props: {},
-  data() {
-    return {
-      visible: false,
-      coords: { type: Object, default: () => ({ x: 0, y: 0 }) },
-      placement: { type: String, default: () => "right" },
-    };
-  },
-  watch: {
-    coords: function (newValue) {
-      this.placement = this.getAdjustedPlacement(newValue);
-    },
-  },
-  mounted() {
-    console.log(this.ogma);
-    this.ogma.events.on("mouseover", ({ target, x, y }) => {
-      if (target.isNode) {
-        this.coords = target.getPosition();
-      } else {
-        this.coords = { x, y };
-      }
-      this.visible = true;
-    });
-    this.ogma.events.on("mouseout", () => {
-      this.visible = false;
-    });
-  },
-  methods: {
-    getAdjustedPlacement(coords) {
-      const { width: screenWidth, height: screenHeight } =
-        this.ogma.view.getSize();
-      const { x, y } = this.ogma.view.graphToScreenCoordinates(coords);
-      const placement = this.placement;
-      let res = placement;
-      const { width, height } = { width: 10, height: 10 };
+const ogma = inject<Ogma>("ogma") as Ogma;
+const coords = ref({ x: 0, y: 0 });
+const visible = ref(false);
+const placement = ref("right");
+watch(coords, (newValue) => {
+  placement.value = getAdjustedPlacement(newValue);
+});
+onMounted(() => {
+  ogma.events.on("mouseover", ({ target, x, y }) => {
+    if (target && target.isNode) {
+      coords.value = target.getPosition();
+    } else {
+      coords.value = { x, y };
+    }
+    visible.value = true;
+  });
+  ogma.events.on("mouseout", () => {
+    visible.value = false;
+  });
+});
 
-      if (placement === "left" && x - width < 0) res = "right";
-      else if (placement === "right" && x + width > screenWidth) res = "left";
-      else if (placement === "bottom" && y + height > screenHeight) res = "top";
-      else if (placement === "top" && y - height < 0) res = "bottom";
+function getAdjustedPlacement(coords: Point) {
+  const { width: screenWidth, height: screenHeight } =
+    ogma.view.getSize();
+  const { x, y } = ogma.view.graphToScreenCoordinates(coords);
+  const plmt = placement.value;
+  let res = plmt;
+  const { width, height } = { width: 10, height: 10 };
 
-      if (res === "right" || res === "left") {
-        if (y + height / 2 > screenHeight) res = "top";
-        else if (y - height / 2 < 0) res = "bottom";
-      } else {
-        if (x + width / 2 > screenWidth) res = "left";
-        else if (x - width / 2 < 0) res = "right";
-      }
-      console.log("placement", res);
+  if (plmt === "left" && x - width < 0) res = "right";
+  else if (plmt === "right" && x + width > screenWidth) res = "left";
+  else if (plmt === "bottom" && y + height > screenHeight) res = "top";
+  else if (plmt === "top" && y - height < 0) res = "bottom";
 
-      return res;
-    },
-  },
-};
+  if (res === "right" || res === "left") {
+    if (y + height / 2 > screenHeight) res = "top";
+    else if (y - height / 2 < 0) res = "bottom";
+  } else {
+    if (x + width / 2 > screenWidth) res = "left";
+    else if (x - width / 2 < 0) res = "right";
+  }
+  return res;
+}
 </script>
 
 <style scoped>
@@ -116,8 +97,7 @@ export default {
   height: 0;
   border-style: solid;
   border-width: 6px 7px 6px 0;
-  border-color: transparent var(--overlay-background-color) transparent
-    transparent;
+  border-color: transparent var(--overlay-background-color) transparent transparent;
   position: absolute;
   left: 50%;
   top: auto;

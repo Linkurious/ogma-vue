@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { DrawingFunction } from "@linkurious/ogma";
 import { withDefaults, defineProps, ref } from "vue";
-import { useLayer } from "../../mixins/useLayer";
+import { useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)

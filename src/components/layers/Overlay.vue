@@ -1,6 +1,6 @@
 <template>
   <div ref="container">
-    <!-- @slot Use this slot to display your Layer -->
+    <!-- @slot Use this slot to display your Overlay -->
     <slot v-if="visible" />
   </div>
 </template>
@@ -8,16 +8,16 @@
 <script setup lang="ts">
 import type { Point } from "@linkurious/ogma";
 import { withDefaults, defineProps, ref, watch } from "vue";
-import { useLayer } from "../../mixins/useLayer";
+import { useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
- * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)
- * @displayName Layer
+ * Add a layer to Ogma. See [addOverlay](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addOverlay)
+ * @displayName Overlay
  */
 const props = withDefaults(
   defineProps<{
     position: Point;
-    size: { width: number; height: number };
+    size: { width: number; height: number; };
     visible: boolean;
     level: number;
   }>(),
