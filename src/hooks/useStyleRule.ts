@@ -1,16 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import Ogma, { EventTypes, RawGraph, Options, StyleRule, EdgeAttributesValue, NodeAttributesValue, EdgeOutput, EdgeDependencies, NodeDependencies, NodeOutput } from "@linkurious/ogma";
-import { defineComponent, h, PropType } from "vue";
-
-
-export interface OgmaProps<ND = unknown, ED = unknown> {
-  width?: number;
-  height?: number;
-  graph?: RawGraph<ND, ED>;
-  options?: Options;
-  layoutOnMounted?: boolean;
-  events?: "all" | (keyof EventTypes<ND, ED>)[];
-}
+import Ogma, {
+  StyleRule, EdgeAttributesValue, NodeAttributesValue,
+  EdgeOutput, EdgeDependencies, NodeDependencies,
+  NodeOutput, Edge, Node
+} from "@linkurious/ogma";
+import { defineComponent, PropType } from "vue";
 
 export function useStyleRule<ND = unknown, ED = unknown>() {
   let styleRule: StyleRule;
@@ -42,12 +35,12 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
         required: false
       },
       edgeSelector: {
-        type: Function,
+        type: Function as PropType<(edge: Edge<ED>) => boolean>,
         default: () => true,
         required: false
       },
       nodeSelector: {
-        type: Function,
+        type: Function as PropType<(node: Node<ND>) => boolean>,
         default: () => true,
         required: false
       },
@@ -63,7 +56,6 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
       },
     },
     mounted() {
-      console.log('mounted');
       styleRule = this.ogma.styles.addRule({
         edgeAttributes: this.edgeAttributes,
         nodeAttributes: this.nodeAttributes,
