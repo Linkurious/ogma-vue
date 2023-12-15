@@ -5,3 +5,4 @@ export * from "./useStyleClass";
 export * from "./useOgma";
 export * from "./useLayer";
 export * from "./useTransformations";
+export * from "./useTools";

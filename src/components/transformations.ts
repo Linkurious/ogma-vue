@@ -8,7 +8,7 @@ import {
   useNeighborGeneration,
   useNeighborMerging,
   useNodeCollapsing,
-} from '../../hooks';
+} from '../hooks';
 
 export const EdgeFilter = useEdgeFilter();
 export const EdgeGrouping = useEdgeGrouping();
