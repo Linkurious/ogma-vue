@@ -1,12 +1,12 @@
 import Ogma, {
-  StyleRule, EdgeAttributesValue, NodeAttributesValue,
+  StyleClass, EdgeAttributesValue, NodeAttributesValue,
   EdgeOutput, EdgeDependencies, NodeDependencies,
-  NodeOutput, Edge, Node
+  NodeOutput
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
-export function useStyleRule<ND = unknown, ED = unknown>() {
-  let styleRule: StyleRule;
+export function useStyleClass<ND = unknown, ED = unknown>() {
+  let styleClass: StyleClass;
   return defineComponent({
     inject: {
       ogma: {
@@ -34,14 +34,9 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
         default: () => undefined,
         required: false
       },
-      edgeSelector: {
-        type: Function as PropType<(edge: Edge<ED>) => boolean>,
-        default: () => true,
-        required: false
-      },
-      nodeSelector: {
-        type: Function as PropType<(node: Node<ND>) => boolean>,
-        default: () => true,
+      name: {
+        type: String as PropType<string>,
+        default: () => undefined,
         required: false
       },
       edgeDependencies: {
@@ -57,27 +52,24 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
     },
     beforeUnmount() {
       // TODO: once 4.6.2 is shipped, uncomment this
-      // styleRule.destroy();
+      // styleClass.destroy();
     },
     mounted() {
-      styleRule = this.ogma.styles.addRule({
+      styleClass = this.ogma.styles.createClass({
+        name: this.name,
         edgeAttributes: this.edgeAttributes,
         nodeAttributes: this.nodeAttributes,
         edgeOutput: this.edgeOutput,
         nodeOutput: this.nodeOutput,
-        edgeSelector: this.edgeSelector,
-        nodeSelector: this.nodeSelector,
         edgeDependencies: this.edgeDependencies,
         nodeDependencies: this.nodeDependencies,
       });
       this.$watch((vm) => [vm.edgeAttributes, vm.nodeAttributes, vm.edgeOutput, vm.nodeOutput, vm.edgeSelector, vm.nodeSelector, vm.edgeDependencies, vm.nodeDependencies], () => {
-        styleRule.update({
+        styleClass.update({
           edgeAttributes: this.edgeAttributes,
           nodeAttributes: this.nodeAttributes,
           edgeOutput: this.edgeOutput,
           nodeOutput: this.nodeOutput,
-          edgeSelector: this.edgeSelector,
-          nodeSelector: this.nodeSelector,
           edgeDependencies: this.edgeDependencies,
           nodeDependencies: this.nodeDependencies,
         });

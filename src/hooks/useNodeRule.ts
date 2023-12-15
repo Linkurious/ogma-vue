@@ -21,15 +21,19 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
         required: false
       },
     },
+    beforeUnmount() {
+      // TODO: once 4.6.2 is shipped, uncomment this
+      // styleRule.destroy();
+    },
     mounted() {
-      styleRule = this.ogma.styles.addNodeRule({
-        selector: this.selector,
-        rule: this.rule,
-      });
+      styleRule = this.ogma.styles.addNodeRule(
+        this.selector,
+        this.nodeAttributes,
+      );
       this.$watch((vm) => [vm.selector, vm.nodeAttributes], () => {
         styleRule.update({
           nodeAttributes: this.nodeAttributes,
-          nodeSelector: this.nodeSelector,
+          nodeSelector: this.selector,
         });
       }
       );

@@ -21,15 +21,19 @@ export function useEdgeRule<ND = unknown, ED = unknown>() {
         required: false
       },
     },
+    beforeUnmount() {
+      // TODO: once 4.6.2 is shipped, uncomment this
+      // styleRule.destroy();
+    },
     mounted() {
-      styleRule = this.ogma.styles.addEdgeRule({
-        selector: this.selector,
-        rule: this.rule,
-      });
+      styleRule = this.ogma.styles.addEdgeRule(
+        this.selector,
+        this.edgeAttributes,
+      );
       this.$watch((vm) => [vm.selector, vm.edgeAttributes], () => {
         styleRule.update({
           edgeAttributes: this.edgeAttributes,
-          edgeSelector: this.edgeSelector,
+          edgeSelector: this.selector,
         });
       }
       );
