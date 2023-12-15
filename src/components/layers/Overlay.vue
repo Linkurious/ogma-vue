@@ -19,7 +19,7 @@ const props = withDefaults(
     position: Point;
     size: { width: number; height: number; };
     visible: boolean;
-    level: number;
+    level?: number;
   }>(),
   {
     /**

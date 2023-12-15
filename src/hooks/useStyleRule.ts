@@ -91,6 +91,8 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
           edgeDependencies: this.edgeDependencies,
           nodeDependencies: this.nodeDependencies,
         });
+      }, {
+        deep: true
       }
       );
     },

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Ogma, { EventTypes, RawGraph, Options } from "@linkurious/ogma";
-import { defineComponent, h, PropType, SlotsType } from "vue";
+import { defineComponent, PropType, h, SlotsType } from "vue";
 
 
 export interface OgmaProps<ND = unknown, ED = unknown> {

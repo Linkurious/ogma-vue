@@ -19,17 +19,17 @@ export type Events =
     indexChanged?: boolean;
     destroyed?: boolean;
   };
-export type BaseOptions = {
-  duration?: number;
+export type PropsTransformations<O> = {
   enabled?: boolean;
-};
-export type PropOptions<O> = Omit<O, keyof BaseOptions>;
-export type PropsTransformations<O> = BaseOptions & {
+  duration?: number;
   events?: Events;
   index?: number;
-  options?: PropOptions<O>;
+  options?: O;
 };
-
+type BaseOptions = {
+  enabled?: boolean;
+  duration?: number;
+};
 export type EmitType<T> = {
   (e: "enabled", transformation: T): void;
   (e: "disabled", transformation: T): void;
@@ -37,9 +37,10 @@ export type EmitType<T> = {
   (e: "indexChanged", transformation: T, index: number): void;
   (e: "destroyed", transformation: T): void;
 };
-function useTransformations<O extends BaseOptions, T extends Transformation<ND, ED, O>, ND = unknown, ED = unknown>(
-  create: string,
-) {
+function useTransformations<O extends BaseOptions,
+  T extends Transformation<ND, ED, O>, ND = unknown, ED = unknown>(
+    create: string,
+  ) {
 
   let transformation: T;
   const listenners: ((a: unknown) => unknown)[] = [];
@@ -66,7 +67,7 @@ function useTransformations<O extends BaseOptions, T extends Transformation<ND, 
         required: false
       },
       options: {
-        type: Object as PropType<O>,
+        type: Object as PropType<Omit<O, 'enabled' | 'duration'>>,
         default: () => ({}),
         required: false
       },
@@ -85,14 +86,15 @@ function useTransformations<O extends BaseOptions, T extends Transformation<ND, 
     },
     watch: {
       enabled(curr, old) {
-        const shouldEnable = curr.enabled && !old.enabled;
-        const shouldDisable = !curr.enabled && old.enabled;
+        const shouldEnable = curr && !old;
+        const shouldDisable = !curr && old;
         const t = transformation;
+        let p = Promise.resolve();
         if (shouldEnable) {
-          t.enable(curr.duration || 0);
+          p = p.then(() => t.enable(curr.duration || 0));
         }
         if (shouldDisable) {
-          t.disable(curr.duration || 0);
+          p = p.then(() => t.disable(curr.duration || 0));
         }
       },
       options(curr) {
@@ -108,6 +110,15 @@ function useTransformations<O extends BaseOptions, T extends Transformation<ND, 
         this.registerEvents(curr || "all");
       }
     },
+    mounted() {
+      this.createTranformation();
+      this.registerEvents(this.events || "all");
+    },
+    beforeUnmount() {
+      this.unRegisterEvents();
+      if (!transformation) return;
+      transformation.destroy();
+    },
     methods: {
       createTranformation() {
         const { options, enabled, duration, index } = this;
@@ -118,7 +129,7 @@ function useTransformations<O extends BaseOptions, T extends Transformation<ND, 
           duration,
         });
         if (index !== undefined) {
-          transformation.setIndex(index);
+          // transformation.setIndex(index);
         }
         return transformation;
       },
@@ -153,18 +164,6 @@ function useTransformations<O extends BaseOptions, T extends Transformation<ND, 
         });
       }
     },
-    onMounted() {
-      this.createTranformation();
-      this.registerEvents(this.events || "all");
-    },
-    onBeforeUnmount() {
-      this.unRegisterEvents();
-      if (!transformation) return;
-      transformation.destroy();
-    },
-    render() {
-      return null;
-    }
   });
 }
 
