@@ -5,57 +5,55 @@ import Ogma, {
   CanvasLayer,
 } from "@linkurious/ogma";
 import { watch, onBeforeUnmount, onMounted, ref, inject, Ref } from "vue";
-import { Props } from "./types";
 
-export type CanvasLayerOptions = {
+type TypeMap<T, P> = {
+  type: T;
+  props: P;
+};
+export type LayerProps = {
+  visible: boolean;
+  level: number;
+  opacity?: number;
+};
+export type OverlayProps = {
+  position: { x: number; y: number; };
+  size: { width: number; height: number; };
+} & LayerProps;
+type CanvasLayerOptions = {
   isStatic: boolean;
   noClear: boolean;
 };
-export type LayerP = Props<
-  "layer",
-  {
-    visible: boolean;
-    level: number;
-  }
->;
+export type CanvasLayerProps = {
+  /**
+    * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
+    */
+  render: DrawingFunction;
+} & CanvasLayerOptions & LayerProps;
 
-export type OverlayP = Props<
-  "overlay",
-  {
-    position: { x: number; y: number; };
-    size: { width: number; height: number; };
-  } & LayerP["props"]
->;
-
-export type CanvasP = Props<
+type LayerP = TypeMap<"layer", LayerProps>;
+type OverlayP = TypeMap<"overlay", OverlayProps>;
+type CanvasP = TypeMap<
   "canvas",
-  {
-    /**
-     * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
-     */
-    render: DrawingFunction;
-    opacity?: number;
-  } & CanvasLayerOptions &
-  LayerP["props"]
+  CanvasLayerProps
 >;
 
 export type Layers = LayerP | OverlayP | CanvasP;
-function isLayerP(
+function isLayer(
   type: string,
   props: Layers["props"],
-): props is LayerP["props"] {
+): props is LayerProps {
   return type === "layer";
 }
-function isOverlayP(
+function isOverlay(
   type: string,
   props: Layers["props"],
-): props is OverlayP["props"] {
+): props is OverlayProps {
   return type === "overlay";
 }
-function isCanvasP(
+function isCanvas(
   type: string,
   props: Layers["props"],
-): props is CanvasP["props"] {
+): props is CanvasLayerProps {
   return type === "canvas";
 }
 
@@ -96,7 +94,7 @@ export function useLayer<L extends Layers>(
 
   function createLayer() {
     destroyLayer();
-    if (isCanvasP(type, props)) {
+    if (isCanvas(type, props)) {
       options.isStatic = props.isStatic;
       options.noClear = props.noClear;
       const canvasLayer = ogma.layers.addCanvasLayer(props.render, options);
@@ -104,7 +102,7 @@ export function useLayer<L extends Layers>(
       return canvasLayer;
     }
     const ctnr = container.value as HTMLElement;
-    if (isOverlayP(type, props)) {
+    if (isOverlay(type, props)) {
       return ogma?.layers.addOverlay({
         element: ctnr,
         position: props.position,
@@ -112,7 +110,7 @@ export function useLayer<L extends Layers>(
       });
     }
 
-    if (isLayerP(type, props)) {
+    if (isLayer(type, props)) {
       return ogma?.layers.addLayer(ctnr);
     }
   }
@@ -134,7 +132,7 @@ export function useLayer<L extends Layers>(
       if (curr.visible) lv.show();
       else lv.hide();
     }
-    if (isCanvasP(type, old) && isCanvasP(type, curr)) {
+    if (isCanvas(type, old) && isCanvas(type, curr)) {
       const l = layer.value as CanvasLayer;
       if (old.isStatic !== curr.isStatic) {
         options.isStatic = curr.isStatic;
@@ -149,7 +147,7 @@ export function useLayer<L extends Layers>(
         l.refresh(curr.render);
       }
     }
-    if (isOverlayP(type, old) && isOverlayP(type, curr)) {
+    if (isOverlay(type, old) && isOverlay(type, curr)) {
       const l = layer.value as Overlay;
       if (old.position !== curr.position) {
         l.setPosition(curr.position);

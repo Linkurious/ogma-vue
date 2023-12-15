@@ -41,9 +41,9 @@ const props = withDefaults(
     level: 0,
   },
 );
-const layer = useLayer("overlay", container, props);
-watch([props.position], () => {
-  if (!layer.value) return;
-  layer.value.setPosition(props.position);
-});
+useLayer("overlay", container, props);
+// watch([props.position], () => {
+//   if (!layer.value) return;
+//   layer.value.setPosition(props.position);
+// });
 </script>

@@ -4,7 +4,9 @@ import Ogma, {
   NodeOutput
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
+export type StyleClassProps<ND = unknown, ED = unknown> = {
 
+};
 export function useStyleClass<ND = unknown, ED = unknown>() {
   let styleClass: StyleClass;
   return defineComponent({

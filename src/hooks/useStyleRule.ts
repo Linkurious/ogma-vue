@@ -5,6 +5,16 @@ import Ogma, {
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
+export type StyleRuleProps<ND = unknown, ED = unknown> = {
+  edgeAttributes?: EdgeAttributesValue<ED, ND>;
+  nodeAttributes?: NodeAttributesValue<ND, ED>;
+  edgeOutput?: EdgeOutput;
+  nodeOutput?: NodeOutput;
+  edgeSelector?: (edge: Edge<ED>) => boolean;
+  nodeSelector?: (node: Node<ND>) => boolean;
+  edgeDependencies?: EdgeDependencies;
+  nodeDependencies?: NodeDependencies;
+};
 export function useStyleRule<ND = unknown, ED = unknown>() {
   let styleRule: StyleRule;
   return defineComponent({

@@ -42,5 +42,5 @@ const props = withDefaults(
     visible: true,
   },
 );
-const layer = useLayer("canvas", container, props);
+useLayer("canvas", container, props);
 </script>

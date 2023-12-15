@@ -37,7 +37,7 @@ export type EmitType<T> = {
   (e: "indexChanged", transformation: T, index: number): void;
   (e: "destroyed", transformation: T): void;
 };
-export function useTransformations<O extends BaseOptions, T extends Transformation<ND, ED, O>, ND = unknown, ED = unknown>(
+function useTransformations<O extends BaseOptions, T extends Transformation<ND, ED, O>, ND = unknown, ED = unknown>(
   create: string,
 ) {
 
@@ -168,34 +168,42 @@ export function useTransformations<O extends BaseOptions, T extends Transformati
   });
 }
 
+export type NodeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<NodeGroupingOptions<ND, ED>>;
 export function useNodeGrouping<ND = unknown, ED = unknown>() {
   return useTransformations<NodeGroupingOptions<ND, ED>, NodeGrouping<ND, ED>, ND, ED>('addNodeGrouping');
 }
-
+export type EdgeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<EdgeGroupingOptions<ND, ED>>;
 export function useEdgeGrouping<ND = unknown, ED = unknown>() {
   return useTransformations<EdgeGroupingOptions<ND, ED>, EdgeGrouping<ND, ED>, ND, ED>('addEdgeGrouping');
 }
+export type NodeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<NodeFilterOptions<ND, ED>>;
 export function useNodeFilter<ND = unknown, ED = unknown>() {
   return useTransformations<NodeFilterOptions<ND, ED>, NodeFilter<ND, ED>, ND, ED>('addNodeFilter');
 }
+export type EdgeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<EdgeFilterOptions<ND, ED>>;
 export function useEdgeFilter<ND = unknown, ED = unknown>() {
   return useTransformations<EdgeFilterOptions<ND, ED>, EdgeFilter<ND, ED>, ND, ED>('addEdgeFilter');
 }
+export type NeighborGenerationProps<ND = unknown, ED = unknown> = PropsTransformations<NeighborGenerationOptions<ND, ED>>;
 export function useNeighborGeneration<ND = unknown, ED = unknown>() {
   return useTransformations<NeighborGenerationOptions<ND, ED>, NeighborGeneration<ND, ED>, ND, ED>('addNeighborGeneration');
 }
+export type GeoClusteringProps<ND = unknown, ED = unknown> = PropsTransformations<GeoClusteringOptions<ND, ED>>;
 export function useGeoClustering<ND = unknown, ED = unknown>() {
   return useTransformations<GeoClusteringOptions<ND, ED>, GeoClustering<ND, ED>, ND, ED>('addGeoClustering');
 }
+export type NeighborMergingProps<ND = unknown, ED = unknown> = PropsTransformations<NeighborMergingOptions<ND, ED>>;
 export function useNeighborMerging<ND = unknown, ED = unknown>() {
   return useTransformations<NeighborMergingOptions<ND, ED>, NeighborMerging<ND, ED>, ND, ED>('addNeighborMerging');
 }
 // export function useNodeClustering<ND = unknown, ED = unknown>() {
 //   return useTransformations<NodeClusteringOptions<ND, ED>, NodeClustering<ND, ED>, ND, ED>('addNodeClustering');
 // }
+export type NodeCollapsingProps<ND = unknown, ED = unknown> = PropsTransformations<NodeCollapsingOptions<ND, ED>>;
 export function useNodeCollapsing<ND = unknown, ED = unknown>() {
   return useTransformations<NodeCollapsingOptions<ND, ED>, NodeCollapsing<ND, ED>, ND, ED>('addNodeCollapsing');
 }
+export type VirtualPropertiesProps<ND = unknown, ED = unknown> = PropsTransformations<VirtualPropertiesOptions<ND, ED>>;
 export function useVirtualProperties<ND = unknown, ED = unknown>() {
   return useTransformations<VirtualPropertiesOptions<ND, ED>, VirtualProperties<ND, ED>, ND, ED>('addVirtualProperties');
 }

@@ -1,7 +1,7 @@
 <template>
   <Overlay :visible="visible" :position="coords" :size="{ width: 100, height: 10 }"
     :class="`ogma-tooltip ogma-tooltip--${placement}`">
-    Tooltip
+
   </Overlay>
 </template>
 

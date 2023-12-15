@@ -1,6 +1,10 @@
 import Ogma, { StyleRule, Node, NodeAttributesValue } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
+export type NodeRuleProps<ND = unknown, ED = unknown> = {
+  nodeAttributes?: NodeAttributesValue<ND, ED>;
+  selector?: (node: Node<ND>) => boolean;
+};
 export function useNodeRule<ND = unknown, ED = unknown>() {
   let styleRule: StyleRule;
   return defineComponent({

@@ -1,6 +1,10 @@
 import Ogma, { StyleRule, Edge, EdgeAttributesValue } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
+export type EdgeRuleProps<ND = unknown, ED = unknown> = {
+  edgeAttributes?: EdgeAttributesValue<ND, ED>;
+  selector?: (edge: Edge<ED>) => boolean;
+};
 export function useEdgeRule<ND = unknown, ED = unknown>() {
   let styleRule: StyleRule;
   return defineComponent({
