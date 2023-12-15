@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
-    "serve": "vite -c demo/vite.config.ts",
+    "dev": "vite -c demo/vite.config.ts",
     "postbuild1": "node scripts/postbuild.js && cp README.md dist",
     "types": "vue-tsc --declaration --emitDeclarationOnly --outFile dist/ogma-vue.d.ts",
     "build": "vite build",
@@ -72,7 +72,7 @@
     "vuepress": "2.0.0-beta.67"
   },
   "eslintConfig": {
-    "parser": "vue-eslint-parser",
+    "parser": "@typescript-eslint/parser",
     "extends": [
       "@linkurious/eslint-config-ogma",
       "plugin:vue/vue3-recommended"

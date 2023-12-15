@@ -1,4 +1,4 @@
-import { useStyleRule, useNodeRule, useEdgeRule, useStyleClass } from "../../hooks";
+import { useStyleRule, useNodeRule, useEdgeRule, useStyleClass } from "../hooks";
 
 export const StyleRule = useStyleRule();
 export const NodeRule = useNodeRule();

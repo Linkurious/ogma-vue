@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       // src/indext.ts is where we have exported the component(s)
-      entry: resolve(__dirname, "src/main.js"),
+      entry: resolve(__dirname, "src/main.ts"),
       name: "Ogma-vue",
       // the name of the output files when the build is run
       fileName: "ogma-vue",
