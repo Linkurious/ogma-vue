@@ -21,10 +21,8 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
 
   function assign(prev: NodeList | EdgeList, next: NodeList | EdgeList) {
     const toRemove = prev.subtract(next);
-    prev.removeClass(styleClass.getName());
+    toRemove.removeClass(styleClass.getName());
     next.addClass(styleClass.getName());
-    // .then(() => this.ogma.getNodes.getClassList());
-    // next.addClass(styleClass.getName());
   }
 
   return defineComponent({

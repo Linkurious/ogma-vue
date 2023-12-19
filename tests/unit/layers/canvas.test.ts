@@ -41,6 +41,7 @@ describe("Canvas.vue", () => {
     if (wrapper) {
       wrapper.unmount();
     }
+    ogma.destroy();
   });
 
   it("Should re-render on render function change", () => {

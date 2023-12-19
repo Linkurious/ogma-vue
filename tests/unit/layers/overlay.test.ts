@@ -47,6 +47,7 @@ describe("Overlay.vue", () => {
     if (wrapper) {
       wrapper.unmount();
     }
+    ogma.destroy();
   });
 
   it("should respect position", () => {

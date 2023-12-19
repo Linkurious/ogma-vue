@@ -28,6 +28,7 @@ describe("NodeRule.vue", () => {
     if (wrapper) {
       wrapper.unmount();
     }
+    ogma.destroy();
   });
 
   it("should create a style rule", () => {

@@ -1,14 +1,13 @@
 import Ogma from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
-import { EdgeRule } from "../../../src/components";
-import { EdgeRuleProps } from "../../../src/hooks";
+import { StyleRule } from "../../../src/components";
+import { StyleRuleProps } from "../../../src/hooks";
 import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountRule = createWrapper<EdgeRuleProps>(EdgeRule, {
+const mountRule = createWrapper<StyleRuleProps>(StyleRule, {
   props: {
-
   },
   global: {
     provide: {
@@ -17,10 +16,10 @@ const mountRule = createWrapper<EdgeRuleProps>(EdgeRule, {
   }
 });
 let wrapper: ReturnType<typeof mountRule>;
-describe("EdgeRule.vue", () => {
+describe("StyleRule.vue", () => {
   beforeEach(() => {
     graph = {
-      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
       edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }]
     };
     ogma = new Ogma({ renderer: "canvas", graph });
@@ -39,54 +38,71 @@ describe("EdgeRule.vue", () => {
 
   it("should respect passed options", () => {
     wrapper = mountRule(ogma, {
-      selector: e => e.getId() === 0,
-      edgeAttributes: {
+      nodeSelector: e => e.getId() === 0,
+      edgeSelector: e => e.getId() === 0,
+      nodeAttributes: {
         color: "red",
       },
+      edgeAttributes: {
+        color: "red"
+      }
     },
     );
     return ogma.view.afterNextFrame()
       .then(() => {
-        const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["red", "grey", "grey"]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", "grey"]);
       });
   });
 
   it("should be update on selector change", () => {
     wrapper = mountRule(ogma, {
-      selector: e => e.getId() === 0,
+      nodeSelector: e => e.getId() === 0,
+      edgeSelector: e => e.getId() === 0,
+      nodeAttributes: {
+        color: "red",
+      },
       edgeAttributes: {
         color: "red",
       },
     });
     return ogma.view.afterNextFrame()
       .then(() => {
-        const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["red", "grey", "grey"]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", "grey"]);
         wrapper.setProps({
-          selector: e => e.getId() === 1,
+          nodeSelector: e => e.getId() === 1,
+          edgeSelector: e => e.getId() === 1,
         });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
-
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["grey", "red", "grey"]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["grey", "red"]);
       });
   });
 
-  it("should be update on selector attributes", () => {
+  it("should be update on attributes change", () => {
     wrapper = mountRule(ogma, {
-      selector: e => e.getId() === 0,
+      nodeSelector: e => e.getId() === 0,
+      edgeSelector: e => e.getId() === 0,
+      nodeAttributes: {
+        color: "red",
+      },
       edgeAttributes: {
         color: "red",
       },
     });
     return ogma.view.afterNextFrame()
       .then(() => {
-        const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(ogma.getNodes().getAttribute("color"))
+          .to.have.same.members(["red", "grey", "grey"]);
+        expect(ogma.getEdges().getAttribute("color"))
+          .to.have.same.members(["red", "grey"]);
         wrapper.setProps({
+          nodeAttributes: {
+            color: "blue",
+          },
           edgeAttributes: {
             color: "blue",
           },
@@ -94,8 +110,11 @@ describe("EdgeRule.vue", () => {
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["blue", "grey"]);
+        expect(ogma.getNodes().getAttribute("color"))
+          .to.have.same.members(["blue", "grey", "grey"]);
+        expect(ogma.getEdges().getAttribute("color"))
+          .to.have.same.members(["blue", "grey"]);
+
       });
   });
 

@@ -17,7 +17,7 @@ const mountRule = createWrapper<StyleClassProps>(StyleClass, {
   }
 });
 let wrapper: ReturnType<typeof mountRule>;
-describe.only("StyleClass.vue", () => {
+describe("StyleClass.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
@@ -29,6 +29,8 @@ describe.only("StyleClass.vue", () => {
     if (wrapper) {
       wrapper.unmount();
     }
+    ogma.destroy();
+
   });
 
   it("should create a style class", () => {

@@ -66,8 +66,7 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
       },
     },
     beforeUnmount() {
-      // TODO: once 4.6.2 is shipped, uncomment this
-      // styleRule.destroy();
+      styleRule.destroy();
     },
     mounted() {
       styleRule = this.ogma.styles.addRule({
@@ -96,5 +95,8 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
       }
       );
     },
+    render() {
+      return null;
+    }
   });
 }
