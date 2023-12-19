@@ -6,15 +6,7 @@ import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountRule = createWrapper<StyleRuleProps>(StyleRule, {
-  props: {
-  },
-  global: {
-    provide: {
-      ogma
-    },
-  }
-});
+const mountRule = createWrapper<StyleRuleProps>(StyleRule, {});
 let wrapper: ReturnType<typeof mountRule>;
 describe("StyleRule.vue", () => {
   beforeEach(() => {

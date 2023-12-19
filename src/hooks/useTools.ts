@@ -12,7 +12,7 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string) {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => new Ogma() as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>
       },
     },
     props: {
@@ -27,20 +27,11 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string) {
         required: false
       },
     },
-    methods: {
-      enable() {
-        const { options } = this;
-        this.ogma.tools.enable[name].enable(options);
-      },
-      disable() {
-        this.ogma.tools.enable[name].disable();
-      },
-    },
-    onMounted() {
+    mounted() {
       if (this.enabled) {
         this.enable();
       }
-      this.$watch(['enabled', 'options'], ([isEnabled], [wasEnabled]) => {
+      this.$watch(() => [this.enabled, this.options], ([isEnabled], [wasEnabled]) => {
         if (wasEnabled) {
           this.disable();
         }
@@ -49,8 +40,20 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string) {
         }
       });
     },
-    onBeforeUnmount() {
+    beforeUnmount() {
       this.disable();
+    },
+    methods: {
+      enable() {
+        const { options } = this;
+        this.ogma.tools[name].enable(options);
+      },
+      disable() {
+        this.ogma.tools[name].disable();
+      },
+    },
+    render() {
+      return null;
     }
   });
 }

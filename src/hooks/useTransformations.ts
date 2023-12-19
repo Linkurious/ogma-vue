@@ -47,7 +47,7 @@ function useTransformations<O extends BaseOptions,
   return defineComponent({
     inject: {
       ogma: {
-        default: () => new Ogma() as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>
       },
     },
     props: {
@@ -119,6 +119,7 @@ function useTransformations<O extends BaseOptions,
       if (!transformation) return;
       transformation.destroy();
     },
+
     methods: {
       createTranformation() {
         const { options, enabled, duration, index } = this;
@@ -163,6 +164,9 @@ function useTransformations<O extends BaseOptions,
           this.ogma.events.off(listenner);
         });
       }
+    },
+    render() {
+      return null;
     },
   });
 }

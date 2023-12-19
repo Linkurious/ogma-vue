@@ -15,11 +15,6 @@ const mountLayer = createWrapper<LayerProps>(Layer, {
   slots: {
     default: defaultSlot
   },
-  global: {
-    provide: {
-      ogma
-    },
-  }
 });
 let wrapper: ReturnType<typeof mountLayer>;
 function checkLayerContent(ogma: Ogma, index: number, expected = defaultSlot) {

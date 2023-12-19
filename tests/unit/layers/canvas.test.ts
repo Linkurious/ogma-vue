@@ -17,11 +17,6 @@ const mountLayer = createWrapper<CanvasLayerProps>(Canvas, {
     isStatic: false,
     noClear: false,
   },
-  global: {
-    provide: {
-      ogma
-    },
-  }
 });
 let wrapper: ReturnType<typeof mountLayer>;
 

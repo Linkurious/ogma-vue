@@ -6,16 +6,7 @@ import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountRule = createWrapper<EdgeRuleProps>(EdgeRule, {
-  props: {
-
-  },
-  global: {
-    provide: {
-      ogma
-    },
-  }
-});
+const mountRule = createWrapper<EdgeRuleProps>(EdgeRule, {});
 let wrapper: ReturnType<typeof mountRule>;
 describe("EdgeRule.vue", () => {
   beforeEach(() => {

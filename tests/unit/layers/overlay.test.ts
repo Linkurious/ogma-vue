@@ -15,11 +15,6 @@ const mountLayer = createWrapper<OverlayProps>(Overlay, {
   slots: {
     default: defaultSlot
   },
-  global: {
-    provide: {
-      ogma
-    },
-  }
 });
 let wrapper: ReturnType<typeof mountLayer>;
 function getTranslation() {

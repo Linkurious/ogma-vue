@@ -10,11 +10,6 @@ const mountRule = createWrapper<StyleClassProps>(StyleClass, {
   props: {
     name: 'test-class',
   },
-  global: {
-    provide: {
-      ogma
-    },
-  }
 });
 let wrapper: ReturnType<typeof mountRule>;
 describe("StyleClass.vue", () => {

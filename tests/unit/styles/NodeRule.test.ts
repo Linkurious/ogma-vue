@@ -6,15 +6,7 @@ import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountRule = createWrapper<NodeRuleProps>(NodeRule, {
-  props: {
-  },
-  global: {
-    provide: {
-      ogma
-    },
-  }
-});
+const mountRule = createWrapper<NodeRuleProps>(NodeRule, {});
 let wrapper: ReturnType<typeof mountRule>;
 describe("NodeRule.vue", () => {
   beforeEach(() => {

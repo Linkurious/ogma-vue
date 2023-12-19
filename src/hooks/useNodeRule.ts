@@ -10,7 +10,7 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => new Ogma() as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>
       },
     },
     props: {
