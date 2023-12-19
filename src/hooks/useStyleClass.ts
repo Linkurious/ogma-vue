@@ -1,14 +1,32 @@
 import Ogma, {
   StyleClass, EdgeAttributesValue, NodeAttributesValue,
   EdgeOutput, EdgeDependencies, NodeDependencies,
-  NodeOutput
+  NodeOutput,
+  NodeList, EdgeList
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 export type StyleClassProps<ND = unknown, ED = unknown> = {
-
+  edgeAttributes?: EdgeAttributesValue<ND, ED>;
+  nodeAttributes?: NodeAttributesValue<ND, ED>;
+  edgeOutput?: EdgeOutput;
+  nodeOutput?: NodeOutput;
+  nodes: NodeList<ND>;
+  edges: EdgeList<ED>;
+  name?: string;
+  edgeDependencies?: EdgeDependencies;
+  nodeDependencies?: NodeDependencies;
 };
 export function useStyleClass<ND = unknown, ED = unknown>() {
   let styleClass: StyleClass;
+
+  function assign(prev: NodeList | EdgeList, next: NodeList | EdgeList) {
+    const toRemove = prev.subtract(next);
+    prev.removeClass(styleClass.getName());
+    next.addClass(styleClass.getName());
+    // .then(() => this.ogma.getNodes.getClassList());
+    // next.addClass(styleClass.getName());
+  }
+
   return defineComponent({
     inject: {
       ogma: {
@@ -16,6 +34,16 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
       },
     },
     props: {
+      nodes: {
+        type: Object as PropType<NodeList<ND, ED>>,
+        default: () => (undefined),
+        required: false
+      },
+      edges: {
+        type: Object as PropType<EdgeList<ED, ND>>,
+        default: () => (undefined),
+        required: false
+      },
       edgeAttributes: {
         type: Object as PropType<EdgeAttributesValue<ED, ND>>,
         default: () => ({}),
@@ -52,6 +80,14 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
         required: false
       },
     },
+    watch: {
+      nodes: function (next: NodeList, prev: NodeList) {
+        assign(prev || this.ogma.nodeList(), next);
+      },
+      edges: function (next: EdgeList, prev: EdgeList) {
+        assign(prev || this.ogma.edgeList(), next);
+      }
+    },
     beforeUnmount() {
       // TODO: once 4.6.2 is shipped, uncomment this
       // styleClass.destroy();
@@ -75,8 +111,12 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
           edgeDependencies: this.edgeDependencies,
           nodeDependencies: this.nodeDependencies,
         });
-      }
-      );
+      });
+      assign(this.ogma.nodeList(), this.nodes || this.ogma.nodeList());
+      assign(this.ogma.edgeList(), this.edges || this.ogma.edgeList());
     },
+    render() {
+      return null;
+    }
   });
 }
