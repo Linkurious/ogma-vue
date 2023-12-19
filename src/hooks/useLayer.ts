@@ -121,19 +121,31 @@ export function useLayer<L extends Layers>(
     if (props.visible) layer?.show();
     else layer?.hide();
   });
-  watchEffect(() => {
-    if (!layer) return;
-    if (isCanvas(type, props)) {
-      layer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
-      options.isStatic = props.isStatic;
-      options.noClear = props.noClear;
-      (layer as CanvasLayer).refresh(props.render);
+
+  watch(() => {
+    if (!isCanvas(type, props)) return [];
+    return [props.opacity, props.isStatic, props.noClear, props.render];
+  }, () => {
+    if (!layer || !isCanvas(type, props)) {
+      return;
     }
-    if (isOverlay(type, props)) {
-      layer.setPosition(props.position);
-      layer.setSize(props.size);
-    }
+    layer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
+    options.isStatic = props.isStatic;
+    options.noClear = props.noClear;
+    (layer as CanvasLayer).refresh(props.render);
+
   });
+  watch(() => {
+    if (!isOverlay(type, props)) return [];
+    return [props.opacity, props.position, props.size];
+  }, () => {
+    if (!layer || !isOverlay(type, props)) {
+      return;
+    }
+    layer.setPosition(props.position);
+    layer.setSize(props.size);
+  });
+
   onMounted(() => {
     if (layer) return;
     // @ts-expect-error
@@ -147,4 +159,4 @@ export function useLayer<L extends Layers>(
     if (!layer) return;
     layer.destroy();
   });
-}
+};
