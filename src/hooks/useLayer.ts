@@ -4,15 +4,15 @@ import Ogma, {
   DrawingFunction,
   CanvasLayer,
 } from "@linkurious/ogma";
-import { watch, onBeforeUnmount, onMounted, ref, inject, Ref } from "vue";
+import { watch, onBeforeUnmount, onMounted, inject, Ref } from "vue";
 
 type TypeMap<T, P> = {
   type: T;
   props: P;
 };
 export type LayerProps = {
-  visible: boolean;
-  level: number;
+  visible?: boolean;
+  level?: number;
   opacity?: number;
 };
 export type OverlayProps = {
@@ -20,8 +20,8 @@ export type OverlayProps = {
   size: { width: number; height: number; };
 } & LayerProps;
 type CanvasLayerOptions = {
-  isStatic: boolean;
-  noClear: boolean;
+  isStatic?: boolean;
+  noClear?: boolean;
 };
 export type CanvasLayerProps = {
   /**
@@ -60,36 +60,34 @@ function isCanvas(
 export function useLayer<L extends Layers>(
   type: L["type"],
   container: Ref<HTMLElement | undefined>,
-  props: L["props"],
+  props: Required<L["props"]>,
 ) {
   // type of layer is Layer if type is 'layer' or Overlay if type is 'overlay'
-  const layer =
-    ref<
-      L["type"] extends "layer"
-      ? Layer
-      : L["type"] extends "overlay"
-      ? Overlay
-      : CanvasLayer
-    >();
+  let layer: L["type"] extends "layer"
+    ? Layer
+    : L["type"] extends "overlay"
+    ? Overlay
+    : CanvasLayer;
+
   const ogma = inject<Ogma>("ogma") as Ogma;
   const options: CanvasLayerOptions = {
     isStatic: false,
     noClear: false,
   };
   function moveTo(level: number) {
-    if (!layer.value || isNaN(level)) return;
+    if (!layer || isNaN(level)) return;
     if (level === Infinity) {
-      layer.value.moveToTop();
+      layer.moveToTop();
     } else if (level === -Infinity) {
-      layer.value.moveToBottom();
+      layer.moveToBottom();
     } else {
-      layer.value.moveTo(level);
+      layer.moveTo(level);
     }
   }
 
   function destroyLayer() {
-    if (!layer.value) return;
-    layer.value.destroy();
+    if (!layer) return;
+    layer.destroy();
   }
 
   function createLayer() {
@@ -116,8 +114,8 @@ export function useLayer<L extends Layers>(
   }
 
   watch(props, (old, curr) => {
-    if (!layer.value) return;
-    const lv = layer.value;
+    if (!layer) return;
+    const lv = layer;
     const { level } = curr;
     if (old.level !== level) {
       if (level === -Infinity) {
@@ -125,7 +123,7 @@ export function useLayer<L extends Layers>(
       } else if (level === Infinity) {
         lv.moveToTop();
       } else {
-        lv.moveTo(level);
+        lv.moveTo(level || 0);
       }
     }
     if (old.visible !== curr.visible) {
@@ -133,7 +131,7 @@ export function useLayer<L extends Layers>(
       else lv.hide();
     }
     if (isCanvas(type, old) && isCanvas(type, curr)) {
-      const l = layer.value as CanvasLayer;
+      const l = layer as CanvasLayer;
       if (old.isStatic !== curr.isStatic) {
         options.isStatic = curr.isStatic;
       }
@@ -148,7 +146,7 @@ export function useLayer<L extends Layers>(
       }
     }
     if (isOverlay(type, old) && isOverlay(type, curr)) {
-      const l = layer.value as Overlay;
+      const l = layer as Overlay;
       if (old.position !== curr.position) {
         l.setPosition(curr.position);
       }
@@ -156,17 +154,18 @@ export function useLayer<L extends Layers>(
         l.setSize(curr.size);
       }
     }
-    moveTo(props.level);
   });
   onMounted(() => {
-    if (layer.value) return;
+    if (layer) return;
     // @ts-expect-error
-    layer.value = createLayer();
-    moveTo(props.level);
+    layer = createLayer();
+    if (props.level !== undefined) {
+      moveTo(props.level);
+    }
+    if (!props.visible) layer?.hide();
   });
   onBeforeUnmount(() => {
-    if (!layer.value) return;
-    layer.value.destroy();
+    if (!layer) return;
+    layer.destroy();
   });
-  return layer;
 }
