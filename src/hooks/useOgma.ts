@@ -194,6 +194,9 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
       });
       this.registerEvents();
     },
+    beforeUnmount() {
+      ogma.destroy();
+    },
     methods: {
       registerEvents() {
         const { events, listeners } = this;
