@@ -1,14 +1,15 @@
-import { describe, beforeEach, afterEach, it, expect } from "vitest"
-import { ComponentMountingOptions, mount } from "@vue/test-utils"
-import Ogma from "@linkurious/ogma"
+import Ogma from "@linkurious/ogma";
+import { ComponentMountingOptions, mount } from "@vue/test-utils";
+import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import Layer from "../../../src/components/layers/Layer.vue";
-import { LayerP } from "../../../src/mixins/LayerMixin";
+import { LayerProps } from "../../../src/hooks/useLayer";
 
 let ogma: Ogma;
 let graph, wrapper;
 
 const defaultSlot = `<div id="layer"></div>`;
-function mountLayer(ogma: Ogma, params: ComponentMountingOptions<LayerP>) {
+
+function mountLayer(ogma: Ogma, params: ComponentMountingOptions<LayerProps>) {
   const defaultOptions = {
     props: {
       visible: true,
@@ -23,36 +24,35 @@ function mountLayer(ogma: Ogma, params: ComponentMountingOptions<LayerP>) {
       },
     }
   };
-
   return mount(Layer, { ...defaultOptions, ...params });
 }
 function checkLayerContent(ogma: Ogma, index: number, expected = defaultSlot) {
   return expect(ogma.getContainer()!.children[0].children[index].innerHTML).toContain(expected);
 }
-function checkLayerVisible(ogma: Ogma, visible: boolean) {
-  const children = [...ogma.getContainer()!.children[0].children].map(c => c.innerHTML);
-  if(visible) {
-    return expect(children).toContain(defaultSlot);
+function checkLayerVisible(ogma: Ogma, visible: boolean, index = 1) {
+  const layer = ogma.getContainer()!.children[0].children[index].innerHTML;
+  if (visible) {
+    return expect(layer).toContain(defaultSlot);
   }
-  return expect(children).not.toContain(defaultSlot);
+  return expect(layer).not.toContain(defaultSlot);
 }
 
-describe("Layer.vue", () => {
+describe.only("Layer.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
       edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }, { id: 2, source: 2, target: 3 }]
-    }
+    };
     const div = document.createElement('div');
     div.id = 'graph-container';
     document.body.appendChild(div);
     ogma = new Ogma({ renderer: "canvas", graph, container: 'graph-container' });
-  })
+  });
   afterEach(() => {
     if (wrapper) {
       wrapper.unmount();
     }
-  })
+  });
 
   it("should show a layer", () => {
     wrapper = mountLayer(ogma, {});
@@ -67,7 +67,7 @@ describe("Layer.vue", () => {
     });
     return ogma.view.afterNextFrame()
       .then(() => {
-        checkLayerContent(ogma, 0)
+        checkLayerContent(ogma, 0);
         wrapper.setProps({ level: 1 });
         return ogma.view.afterNextFrame();
       })
@@ -81,7 +81,7 @@ describe("Layer.vue", () => {
         wrapper.setProps({ level: Infinity });
         return ogma.view.afterNextFrame();
       })
-      .then(() => checkLayerContent(ogma, 1))
+      .then(() => checkLayerContent(ogma, 1));
   });
   it("should show/hide on visible change", () => {
     wrapper = mountLayer(ogma, {
@@ -91,12 +91,12 @@ describe("Layer.vue", () => {
     });
     return ogma.view.afterNextFrame()
       .then(() => {
-        checkLayerVisible(ogma, false);
+        checkLayerVisible(ogma, false, 0);
         wrapper.setProps({ visible: true });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        checkLayerVisible(ogma, true);
+        checkLayerVisible(ogma, true, 0);
       });
   });
 
@@ -109,7 +109,8 @@ describe("Layer.vue", () => {
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        checkLayerVisible(ogma, false);
+        const siblings = ogma.getContainer()!.children[0].children.length;
+        return expect(siblings).toBe(1);
       });
   });
 });

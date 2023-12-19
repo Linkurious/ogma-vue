@@ -4,7 +4,7 @@ import Ogma, {
   DrawingFunction,
   CanvasLayer,
 } from "@linkurious/ogma";
-import { watch, onBeforeUnmount, onMounted, inject, Ref } from "vue";
+import { watch, onBeforeUnmount, onMounted, inject, Ref, watchEffect } from "vue";
 
 type TypeMap<T, P> = {
   type: T;
@@ -113,46 +113,25 @@ export function useLayer<L extends Layers>(
     }
   }
 
-  watch(props, (old, curr) => {
+  watchEffect(() => {
+    if (props.level === undefined) return;
+    moveTo(props.level);
+  });
+  watchEffect(() => {
+    if (props.visible) layer?.show();
+    else layer?.hide();
+  });
+  watchEffect(() => {
     if (!layer) return;
-    const lv = layer;
-    const { level } = curr;
-    if (old.level !== level) {
-      if (level === -Infinity) {
-        lv.moveToBottom();
-      } else if (level === Infinity) {
-        lv.moveToTop();
-      } else {
-        lv.moveTo(level || 0);
-      }
+    if (isCanvas(type, props)) {
+      layer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
+      options.isStatic = props.isStatic;
+      options.noClear = props.noClear;
+      (layer as CanvasLayer).refresh(props.render);
     }
-    if (old.visible !== curr.visible) {
-      if (curr.visible) lv.show();
-      else lv.hide();
-    }
-    if (isCanvas(type, old) && isCanvas(type, curr)) {
-      const l = layer as CanvasLayer;
-      if (old.isStatic !== curr.isStatic) {
-        options.isStatic = curr.isStatic;
-      }
-      if (old.noClear !== curr.noClear) {
-        options.noClear = curr.noClear;
-      }
-      if (old.opacity !== curr.opacity) {
-        l.setOpacity(curr.opacity === undefined ? 1 : curr.opacity);
-      }
-      if (old.render !== curr.render) {
-        l.refresh(curr.render);
-      }
-    }
-    if (isOverlay(type, old) && isOverlay(type, curr)) {
-      const l = layer as Overlay;
-      if (old.position !== curr.position) {
-        l.setPosition(curr.position);
-      }
-      if (old.size !== curr.size) {
-        l.setSize(curr.size);
-      }
+    if (isOverlay(type, props)) {
+      layer.setPosition(props.position);
+      layer.setSize(props.size);
     }
   });
   onMounted(() => {
