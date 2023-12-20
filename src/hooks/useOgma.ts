@@ -87,10 +87,12 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
       },
       width: {
         type: Number,
+        required: false,
         default: 600
       },
       height: {
         type: Number,
+        required: false,
         default: 400
       },
       graph: {
@@ -174,9 +176,11 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
         ogma.setGraph(newGraph);
       },
       width(newWidth) {
+        if (newWidth === undefined || this.height === undefined) return;
         ogma.view.setSize({ width: newWidth, height: this.height });
       },
       height(newHeight) {
+        if (newHeight === undefined || this.width === undefined) return;
         ogma.view.setSize({ width: this.width, height: newHeight });
       },
       events() {
