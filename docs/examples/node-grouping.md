@@ -1,32 +1,26 @@
 ```vue
 <template>
-...
- <NodeGrouping
-    :options="groupingOptions"
+  ...
+  <NodeGrouping
+    :options="grouping.options"
+    :enabled="grouping.enabled"
+    :duration="grouping.duration"
     @enabled="onEnabled"
   />
-...
+  ...
 </template>
-<script>
-import { NodeGrouping } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      groupingOptions: {
-        enabled: true,
-        nodeSelector: () => true,
-        duration: 1000,
-        groupIdFunction: (node) => node.getId() % 2,
-        showContents: true,
-       }
-    }
+<script setup lang="ts">
+import { NodeGrouping, NodeGroupingProps } from "@linkurious/ogma-vue";
+const grouping = ref<NodeGroupingProps>({
+  enabled: true,
+  duration: 1000,
+  options: {
+    selector: () => true,
+    groupIdFunction: (node) => node.getId() % 2,
   },
-  methods: {
-    onEnabled(transformation){
-      console.log("Enabled: ", transformation)
-    }
-  }
+});
+function onEnabled(transformation) {
+  console.log("Enabled: ", transformation);
 }
 </script>
 ```

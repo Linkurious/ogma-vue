@@ -1,4 +1,4 @@
-import { DefaultTheme, defineConfig } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import fs from 'fs/promises';
 
 // recursively go into input dir and create a vitepress sidebar config
@@ -27,24 +27,22 @@ function createSidebar(dir) {
       return res.filter(r => r);
     });
 }
-const components = await createSidebar('docs/src/components');
-console.log(JSON.stringify(components, 0, 2));
+const components = await createSidebar('docs/src');
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Ogma-vue",
-  description: "Documentation for the Ogma-vue library",
+  description: "Vue wrapper for Ogma",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
       { text: 'API', link: '/src/components/tools/Lasso' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Getting Started', link: '/getting-started' }
     ],
 
     sidebar: {
-      '/src/components/': components,
-      // '/api/interfaces/': interfaces,
+      '/src/': components,
     },
     outline: {
       level: [2, 3]

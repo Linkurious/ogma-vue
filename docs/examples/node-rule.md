@@ -1,25 +1,16 @@
 ```vue
 <template>
-...
- <NodeRule
-    :options="styleOptions"
-  />
-...
+  ...
+  <NodeRule :selector="rule.selector" :attributes="rule.attributes" />
+  ...
 </template>
-<script>
-import { NodeRule } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      styleOptions: {
-        nodeAttributes:{
-          color: "blue"
-        },
-        nodeSelector: () => true,
-       }
-    }
+<script setup lang="ts">
+import { NodeRule, NodeRuleProps } from "@linkurious/ogma-vue";
+const rule = ref<NodeRuleProps>({
+  attributes: {
+    color: "blue",
   },
-}
+  selector: () => true,
+});
 </script>
 ```

@@ -1,54 +1,41 @@
 ```vue
 <template>
-  <div id="app">
-    <OgmaVue 
-      :ogma="ogma"
-      :graph="graph"
-      :width="width"
-      :height="height"
-      @nodesSelected="onNodesSelected"
-    >
-      <template>
-        ... add you other components here (NodeGrouping, tools....)
-        <StyleRule :options="rule" />
-        ...
-      </template>
-    </OgmaVue>
-  </div>
+  <Ogma :graph="graph" :options="options" @addNodes="onAddNodes">
+    <NodeFilter :options="nodeFilterOptions" :enabled="true" />
+    <NodeRule :attributes="nodeAttributes" />
+  </Ogma>
 </template>
+<script setup lang="ts">
+import { ref } from "vue";
+import axios from "axios";
+import {
+  Ogma,
+  NodeFilter,
+  NodeRule,
+  OgmaProps,
+  NodeFilterProps,
+  NodeRuleProps,
+} from "@linkurious/ogma-vue";
 
-<script>
-import {Ogma as OgmaVue, StyleRule } from "../../src/components/Ogma.vue";
-import Ogma from "@linkurious/ogma";
-const ogma = new Ogma();
+const graph = ref<OgmaProps["graph"]>({
+  nodes: [],
+  edges: [],
+});
+const nodeAttributes = ref<NodeRuleProps["attributes"]>({
+  color: "#33dd66",
+});
+const nodeFilterOptions = ref<NodeFilterProps["options"]>({
+  nodeFilter: (node) => node.data("type") === "person",
+});
 
-export default {
-  name: "App",
-  data() {
-    return {
-      ogma,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      rule: {
-        nodeAttributes: {
-          color: "rgba(74, 160, 100, 1)",
-        },
-      },
-      graph: {
-        nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-        edges: [],
-      },
-    };
-  },
-  methods: {
-    onNodesSelected({ nodes }) {
-      console.log('nodes selected', nodes)
-    },
-  },
-  components: {
-    OgmaVue,
-    StyleRule,
-  },
-};
+onMounted(() => {
+  axios.fetch("/some/api").then(({ data }) => {
+    graph.value = data;
+  });
+});
+
+function onAddNodes(nodes: NodeList) {
+  console.log("new nodes: ", nodes.getId());
+}
 </script>
 ```

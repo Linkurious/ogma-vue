@@ -62,31 +62,4 @@ Creates a [style rule](https://doc.linkurious.com/ogma/latest/api.html#Ogma-styl
 
 ## Example
 
-```vue
-<template>
-  ...
-  <StyleRule
-    :edgeSelector="ruleProps.edgeSelector"
-    :edgeAttributes="ruleProps.edgeAttributes"
-    :nodeSelector="ruleProps.nodeSelector"
-    :nodeAttributes="ruleProps.nodeAttributes"
-  />
-  ...
-</template>
-<script setup lang="ts">
-import { StyleRule } from "@linkurious/ogma-vue";
-  const ruleProps = ref<StyleRuleProps> ({
-    edgeAttributes: {
-      color: "blue",
-      text: (edge) => edge.getData("name"),
-    },
-    selector: (edge) => edge.getId() === "edge1",
-    nodeAttributes: {
-      color: "blue",
-      text: (node) => node.getData("name"),
-    },
-    selector: (node) => node.getId() === "node1",
-  })
-};
-</script>
-```
+<!--@include: ../../../examples/style-rule.md-->

@@ -58,3 +58,7 @@ Emitted when the transformation is refreshed.
 - payload: `transformation: NodeGrouping`
 
 Emitted when the transformation index is changed. See [transformation pipeline](https://doc.linkurious.com/ogma/latest/examples/transformation-schema.html).
+
+## Example
+
+<!--@include: ../../../examples/node-grouping.md-->

@@ -62,3 +62,7 @@ import { StyleClass } from "@linkurious/ogma-vue";
 };
 </script>
 ```
+
+## Example
+
+<!--@include: ../../../examples/style-class.md-->

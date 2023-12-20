@@ -1,0 +1,36 @@
+html::-webkit-scrollbar,
+.VPSidebar::-webkit-scrollbar {
+  width: 8px;
+  background: var(--vp-c-bg-alt);
+}
+
+html::-webkit-scrollbar-track,
+.VPSidebar::-webkit-scrollbar-track {
+  background: var(--vp-c-bg-alt);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+html::-webkit-scrollbar-thumb,
+.VPSidebar::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  max-height: 20px;
+  background: var(--vp-c-border);
+  border: 0px solid var(----vp-c-border);
+}
+
+pre.shiki.shiki-themes.github-light.github-dark.vp-code::-webkit-scrollbar {
+  height: 5px;
+  background: var(--vp-c-bg-alt);
+}
+
+pre.shiki.shiki-themes.github-light.github-dark.vp-code::-webkit-scrollbar-track {
+  background: var(--vp-c-bg-alt);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+pre.shiki.shiki-themes.github-light.github-dark.vp-code::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  max-height: 20px;
+  background: var(--vp-c-border);
+  border: 0px solid var(----vp-c-border);
+}

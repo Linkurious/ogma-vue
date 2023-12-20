@@ -20,24 +20,4 @@ Creates a [style rule](https://doc.linkurious.com/ogma/latest/api.html#Ogma-styl
 
 ## Example
 
-```vue
-<template>
-  ...
-  <NodeRule
-    :selector="ruleProps.selector"
-    :nodeAttributes="ruleProps.nodeAttributes"
-  />
-  ...
-</template>
-<script setup lang="ts">
-import { NodeRule } from "@linkurious/ogma-vue";
-  const ruleProps = ref<NodeRuleProps> ({
-    nodeAttributes: {
-      color: "blue",
-      text: (node) => node.getData("name"),
-    },
-    selector: (node) => node.getId() === "node1",
-  })
-};
-</script>
-```
+<!--@include: ../../../examples/node-rule.md-->
