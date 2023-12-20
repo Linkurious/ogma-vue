@@ -37,7 +37,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'API', link: '/src/components/tools/Lasso' },
+      { text: 'API', link: '/src/components/Ogma' },
       { text: 'Getting Started', link: '/getting-started' }
     ],
 
