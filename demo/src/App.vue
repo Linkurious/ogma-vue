@@ -3,12 +3,9 @@
     <Ogma :graph="graph" :width="width" :height="height">
       <template>
         <StyleRule :node-attributes="rule.nodeAttributes" />
-        <Tooltip :visible="tooltip.visible" :size="tooltip.size" :position="tooltip.position">
-          <div class="tooltip">{{ tooltip.content }}</div>
-        </Tooltip>
-        <NodeGrouping :options="grouping.options" :enabled="grouping.enabled" @enabled="onGroupingEnabled" />
+        <NodeGrouping :options="grouping.options" :enabled="grouping.enabled" @enabled="onGroupingEnabled"
+          @disabled="onGroupingDisabled" />
         <NodeFilter :options="filter.options" :enabled="filter.enabled" @enabled="onFilterEnabled" />-->
-        <Canvas :visible="canvas.visible" :render="canvas.render" :level="canvas.level" />
         <Layer>
           <UX v-model:grouping="grouping" v-model:filter="filter" v-model:rule="rule" />
         </Layer>
@@ -19,124 +16,71 @@
 
 <script setup lang="ts">
 import {
-  Canvas,
   StyleRule,
   Layer,
   useNodeGrouping,
-  Tooltip,
   useNodeFilter,
-  useEdgeFilter,
   NodeFilterProps,
   useOgma,
   NodeGroupingProps,
-  CanvasLayerProps
 } from "../../src/main";
-
+import O from "@linkurious/ogma/dev";
 import UX from "./UX.vue";
-import { computed, ref, provide, watch } from "vue";
+import { ref, watch } from "vue";
 
 type ND = { id: number; };
 type ED = { source: number; target: number; };
 
 const NodeGrouping = useNodeGrouping<ND, ED>();
 const NodeFilter = useNodeFilter<ND, ED>();
-const EdgeFilter = useEdgeFilter<ND, ED>();
 const width = ref(window.innerWidth);
 const height = ref(window.innerHeight);
-const Ogma = useOgma<ND, ED>();
+const ogma = new O();
+const Ogma = useOgma<ND, ED>(ogma);
 const graph = ref({
-  nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+  nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
   edges: [{ source: 0, target: 1 }],
 });
 const filter = ref<NodeFilterProps<ND, ED>>({
   options: {
-    criteria: (node) => +node.getId() % 2,
+    criteria: (node) => node.isVirtual() || +node.getId() % 2,
   },
-  enabled: true,
-  // events: ["enabled", "destroyed"],
+  enabled: false,
 });
 const rule = ref({
   nodeAttributes: {
     color: "rgba(74, 160, 100, 1)",
+    opacity: node => node.isVirtual() ? 0.5 : 1,
   },
-});
-const tooltip = ref({
-  visible: false,
-  enabled: false,
-  position: {
-    x: 0,
-    y: 0,
-  },
-  size: {
-    width: "unset",
-    height: "unset",
-  },
-  content: "",
 });
 
 const grouping = ref<NodeGroupingProps<ND, ED>>({
   options: {
     nodeSelector: () => true,
     duration: 1000,
-    groupIdFunction: (node) => node.getId() % 2,
+    groupIdFunction: (node) => node.getId() % 3,
     showContents: true,
   },
   enabled: false,
-  // events: ["enabled", "destroyed"],
-});
-const canvas = ref<CanvasLayerProps>({
-  render: (ctx) => {
-    ctx.fillRect(0, 0, 100, 100);
-  },
-  isStatic: true,
-  visible: true,
-  level: -1,
-  noClear: false,
 });
 
 watch([filter], ([n]) => {
   console.log('filter', n);
 });
-function onGroupingEnabled(grouping) {
-  console.log("grouping enabled", grouping);
+function onGroupingEnabled() {
+  ogma.layouts.force({ duration: 1000, locate: true });
+}
+function onGroupingDisabled() {
+  ogma.transformations.afterNextUpdate()
+    .then(() => {
+      ogma.layouts.force({ duration: 1000, locate: true });
+    });
 }
 function onFilterEnabled(filter) {
   console.log("filter enabled", filter);
 }
-// function onTooltipToggle(e) {
-//   this.tooltip.enabled = e;
-//   const selectedNodes = this.ogma.getSelectedNodes();
-//   if (selectedNodes.size) {
-//     // show the tooltip if some nodes are selected
-//     this.onNodesSelected({ nodes: selectedNodes });
-//   }
-// }
-// function onNodesUnselected() {
-//   const selectedNodes = this.ogma.getSelectedNodes();
-//   if (selectedNodes.size) return;
-//   this.tooltip = {
-//     ...this.tooltip,
-//     visible: false,
-//   };
-// }
-function onNodesSelected({ nodes }) {
-  this.tooltip = {
-    ...this.tooltip,
-    position: {
-      x:
-        nodes.get(0).getAttribute("x") +
-        5 +
-        nodes.get(0).getAttribute("radius"),
-      y: nodes.get(0).getAttribute("y"),
-    },
-    content: `${nodes.get(0).getId()} is selected`,
-    visible: true && this.tooltip.enabled,
-  };
-}
-
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped></style>
 
 

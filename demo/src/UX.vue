@@ -12,8 +12,6 @@
       <n-color-picker :default-value="props.rule.nodeAttributes.color" :on-update:value="onColorChange" />
     </span>
     <span>
-      <!-- <n-switch @update:value="(e) => $emit('tooltipToggle', e)" /> -->
-      <!-- tooltip on select -->
     </span>
   </div>
 </template>
@@ -61,15 +59,8 @@ function onColorChange(e) {
       color: e
     }
   });
-  // this.rule.nodeAttributes.color = e;
 }
 
-watch([props.filter], (e) => {
-  console.log('UX', e);
-});
-onMounted(() => {
-  console.log('UX', props.filter);
-});
 </script>
 <style>
 .ui {
