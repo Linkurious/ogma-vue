@@ -1,7 +1,7 @@
 # Ogma
 
 Main Ogma component, it automatically creates an Ogma instance and provides it to its children.
-If you want to pass it your own instance, or if you want to type nodes and edges data types, see [useOgma](./useOgma.md).
+If you want to pass it your own instance, or if you want to type nodes and edges data types, see [useOgma](/src/hooks/index.md).
 
 ## Props
 
