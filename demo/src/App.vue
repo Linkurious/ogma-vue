@@ -23,6 +23,7 @@ import {
   NodeFilterProps,
   useOgma,
   NodeGroupingProps,
+  StyleRuleProps,
 } from "../../src/main";
 import O from "@linkurious/ogma/dev";
 import UX from "./UX.vue";
@@ -47,7 +48,7 @@ const filter = ref<NodeFilterProps<ND, ED>>({
   },
   enabled: false,
 });
-const rule = ref({
+const rule = ref<StyleRuleProps>({
   nodeAttributes: {
     color: "rgba(74, 160, 100, 1)",
     opacity: node => node.isVirtual() ? 0.5 : 1,
