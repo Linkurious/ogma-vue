@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from "vue";
-import { useLayer } from "../../hooks/useLayer";
+import { LayerProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)
@@ -25,5 +25,5 @@ const props = defineProps({
   level: { type: Number, default: 0 },
 });
 
-useLayer("layer", container, props);
+useLayer("layer", container, props as Required<LayerProps>);
 </script>

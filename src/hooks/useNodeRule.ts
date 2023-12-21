@@ -29,7 +29,7 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
       styleRule.destroy();
     },
     mounted() {
-      styleRule = this.ogma.styles.addNodeRule(
+      styleRule = (this.ogma as Ogma).styles.addNodeRule(
         this.selector,
         this.nodeAttributes,
       );

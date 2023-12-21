@@ -95,7 +95,7 @@ export function useLayer<L extends Layers>(
     if (isCanvas(type, props)) {
       options.isStatic = props.isStatic;
       options.noClear = props.noClear;
-      const canvasLayer = ogma.layers.addCanvasLayer(props.render, options);
+      const canvasLayer = ogma.layers.addCanvasLayer(props.render, options as Required<CanvasLayerOptions>);
       canvasLayer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
       return canvasLayer;
     }

@@ -46,9 +46,11 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string) {
     methods: {
       enable() {
         const { options } = this;
+        // @ts-ignore
         this.ogma.tools[name].enable(options);
       },
       disable() {
+        // @ts-ignore
         this.ogma.tools[name].disable();
       },
     },

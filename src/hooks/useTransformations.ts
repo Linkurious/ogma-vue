@@ -155,13 +155,13 @@ function useTransformations<O extends BaseOptions,
           };
           // @ts-ignore
           listenners.push(listenner);
-          this.ogma.events.on(ogmaEvent, listenner);
+          (this.ogma as Ogma).events.on(ogmaEvent, listenner);
         });
       },
       unRegisterEvents() {
         if (!this.ogma) return;
         listenners.forEach((listenner) => {
-          this.ogma.events.off(listenner);
+          (this.ogma as Ogma).events.off(listenner);
         });
       }
     },

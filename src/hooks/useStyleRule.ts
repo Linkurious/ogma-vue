@@ -69,7 +69,7 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
       styleRule.destroy();
     },
     mounted() {
-      styleRule = this.ogma.styles.addRule({
+      styleRule = (this.ogma as Ogma).styles.addRule({
         edgeAttributes: this.edgeAttributes,
         nodeAttributes: this.nodeAttributes,
         edgeOutput: this.edgeOutput,

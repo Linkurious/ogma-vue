@@ -20,7 +20,7 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
   let styleClass: StyleClass;
 
   function assign(prev: NodeList | EdgeList, next: NodeList | EdgeList) {
-    const toRemove = prev.subtract(next);
+    const toRemove = (prev as NodeList).subtract(next as NodeList);
     toRemove.removeClass(styleClass.getName());
     next.addClass(styleClass.getName());
   }
@@ -64,8 +64,7 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
       },
       name: {
         type: String as PropType<string>,
-        default: () => undefined,
-        required: false
+        required: true
       },
       edgeDependencies: {
         type: Object as PropType<EdgeDependencies>,
@@ -80,9 +79,11 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
     },
     watch: {
       nodes: function (next: NodeList, prev: NodeList) {
+        // @ts-ignore
         assign(prev || this.ogma.nodeList(), next);
       },
       edges: function (next: EdgeList, prev: EdgeList) {
+        // @ts-ignore
         assign(prev || this.ogma.edgeList(), next);
       }
     },
@@ -91,7 +92,8 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
       // styleClass.destroy();
     },
     mounted() {
-      styleClass = this.ogma.styles.createClass({
+      const ogma = (this.ogma as Ogma);
+      styleClass = ogma.styles.createClass({
         name: this.name,
         edgeAttributes: this.edgeAttributes,
         nodeAttributes: this.nodeAttributes,
@@ -110,8 +112,10 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
           nodeDependencies: this.nodeDependencies,
         });
       });
-      assign(this.ogma.nodeList(), this.nodes || this.ogma.nodeList());
-      assign(this.ogma.edgeList(), this.edges || this.ogma.edgeList());
+      // @ts-ignore
+      assign(ogma.nodeList(), this.nodes || ogma.nodeList());
+      // @ts-ignore
+      assign(ogma.edgeList(), this.edges || ogma.edgeList());
     },
     render() {
       return null;

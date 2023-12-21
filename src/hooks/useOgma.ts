@@ -206,6 +206,7 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
         const { events, listeners } = this;
         if (!events) return;
         (events === "all" ? allEvents : events).forEach((event) => {
+          // @ts-ignore
           const handler = (evt) => {
             // @ts-ignore
             this.$emit(event, evt);
@@ -226,7 +227,7 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
       return h("div", {
         ref: "container",
         class: 'ogma-container'
-      }, this.$slots.default?.());
+      }, this.$slots.default?.({}));
     },
   });
 

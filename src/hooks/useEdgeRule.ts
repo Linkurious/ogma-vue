@@ -29,7 +29,7 @@ export function useEdgeRule<ND = unknown, ED = unknown>() {
       styleRule.destroy();
     },
     mounted() {
-      styleRule = this.ogma.styles.addEdgeRule(
+      styleRule = (this.ogma as Ogma).styles.addEdgeRule(
         this.selector,
         this.edgeAttributes,
       );

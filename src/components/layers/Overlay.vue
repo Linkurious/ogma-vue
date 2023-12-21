@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import type { Point } from "@linkurious/ogma";
 import { withDefaults, defineProps, ref, watch } from "vue";
-import { useLayer } from "../../hooks/useLayer";
+import { OverlayProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addOverlay](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addOverlay)
@@ -41,9 +41,5 @@ const props = withDefaults(
     level: 0,
   },
 );
-useLayer("overlay", container, props);
-// watch([props.position], () => {
-//   if (!layer.value) return;
-//   layer.value.setPosition(props.position);
-// });
+useLayer("overlay", container, props as Required<OverlayProps>);
 </script>

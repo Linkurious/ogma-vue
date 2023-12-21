@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { DrawingFunction } from "@linkurious/ogma";
 import { withDefaults, defineProps, ref } from "vue";
-import { useLayer } from "../../hooks/useLayer";
+import { CanvasLayerProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)
@@ -42,5 +42,5 @@ const props = withDefaults(
     visible: true,
   },
 );
-useLayer("canvas", container, props);
+useLayer("canvas", container, props as Required<CanvasLayerProps>);
 </script>
