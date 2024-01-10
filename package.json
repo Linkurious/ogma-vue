@@ -1,12 +1,14 @@
 {
   "name": "@linkurious/ogma-vue",
+  "description": "Vue 3 wrapper for Ogma",
+  "author": "Linkurious SAS",
   "version": "0.1.12",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "vite -c demo/vite.config.ts",
     "postbuild1": "node scripts/postbuild.js && cp README.md dist",
-    "types": "vue-tsc --declaration --emitDeclarationOnly --outFile dist/ogma-vue.d.ts",
+    "types": "vue-tsc --declaration --emitDeclarationOnly",
     "build": "vite build",
     "test": "vitest -c tests/unit/vitest.config.ts",
     "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
@@ -21,26 +23,28 @@
     "bump:patch": "npm version patch --no-git-tag-version"
   },
   "main": "dist/ogma-vue.js",
-  "files": [
-    "dist/lib.umd.js",
-    "dist/lib.umd.min.js",
-    "dist/lib.commin.js",
-    "dist/**/*.d.ts",
-    "dist/*.md"
-  ],
-  "types": "dist/ogma-vue.d.ts",
+  "types": "dist/types/main.d.ts",
+  "module": "dist/ogma-vue.js",
   "exports": {
     ".": {
+      "types": "./dist/types/main.d.ts",
       "import": "./dist/ogma-vue.js",
       "require": "./dist/ogma-vue.umd.cjs"
     }
   },
+  "files": [
+    "dist/ogma-vue.js",
+    "dist/ogma-vue.umd.cjs",
+    "dist/**/*.d.ts",
+    "dist/*.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "private": false,
   "peerDependencies": {
-    "@linkurious/ogma": ">=4.5.5"
+    "@linkurious/ogma": ">=4.5.5",
+    "vue": "3.4.7"
   },
   "devDependencies": {
     "@linkurious/code-tools": "^0.0.8",
@@ -58,13 +62,10 @@
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.2.2",
     "vite": "4.5.0",
-    "vite-plugin-dts": "^3.6.3",
+    "vite-plugin-dts": "^3.7.0",
     "vitepress": "^1.0.0-rc.32",
     "vitest": "^0.34.6",
-    "vue": "3.3.7",
-    "vue-docgen-api": "file:../vue-styleguidist/packages/vue-docgen-api",
-    "vue-docgen-cli": "file:../vue-styleguidist/packages/vue-docgen-cli",
-    "vue-tsc": "^1.8.22"
+    "vue-tsc": "^1.8.27"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
