@@ -11,7 +11,7 @@
     "types": "vue-tsc --declaration --emitDeclarationOnly",
     "build": "vite build",
     "test": "vitest -c tests/unit/vitest.config.ts",
-    "test:unit": "vue-cli-service test:unit --reporter mocha-multi-reporters --reporter-options configFile=.test-reporters.json",
+    "test:unit": "vitest run -c tests/unit/vitest.config.ts  --reporter=junit --reporter=default --outputFile reports/unit/junit-test-results.xml",
     "lint:ci": "eslint -f checkstyle -o reports/checkstyle.xml --ext ts --ext js src ./tests/**/*.test.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
