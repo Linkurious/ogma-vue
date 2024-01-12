@@ -23,5 +23,7 @@ pnpm-debug.log*
 *.sw?
 .temp
 .cache
-docs/.vuepress/dist
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 reports/
