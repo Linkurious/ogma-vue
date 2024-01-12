@@ -18,6 +18,7 @@
     "docs:preview": "vitepress preview docs",
     "predocs:publish": "npm run docs:build",
     "docs:publish": "gh-pages -d docs/.vitepress/dist",
+    "upload": "npm run docs:publish",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build",
     "bump:patch": "npm version patch --no-git-tag-version"
