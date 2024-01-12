@@ -370,6 +370,14 @@ Triggered when the view changes.
 
 Put your Ogma components here. They will be provided with the Ogma instance.
 
+## Provide
+
+### ogma
+
+- type: [Ogma](https://doc.linkurious.com/ogma/latest/api.html#Ogma)
+
+The Ogma instance created by the component (or passed to if using useOgma).
+
 ## Example
 
 <!--@include: ../../examples/ogma.md-->
