@@ -1,30 +1,25 @@
 ```vue
 <template>
-...
- <EdgeFilter
-    :options="filterOptions"
+  ...
+  <EdgeFilter
+    :enabled="filter.enabled"
+    :duration="filter.duration"
+    :options="filter.options"
     @enabled="onEnabled"
   />
-...
+  ...
 </template>
-<script>
-import { EdgeFilter } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      filterOptions: {
-        enabled: true,
-        criteria: () => true,
-        duration: 1000,
-       }
-    }
+<script setup lang="ts">
+import { EdgeFilter, EdgeFilterProps } from "@linkurious/ogma-vue";
+const filter = ref<EdgeFilterProps>({
+  enabled: true,
+  duration: 1000,
+  options: {
+    criteria: () => true,
   },
-  methods: {
-    onEnabled(transformation){
-      console.log("Enabled: ", transformation)
-    }
-  }
+});
+function onEnabled(transformation) {
+  console.log("Enabled: ", transformation);
 }
 </script>
 ```

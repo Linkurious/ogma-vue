@@ -1,61 +1,66 @@
 <template>
   <div class="ui">
     <n-button @click="onToggleGrouping">{{
-      grouping.options.enabled ? "disable grouping" : "enable grouping"
+      props.grouping.enabled ? "disable grouping" : "enable grouping"
     }}</n-button>
 
-    <n-button @click="onToggleFilter"
-      >{{ filter.options.enabled ? "disable filter" : "enable filter" }}
+    <n-button @click="onToggleFilter">{{ props.filter.enabled ? "disable filter" : "enable filter" }}
     </n-button>
 
     <span>
       Node color
-      <n-color-picker
-        :default-value="rule.nodeAttributes.color"
-        :on-update:value="onColorChange"
-      />
+      <n-color-picker :default-value="props.rule.nodeAttributes.color" :on-update:value="onColorChange" />
     </span>
     <span>
-      <n-switch @update:value="(e) => $emit('tooltipToggle', e)"/>
-      tooltip on select
     </span>
   </div>
 </template>
 
-<script>
-import { provide } from "vue";
+<script setup lang="ts">
+import Ogma from '@linkurious/ogma';
+import { inject, onMounted, provide, watch } from "vue";
+import {
+  NodeGroupingProps,
+  NodeFilterProps,
+  StyleRuleProps
 
-export default {
-  name: "UX",
-  props: ["ogma"],
-  inject: ["grouping", "filter", "rule", "tooltip"],
-  setup(props) {
-    provide("ogma", props.ogma);
-  },
-  data() {
-    return {
-      color: "rgba(153, 0, 0, 1)",
-    };
-  },
-  methods: {
-    onToggleGrouping() {
-        this.grouping.options = this.grouping.options = {
-        ...this.grouping.options,
-        enabled: !this.grouping.options.enabled,
-      };
+} from '../../src/main';
 
-    },
-    onToggleFilter() {      
-      this.filter.options = this.filter.options = {
-        ...this.filter.options,
-        enabled: !this.filter.options.enabled,
-      };
-    },
-    onColorChange(e) {
-      this.rule.nodeAttributes.color = e;
-    },
-  },
-};
+const props = defineProps<{
+  grouping: NodeGroupingProps;
+  filter: NodeFilterProps;
+  rule: StyleRuleProps;
+}>();
+// define emits for v-model
+const emit = defineEmits<{
+  (event: "update:grouping", value: NodeGroupingProps): void;
+  (event: "update:filter", value: NodeFilterProps): void;
+  (event: "update:rule", value: StyleRuleProps): void;
+}>();
+
+const ogma = inject<Ogma>("ogma");
+function onToggleGrouping() {
+  emit("update:grouping", {
+    ...props.grouping,
+    enabled: !props.grouping.enabled
+  });
+}
+function onToggleFilter() {
+  emit("update:filter", {
+    ...props.filter,
+    enabled: !props.filter.enabled
+  });
+}
+function onColorChange(e) {
+  emit("update:rule", {
+    ...props.rule,
+    nodeAttributes: {
+      ...props.rule.nodeAttributes,
+      color: e
+    }
+  });
+}
+
 </script>
 <style>
 .ui {
@@ -71,7 +76,8 @@ export default {
   background: white;
   min-width: 180px;
 }
-.ui > .n-button {
+
+.ui>.n-button {
   margin: 2px;
 }
 </style>

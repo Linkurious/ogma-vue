@@ -1,25 +1,16 @@
 ```vue
 <template>
-...
- <EdgeRule
-    :options="styleOptions"
-  />
-...
+  ...
+  <EdgeRule :selector="rule.selector" :attributes="rule.attributes" />
+  ...
 </template>
-<script>
-import { EdgeRule } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      styleOptions: {
-        edgeAttributes:{
-          color: "blue"
-        },
-        edgeSelector: () => true,
-       }
-    }
+<script setup lang="ts">
+import { EdgeRule, EdgeRuleProps } from "@linkurious/ogma-vue";
+const rule = ref<EdgeRuleProps>({
+  attributes: {
+    color: "blue",
   },
-}
+  selector: () => true,
+});
 </script>
 ```
