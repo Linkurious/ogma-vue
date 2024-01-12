@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite -c demo/vite.config.ts",
-    "postbuild1": "node scripts/postbuild.js && cp README.md dist",
+    "postbuild": "node scripts/postbuild.js && cp README.md dist",
     "types": "vue-tsc --declaration --emitDeclarationOnly",
     "build": "vite build",
     "test": "vitest -c tests/unit/vitest.config.ts",
