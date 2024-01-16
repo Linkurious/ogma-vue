@@ -11,6 +11,7 @@ nodeJob {
   runDependencyVersionCheck = false
   npmPackPath = './dist'
   gitTagPrefix = 'v'
+  githubRelease = true
   runBookeeping = true
   runNpmPublish = true
 }

@@ -20,4 +20,8 @@ fs.readFile("package.json", "utf8")
   })
   .then((data) =>
     fs.writeFile("dist/package.json", data)
-  );
+  )
+  .then(() => Promise.all([
+    fs.rm("dist/index.html", { force: true }),
+    fs.rm("dist/favicon.ico", { force: true })
+  ]));

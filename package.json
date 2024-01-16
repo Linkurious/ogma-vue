@@ -22,6 +22,7 @@
     "upload": "npm run docs:publish",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build",
+    "prepack": "npm run build && npm run types",
     "bump:patch": "npm version patch --no-git-tag-version"
   },
   "main": "dist/ogma-vue.js",
