@@ -33,6 +33,7 @@ const components = await createSidebar('docs/src');
 export default defineConfig({
   title: "Ogma-vue",
   description: "Vue wrapper for Ogma",
+  base: '/ogma-vue/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -48,7 +49,7 @@ export default defineConfig({
       level: [2, 3]
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/Linkurious/ogma-vue' }
     ]
   }
 });
