@@ -27,7 +27,7 @@ npm install
 
 ### Compiles and hot-reloads DEMO
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
@@ -35,14 +35,9 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
 ### Builds the docs for development: 
 ```
-npm run doc:dev
+npm run docs:dev
 ```
 
 ### run unit tests

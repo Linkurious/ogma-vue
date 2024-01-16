@@ -86,6 +86,10 @@ function onFilterEnabled(filter) {
 
 
 <style>
+body {
+  overflow: hidden;
+}
+
 #app {
   width: 100%;
   align-content: space-around;
