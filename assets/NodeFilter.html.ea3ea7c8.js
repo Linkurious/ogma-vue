@@ -1,1 +1,0 @@
-const e={key:"v-cd119eb6",path:"/src/components/transformations/NodeFilter.html",title:"NodeFilter",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Events",slug:"events",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NodeFilter.md"};export{e as data};

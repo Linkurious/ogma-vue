@@ -1,1 +1,0 @@
-const e={key:"v-058b4e93",path:"/examples/edge-grouping.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1644845785e3,contributors:[{name:"Leo Nicolle",email:"leo@linkurio.us",commits:1}]},filePathRelative:"examples/edge-grouping.md"};export{e as data};

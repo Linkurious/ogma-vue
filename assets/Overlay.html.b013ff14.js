@@ -1,1 +1,0 @@
-const e={key:"v-6ccfb021",path:"/src/components/layers/Overlay.html",title:"Overlay",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Slots",slug:"slots",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/layers/Overlay.md"};export{e as data};

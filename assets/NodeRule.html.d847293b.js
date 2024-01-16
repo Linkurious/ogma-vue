@@ -1,1 +1,0 @@
-const e={key:"v-1f0e5883",path:"/src/components/styles/NodeRule.html",title:"NodeRule",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/styles/NodeRule.md"};export{e as data};

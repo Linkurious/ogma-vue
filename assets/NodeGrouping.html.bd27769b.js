@@ -1,1 +1,0 @@
-const e={key:"v-29aac60c",path:"/src/components/transformations/NodeGrouping.html",title:"NodeGrouping",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Events",slug:"events",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/NodeGrouping.md"};export{e as data};

@@ -1,1 +1,0 @@
-const e={key:"v-4f96fc74",path:"/examples/style-rule.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1644846999e3,contributors:[{name:"Leo Nicolle",email:"leo@linkurio.us",commits:1}]},filePathRelative:"examples/style-rule.md"};export{e as data};

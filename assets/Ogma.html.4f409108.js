@@ -1,1 +1,0 @@
-const e={key:"v-41197350",path:"/src/components/Ogma.html",title:"Ogma",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Events",slug:"events",children:[]},{level:2,title:"Slots",slug:"slots",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/Ogma.md"};export{e as data};

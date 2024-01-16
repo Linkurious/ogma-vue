@@ -1,1 +1,0 @@
-const e={key:"v-7214b249",path:"/src/components/tools/ConnectNodes.html",title:"ConnectNodes",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/tools/ConnectNodes.md"};export{e as data};

@@ -1,1 +1,0 @@
-const t={key:"v-45258f88",path:"/src/components/tools/Lasso.html",title:"Lasso",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/tools/Lasso.md"};export{t as data};

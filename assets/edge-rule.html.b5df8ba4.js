@@ -1,1 +1,0 @@
-const e={key:"v-07139eba",path:"/examples/edge-rule.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1644846999e3,contributors:[{name:"Leo Nicolle",email:"leo@linkurio.us",commits:1}]},filePathRelative:"examples/edge-rule.md"};export{e as data};

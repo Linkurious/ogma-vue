@@ -1,1 +1,0 @@
-const e={key:"v-fa80d33c",path:"/src/components/Ogma%20copy.html",title:"Ogma",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Events",slug:"events",children:[]},{level:2,title:"Slots",slug:"slots",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/Ogma copy.md"};export{e as data};

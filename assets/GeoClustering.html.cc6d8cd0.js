@@ -1,1 +1,0 @@
-const e={key:"v-3056053a",path:"/src/components/transformations/GeoClustering.html",title:"GeoClustering",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]},{level:2,title:"Events",slug:"events",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/transformations/GeoClustering.md"};export{e as data};

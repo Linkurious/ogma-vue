@@ -1,1 +1,0 @@
-const e={key:"v-2971b792",path:"/src/components/styles/EdgeRule%20copy.html",title:"EdgeRule",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Props",slug:"props",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"src/components/styles/EdgeRule copy.md"};export{e as data};
