@@ -74,6 +74,9 @@
     "extends": [
       "@linkurious/eslint-config-ogma",
       "plugin:vue/vue3-recommended"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/ban-ts-comment": 0
+    }
   }
 }
