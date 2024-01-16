@@ -1,18 +1,13 @@
 import Ogma from "@linkurious/ogma";
-import { describe, beforeEach, afterEach, it, expect } from "vitest";
-// import { useOgma } from "../../../src/components";
-import { OgmaProps, useOgma } from "../../src/hooks";
 import { mount } from "@vue/test-utils";
-import { VueElement, nextTick } from "vue";
+import { describe, beforeEach, it, expect } from "vitest";
+import {  nextTick } from "vue";
+import {  useOgma } from "../../src/hooks";
 
 let ogma: Ogma;
 describe("Ogma.vue", () => {
   beforeEach(() => {
     ogma = new Ogma({ renderer: "canvas" });
-    // graph = {
-    //   nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
-    //   edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }, { id: 2, source: 2, target: 3 }]
-    // };
   });
   it("should instanciate ogma and render the graph", () => {
     mount(useOgma(ogma), {
