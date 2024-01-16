@@ -15,8 +15,6 @@ fs.readFile("package.json", "utf8")
     toDelete.forEach((key) => delete base[key]);
     base.peerDependencies.vue = `>=3.4.x`;
     return JSON.stringify(base, null , 2)
-    .replace(/\.\/dist/gm, ".")
-    .replace(/dist/gm, ".");
   })
   .then((data) =>
     fs.writeFile("package.json", data)
