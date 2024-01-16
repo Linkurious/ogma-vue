@@ -68,7 +68,7 @@ function onColorChange(e) {
   flex-direction: column;
   position: fixed;
   right: 0;
-  top: 2px;
+  top: 10px;
   bottom: 100px;
   border: 1px solid sblack;
   box-shadow: -4px 0px 20px -6px grey;
