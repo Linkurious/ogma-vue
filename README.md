@@ -1,12 +1,11 @@
 # `@linkurious/ogma-vue`
 
-![logo](/logo.svg)
-
+![logo](https://raw.githubusercontent.com/Linkurious/ogma-vue/develop/logo.svg)
 
 Wrapper to use [Ogma](https://doc.linkurio.us/ogma/latest/) with [Vue3](https://vuejs.org/about/releases.html).
-It allows you to create graph visualisations easilly, with both the power of Ogma and the reactivity of Vue. 
+It allows you to create graph visualisations easilly, with both the power of Ogma and the reactivity of Vue.
 
-You need an Ogma licence to use it. Please [contact us]([https://doc.linkurio.us/ogma/latest/support.html](https://doc.linkurious.com/ogma/latest/contact.html)) for more info.
+You need an Ogma licence to use it. Please [contact us](<[https://doc.linkurio.us/ogma/latest/support.html](https://doc.linkurious.com/ogma/latest/contact.html)>) for more info.
 
 ## Documentation
 
@@ -14,8 +13,8 @@ Please visit the documentation of Ogma-vue [here](https://linkurious.github.io/o
 
 ## How to contribute
 
-Some parts of this repo belongs to Linkurious internal infrastructure and CI. 
-When developing, you can remove `.version` `.bumpversion.cfg` `Jenkinsfile`  files.
+Some parts of this repo belongs to Linkurious internal infrastructure and CI.
+When developing, you can remove `.version` `.bumpversion.cfg` `Jenkinsfile` files.
 
 ### Project setup
 
@@ -26,21 +25,25 @@ npm install
 ```
 
 ### Compiles and hot-reloads DEMO
+
 ```
 npm run dev
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
-### Builds the docs for development: 
+### Builds the docs for development:
+
 ```
 npm run docs:dev
 ```
 
 ### run unit tests
+
 ```
 npm run test:unit
 ```

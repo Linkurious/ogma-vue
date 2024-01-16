@@ -2,13 +2,11 @@
   "name": "@linkurious/ogma-vue",
   "description": "Vue 3 wrapper for Ogma",
   "author": "Linkurious SAS",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "vite -c demo/vite.config.ts",
-    "postbuild": "node scripts/postbuild.js && cp README.md dist",
-    "types": "vue-tsc --declaration --emitDeclarationOnly",
     "build": "vite build",
     "test": "vitest -c tests/unit/vitest.config.ts",
     "test:unit": "vitest run -c tests/unit/vitest.config.ts  --reporter=junit --reporter=default --outputFile reports/unit/junit-test-results.xml",
@@ -22,6 +20,7 @@
     "upload": "npm run docs:publish",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build",
+    "prepack": "node scripts/clean-package.js",
     "bump:patch": "npm version patch --no-git-tag-version"
   },
   "main": "dist/ogma-vue.js",
@@ -38,7 +37,8 @@
     "dist/ogma-vue.js",
     "dist/ogma-vue.umd.cjs",
     "dist/**/*.d.ts",
-    "dist/*.md"
+    "README.md",
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
@@ -66,8 +66,7 @@
     "vite": "4.5.0",
     "vite-plugin-dts": "^3.7.0",
     "vitepress": "^1.0.0-rc.32",
-    "vitest": "^0.34.6",
-    "vue-tsc": "^1.8.27"
+    "vitest": "^0.34.6"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
