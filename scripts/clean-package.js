@@ -19,9 +19,10 @@ fs.readFile("package.json", "utf8")
     .replace(/dist/gm, ".");
   })
   .then((data) =>
-    fs.writeFile("dist/package.json", data)
+    fs.writeFile("package.json", data)
   )
   .then(() => Promise.all([
     fs.rm("dist/index.html", { force: true }),
     fs.rm("dist/favicon.ico", { force: true })
-  ]));
+  ])
+);
