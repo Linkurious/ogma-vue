@@ -1,30 +1,25 @@
 ```vue
 <template>
-...
- <NodeFilter
-    :options="filterOptions"
+  ...
+  <NodeFilter
+    :enabled="filter.enabled"
+    :duration="filter.duration"
+    :options="filter.options"
     @enabled="onEnabled"
   />
-...
+  ...
 </template>
-<script>
-import { NodeFilter } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      filterOptions: {
-        enabled: true,
-        criteria: () => true,
-        duration: 1000,
-       }
-    }
+<script setup lang="ts">
+import { NodeFilter, NodeFilterProps } from "@linkurious/ogma-vue";
+const filter = ref<NodeFilterProps>({
+  enabled: true,
+  duration: 1000,
+  options: {
+    criteria: () => true,
   },
-  methods: {
-    onEnabled(transformation){
-      console.log("Enabled: ", transformation)
-    }
-  }
+});
+function onEnabled(transformation) {
+  console.log("Enabled: ", transformation);
 }
 </script>
 ```

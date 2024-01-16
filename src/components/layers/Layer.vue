@@ -1,28 +1,29 @@
 <template>
-  <div>
-    <!-- @slot Use this slot to display your Layer -->
-    <slot v-if="visible"></slot>
+  <div ref="container">
+    <!-- @slot Put your layer here -->
+    <slot v-if="visible" />
   </div>
 </template>
 
-<script>
-import layerMixin from "../../mixins/LayerMixin";
-
+<script setup lang="ts">
+import { defineProps, ref } from "vue";
+import { LayerProps, useLayer } from "../../hooks/useLayer";
+const container = ref<HTMLDivElement>();
 /**
  * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)
  * @displayName Layer
  */
-export default {
-  name: "Layer",
-  inject: ["ogma"],
-  mixins: [layerMixin],
-  methods: {
-    createLayer() {
-      this.layer = this.ogma.layers.addLayer(
-        this.$el,
-        this.index,
-      );
-    }
-  },
-};
+const props = defineProps({
+  /**
+   * Wether the layer is visible or not. See [Layer show/hide](https://doc.linkurio.us/ogma/latest/api.html#Layer)
+   */
+  visible: { type: Boolean, default: true },
+  /**
+   * Level of the layer. See [Layer setLevel](https://doc.linkurio.us/ogma/latest/api.html#Layer)
+   * Infinity and -Infinity triggers moveToTop and moveToBottom.
+   */
+  level: { type: Number, default: 0 },
+});
+
+useLayer("layer", container, props as Required<LayerProps>);
 </script>

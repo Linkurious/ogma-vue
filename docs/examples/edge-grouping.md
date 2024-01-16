@@ -1,31 +1,26 @@
 ```vue
 <template>
-...
- <EdgeGrouping
-    :options="groupingOptions"
+  ...
+  <EdgeGrouping
+    :options="grouping.options"
+    :enabled="grouping.enabled"
+    :duration="grouping.duration"
     @enabled="onEnabled"
   />
-...
+  ...
 </template>
-<script>
-import { EdgeGrouping } from "@linkurious/ogma-vue"
-export default {
-  name: "example",
-  data() {
-    return {
-      groupingOptions: {
-        enabled: true,
-        selector: () => true,
-        duration: 1000,
-        groupIdFunction: (edge) => edge.getId() % 2,
-       }
-    }
+<script setup lang="ts">
+import { EdgeGrouping, EdgeGroupingProps } from "@linkurious/ogma-vue";
+const grouping = ref<EdgeGroupingProps>({
+  enabled: true,
+  duration: 1000,
+  options: {
+    selector: () => true,
+    groupIdFunction: (edge) => edge.getId() % 2,
   },
-  methods: {
-    onEnabled(transformation){
-      console.log("Enabled: ", transformation)
-    }
-  }
+});
+function onEnabled(transformation) {
+  console.log("Enabled: ", transformation);
 }
 </script>
 ```

@@ -1,59 +1,46 @@
-<script>
-import layerMixin from "../../mixins/LayerMixin";
-
+<template></template>
+<script setup lang="ts">
+import type { DrawingFunction } from "@linkurious/ogma";
+import { withDefaults, defineProps, ref } from "vue";
+import { CanvasLayerProps, useLayer } from "../../hooks/useLayer";
+const container = ref<HTMLDivElement>();
 /**
- * Add a canvas layer to Ogma. See [addCanvasLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addCanvasLayer)
- * @displayName CanvasLayer
+ * Add a layer to Ogma. See [addLayer](https://doc.linkurio.us/ogma/latest/api.html#Ogma-layers-addLayer)
+ * @displayName Layer
  */
-export default {
-  name: "CanvasLayer",
-  mixins: [layerMixin],
-  props: {
+const props = withDefaults(
+  defineProps<{
     /**
-     * The options to pass to the creation of the layer. See [CanvasLayerOptions](https://doc.linkurio.us/ogma/latest/api.html#CanvasLayerOptions)
+     * wether canvas moves with the camera or not.[See](https://doc.linkurious.com/ogma/latest/api.html#CanvasLayerOptions)
      */
-    options: { default: {} },
+    isStatic?: boolean;
     /**
-     * Opacity of the layer [0; 1]
+     * transparency
      */
-    opacity: { default: 1 },
+    opacity?: number;
+    /**
+     * Should clear the canvas on new frame
+     */
+    noClear?: boolean;
+    /**
+     * Same as Layer.vue
+     */
+    level?: number;
+    /**
+     * Same as Layer.vue
+     */
+    visible?: boolean;
     /**
      * [Drawing function](https://doc.linkurio.us/ogma/latest/api.html#DrawingFunction)
      */
-    draw: { default: () => {} },
+    render: DrawingFunction;
+  }>(),
+  {
+    isStatic: false,
+    noClear: false,
+    opacity: 1,
+    visible: true,
   },
-  watch: {
-    visible: function (newValue) {
-      if (newValue) {
-        this.layer.show();
-      } else {
-        this.layer.hide();
-      }
-    },
-    opacity: function (newValue) {
-      this.layer.setOpacity(newValue);
-    },
-    options: {
-      handler() {
-        this.layer.destroy();
-        this.createLayer();
-      },
-    },
-  },
-  render() {
-    return null;
-  },
-  methods: {
-    createLayer() {
-      this.layer = this.ogma.layers.addCanvasLayer(
-        (ctx) => this.draw(ctx),
-        this.options,
-        this.index
-      );
-      this.layer.setOpacity(this.opacity);
-      this.layer.moveTo(this.index);
-      if (!this.visible) this.layer.hide();
-    },
-  },
-};
+);
+useLayer("canvas", container, props as Required<CanvasLayerProps>);
 </script>
