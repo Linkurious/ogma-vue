@@ -2,7 +2,7 @@
   "name": "@linkurious/ogma-vue",
   "description": "Vue 3 wrapper for Ogma",
   "author": "Linkurious SAS",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
