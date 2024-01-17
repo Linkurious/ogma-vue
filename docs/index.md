@@ -5,6 +5,7 @@ layout: home
 hero:
   name: "Ogma-vue"
   text: "Vue wrapper for Ogma"
+  image: /logo-small.svg
   actions:
     - theme: brand
       text: Getting Started

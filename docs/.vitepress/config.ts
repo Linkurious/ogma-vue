@@ -34,7 +34,9 @@ export default defineConfig({
   title: "Ogma-vue",
   description: "Vue wrapper for Ogma",
   base: '/ogma-vue/',
+  head: [['link', { rel: 'icon', href: '/ogma-vue/favicon.ico' }]],
   themeConfig: {
+    logo: '/logo-small.svg',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
