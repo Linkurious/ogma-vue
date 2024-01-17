@@ -43,7 +43,6 @@ export default defineConfig({
       { text: 'API', link: '/src/components/Ogma' },
       { text: 'Getting Started', link: '/getting-started' }
     ],
-
     sidebar: {
       '/src/': components,
     },
@@ -52,6 +51,6 @@ export default defineConfig({
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Linkurious/ogma-vue' }
-    ]
+    ],
   }
 });
