@@ -11,7 +11,7 @@ const mountRule = createWrapper<StyleClassProps>(StyleClass, {
     name: "test-class",
   },
 });
-let wrapper: ReturnType<typeof mountRule>;
+let wrapper: ReturnType;
 describe("StyleClass.vue", () => {
   beforeEach(() => {
     graph = {

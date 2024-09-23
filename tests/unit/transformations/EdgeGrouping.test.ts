@@ -36,7 +36,7 @@ describe("EdgeGrouping.vue", () => {
       duration: 10,
       enabled: true,
       options: {
-        selector: (edge) => edge.getId() % 2,
+        selector: (edge) => +edge.getId() % 2 !== 0,
       },
     });
     return ogma.transformations.afterNextUpdate().then(() => {
@@ -68,7 +68,6 @@ describe("EdgeGrouping.vue", () => {
   it("should destroy the transformation on detroy", () => {
     wrapper = mountEdgeGrouping(ogma);
     wrapper.unmount();
-    wrapper = null;
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
     return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
