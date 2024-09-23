@@ -7,7 +7,7 @@ import { createWrapper } from "../utils";
 let ogma: Ogma;
 let graph;
 const mountEdgeGrouping = createWrapper<EdgeGroupingProps>(EdgeGrouping, {});
-let wrapper: ReturnType<typeof mountEdgeGrouping>;
+let wrapper: ReturnType;
 describe("EdgeGrouping.vue", () => {
   beforeEach(() => {
     graph = {
@@ -26,7 +26,7 @@ describe("EdgeGrouping.vue", () => {
     }
   });
 
-  it.only("should create a transformation", () => {
+  it("should create a transformation", () => {
     wrapper = mountEdgeGrouping(ogma);
     expect(ogma.transformations.getList().length).to.equal(1);
   });
