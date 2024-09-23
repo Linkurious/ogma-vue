@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.BGK45xF_.js";const F=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"examples/ogma.md","filePath":"examples/ogma.md"}'),h={name:"examples/ogma.md"},k=n("",1),t=[k];function l(p,E,e,d,r,g){return a(),i("div",null,t)}const o=s(h,[["render",l]]);export{F as __pageData,o as default};
