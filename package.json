@@ -16,7 +16,7 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "predocs:publish": "npm run docs:build",
-    "docs:publish": "gh-pages -d docs/.vitepress/dist",
+    "docs:publish": "gh-pages -t --nojekyll -d docs/.vitepress/dist",
     "upload": "npm run docs:publish",
     "postversion": "sync_versions",
     "help": "vue-cli-service help build",
@@ -49,7 +49,7 @@
     "vue": "3.4.7"
   },
   "devDependencies": {
-    "@linkurious/code-tools": "^0.0.8",
+    "@linkurious/code-tools": "0.0.14",
     "@linkurious/eslint-config-ogma": "^1.0.5",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vue/test-utils": "^2.4.1",
