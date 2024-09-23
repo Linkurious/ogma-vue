@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import type { Point } from "@linkurious/ogma";
-import { withDefaults, defineProps, ref, watch } from "vue";
+import { withDefaults, ref, watch } from "vue";
 import { OverlayProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
@@ -17,7 +17,7 @@ const container = ref<HTMLDivElement>();
 const props = withDefaults(
   defineProps<{
     position: Point;
-    size: { width: number; height: number; };
+    size: { width: number; height: number };
     visible: boolean;
     level?: number;
   }>(),
@@ -39,7 +39,7 @@ const props = withDefaults(
      * Infinity and -Infinity triggers moveToTop and moveToBottom.
      */
     level: 0,
-  },
+  }
 );
-useLayer("overlay", container, props as Required<OverlayProps>);
+useLayer("overlay", container, props as Required);
 </script>
