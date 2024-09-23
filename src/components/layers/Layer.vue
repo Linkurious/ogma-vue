@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import { LayerProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
@@ -25,5 +25,5 @@ const props = defineProps({
   level: { type: Number, default: 0 },
 });
 
-useLayer("layer", container, props as Required<LayerProps>);
+useLayer("layer", container, props as Required);
 </script>

@@ -1,7 +1,7 @@
 <template></template>
 <script setup lang="ts">
 import type { DrawingFunction } from "@linkurious/ogma";
-import { withDefaults, defineProps, ref } from "vue";
+import { withDefaults, ref } from "vue";
 import { CanvasLayerProps, useLayer } from "../../hooks/useLayer";
 const container = ref<HTMLDivElement>();
 /**
@@ -40,7 +40,7 @@ const props = withDefaults(
     noClear: false,
     opacity: 1,
     visible: true,
-  },
+  }
 );
-useLayer("canvas", container, props as Required<CanvasLayerProps>);
+useLayer("canvas", container, props as Required);
 </script>

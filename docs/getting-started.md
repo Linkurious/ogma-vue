@@ -232,7 +232,7 @@ Which you can then use within your app:
 
 <script setup lang="ts">
 
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import { Ogma, StyleRule, NodeGrouping, StyleRuleProps, Layer } from "@linkurious/ogma-vue";
 import UX from './UX.vue';
 import Ogma from "@linkurious/ogma";
