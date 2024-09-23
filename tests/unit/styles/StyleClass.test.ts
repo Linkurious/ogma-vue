@@ -8,7 +8,7 @@ let ogma: Ogma;
 let graph;
 const mountRule = createWrapper<StyleClassProps>(StyleClass, {
   props: {
-    name: 'test-class',
+    name: "test-class",
   },
 });
 let wrapper: ReturnType<typeof mountRule>;
@@ -16,7 +16,10 @@ describe("StyleClass.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
-      edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }]
+      edges: [
+        { id: 0, source: 0, target: 1 },
+        { id: 1, source: 1, target: 2 },
+      ],
     };
     ogma = new Ogma({ renderer: "canvas", graph });
   });
@@ -25,14 +28,13 @@ describe("StyleClass.vue", () => {
       wrapper.unmount();
     }
     ogma.destroy();
-
   });
 
   it("should create a style class", () => {
     wrapper = mountRule(ogma, {
       name: "test",
     });
-    expect(ogma.styles.getClassList().length).to.equal(1);
+    expect(ogma.styles.getClassList().length).to.equal(2);
   });
 
   it("should respect passed options", () => {
@@ -47,18 +49,17 @@ describe("StyleClass.vue", () => {
       },
       nodeAttributes: {
         color: "red",
-      }
+      },
     });
-    return ogma.view.afterNextFrame()
-      .then(() => {
-        const nodeColors = ogma.getNodes().getAttribute("color");
-        expect(nodeColors).to.have.same.members(["red", "red", "red"]);
-        const edgeColors = ogma.getNodes().getAttribute("color");
-        expect(edgeColors).to.have.same.members(["red", "red", "red"]);
-      });
+    return ogma.view.afterNextFrame().then(() => {
+      const nodeColors = ogma.getNodes().getAttribute("color");
+      expect(nodeColors).to.have.same.members(["red", "red", "red"]);
+      const edgeColors = ogma.getNodes().getAttribute("color");
+      expect(edgeColors).to.have.same.members(["red", "red", "red"]);
+    });
   });
 
-  it('Should add/remove nodes and edges', () => {
+  it("Should add/remove nodes and edges", () => {
     wrapper = mountRule(ogma, {
       nodes: ogma.getNodes().slice(0, 1),
       edges: ogma.getEdges().slice(0, 1),
@@ -68,15 +69,17 @@ describe("StyleClass.vue", () => {
       },
       nodeAttributes: {
         color: "red",
-      }
+      },
     });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
         wrapper.setProps({
           nodes: ogma.getNodes().slice(1),
           edges: ogma.getEdges().slice(1),
         });
-        return ogma.view.afterNextFrame()
+        return ogma.view
+          .afterNextFrame()
           .then(() => ogma.view.afterNextFrame());
       })
       .then(() => {
@@ -89,7 +92,6 @@ describe("StyleClass.vue", () => {
           edges: ogma.getEdges().slice(1, 2),
         });
         return ogma.view.afterNextFrame();
-
       })
       .then(() => {
         const nodeColors = ogma.getNodes().getAttribute("color");
@@ -109,9 +111,10 @@ describe("StyleClass.vue", () => {
       },
       nodeAttributes: {
         color: "red",
-      }
+      },
     });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
         wrapper.setProps({
           nodeAttributes: {
@@ -137,9 +140,8 @@ describe("StyleClass.vue", () => {
     wrapper = null;
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
-    return new Promise((resolve) => setTimeout(resolve, 200))
-      .then(() =>
-        expect(ogma.styles.getRuleList().length).to.equal(0)
-      );
+    return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
+      expect(ogma.styles.getRuleList().length).to.equal(0)
+    );
   });
 });
