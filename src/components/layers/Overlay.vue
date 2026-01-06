@@ -41,5 +41,5 @@ const props = withDefaults(
     level: 0,
   }
 );
-useLayer("overlay", container, props as Required);
+useLayer("overlay", container, props as Required<OverlayProps>);
 </script>

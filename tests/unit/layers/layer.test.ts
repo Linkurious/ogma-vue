@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import Layer from "../../../src/components/layers/Layer.vue";
 import { LayerProps } from "../../../src/hooks/useLayer";
@@ -13,12 +13,14 @@ const mountLayer = createWrapper<LayerProps>(Layer, {
     level: 1,
   },
   slots: {
-    default: defaultSlot
+    default: defaultSlot,
   },
 });
 let wrapper: ReturnType<typeof mountLayer>;
 function checkLayerContent(ogma: Ogma, index: number, expected = defaultSlot) {
-  return expect(ogma.getContainer()!.children[0].children[index].innerHTML).toContain(expected);
+  return expect(
+    ogma.getContainer()!.children[0].children[index].innerHTML
+  ).toContain(expected);
 }
 function checkLayerVisible(ogma: Ogma, visible: boolean, index = 1) {
   const layer = ogma.getContainer()!.children[0].children[index].innerHTML;
@@ -32,12 +34,16 @@ describe("Layer.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [],
-      edges: []
+      edges: [],
     };
-    const div = document.createElement('div');
-    div.id = 'graph-container';
+    const div = document.createElement("div");
+    div.id = "graph-container";
     document.body.appendChild(div);
-    ogma = new Ogma({ renderer: "canvas", graph, container: 'graph-container' });
+    ogma = new Ogma({
+      renderer: "canvas",
+      graph,
+      container: "graph-container",
+    });
   });
   afterEach(() => {
     if (wrapper) {
@@ -48,14 +54,14 @@ describe("Layer.vue", () => {
 
   it("should show a layer", () => {
     wrapper = mountLayer(ogma, {});
-    return ogma.view.afterNextFrame()
-      .then(() => checkLayerContent(ogma, 1));
+    return ogma.view.afterNextFrame().then(() => checkLayerContent(ogma, 1));
   });
   it("should respect level", () => {
     wrapper = mountLayer(ogma, {
-      level: -1
+      level: -1,
     });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
         checkLayerContent(ogma, 0);
         wrapper.setProps({ level: 1 });
@@ -75,9 +81,10 @@ describe("Layer.vue", () => {
   });
   it("should show/hide on visible change", () => {
     wrapper = mountLayer(ogma, {
-      visible: false
+      visible: false,
     });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
         checkLayerVisible(ogma, false, 1);
         wrapper.setProps({ visible: true });
@@ -90,7 +97,8 @@ describe("Layer.vue", () => {
 
   it("should remove layer on unmount", () => {
     wrapper = mountLayer(ogma, {});
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
         checkLayerVisible(ogma, true);
         wrapper.unmount();

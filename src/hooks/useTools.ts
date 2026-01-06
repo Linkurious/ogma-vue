@@ -1,44 +1,49 @@
-
-
-import Ogma, {
-  ConnectNodesOptions, LassoOptions,
-  LegendOptions, RectangleSelectOptions,
-  ResizingOptions, RewiringOptions
+import {
+  Ogma,
+  ConnectNodesOptions,
+  LassoOptions,
+  LegendOptions,
+  RectangleSelectOptions,
+  ResizingOptions,
+  RewiringOptions,
 } from "@linkurious/ogma";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, Component, PropType } from "vue";
 
-type ToolProps<T> = { enabled: boolean; options: T; };
-export function useTools<O, ND = unknown, ED = unknown>(name: string) {
+type ToolProps<T> = { enabled: boolean; options: T };
+export function useTools<O, ND = unknown, ED = unknown>(name: string): Component<ToolProps<O>> {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => undefined as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>,
       },
     },
     props: {
       enabled: {
         type: Boolean,
         default: true,
-        required: false
+        required: false,
       },
       options: {
         type: Object as PropType<O>,
         default: () => ({}),
-        required: false
+        required: false,
       },
     },
     mounted() {
       if (this.enabled) {
         this.enable();
       }
-      this.$watch(() => [this.enabled, this.options], ([isEnabled], [wasEnabled]) => {
-        if (wasEnabled) {
-          this.disable();
+      this.$watch(
+        () => [this.enabled, this.options],
+        ([isEnabled]: [boolean, O], [wasEnabled]: [boolean, O]) => {
+          if (wasEnabled) {
+            this.disable();
+          }
+          if (isEnabled) {
+            this.enable();
+          }
         }
-        if (isEnabled) {
-          this.enable();
-        }
-      });
+      );
     },
     beforeUnmount() {
       this.disable();
@@ -56,18 +61,22 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string) {
     },
     render() {
       return null;
-    }
+    },
   });
 }
 
 export function useSnapping() {
   return useTools("snapping");
 }
-export type ConnectNodeProps<ND = unknown, ED = unknown> = ToolProps<ConnectNodesOptions<ND, ED>>;
+export type ConnectNodeProps<ND = unknown, ED = unknown> = ToolProps<
+  ConnectNodesOptions<ND, ED>
+>;
 export function useConnectNodes<ND = unknown, ED = unknown>() {
   return useTools<ConnectNodesOptions<ND, ED>, ND, ED>("connectNodes");
 }
-export type LassoProps<ND = unknown, ED = unknown> = ToolProps<LassoOptions<ND, ED>>;
+export type LassoProps<ND = unknown, ED = unknown> = ToolProps<
+  LassoOptions<ND, ED>
+>;
 export function useLasso<ND = unknown, ED = unknown>() {
   return useTools<LassoOptions<ND, ED>, ND, ED>("lasso");
 }

@@ -4,27 +4,29 @@
       props.grouping.enabled ? "disable grouping" : "enable grouping"
     }}</n-button>
 
-    <n-button @click="onToggleFilter">{{ props.filter.enabled ? "disable filter" : "enable filter" }}
+    <n-button @click="onToggleFilter"
+      >{{ props.filter.enabled ? "disable filter" : "enable filter" }}
     </n-button>
 
     <span>
       Node color
-      <n-color-picker :default-value="props.rule.nodeAttributes.color" :on-update:value="onColorChange" />
+      <n-color-picker
+        :default-value="props.rule.nodeAttributes!.color"
+        :on-update:value="onColorChange"
+      />
     </span>
-    <span>
-    </span>
+    <span> </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import Ogma from '@linkurious/ogma';
+import { Ogma } from "@linkurious/ogma";
 import { inject, onMounted, provide, watch } from "vue";
 import {
   NodeGroupingProps,
   NodeFilterProps,
-  StyleRuleProps
-
-} from '../../src/main';
+  StyleRuleProps,
+} from "../../src/main";
 
 const props = defineProps<{
   grouping: NodeGroupingProps;
@@ -42,13 +44,13 @@ const ogma = inject<Ogma>("ogma");
 function onToggleGrouping() {
   emit("update:grouping", {
     ...props.grouping,
-    enabled: !props.grouping.enabled
+    enabled: !props.grouping.enabled,
   });
 }
 function onToggleFilter() {
   emit("update:filter", {
     ...props.filter,
-    enabled: !props.filter.enabled
+    enabled: !props.filter.enabled,
   });
 }
 function onColorChange(e) {
@@ -56,11 +58,10 @@ function onColorChange(e) {
     ...props.rule,
     nodeAttributes: {
       ...props.rule.nodeAttributes,
-      color: e
-    }
+      color: e,
+    },
   });
 }
-
 </script>
 <style>
 .ui {
@@ -77,7 +78,7 @@ function onColorChange(e) {
   min-width: 180px;
 }
 
-.ui>.n-button {
+.ui > .n-button {
   margin: 2px;
 }
 </style>

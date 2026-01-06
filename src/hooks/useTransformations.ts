@@ -1,11 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Ogma, {
-  EdgeGrouping, EdgeGroupingOptions, NodeFilterOptions,
-  NodeGrouping, NodeFilter, NodeGroupingOptions,
-  Transformation, EdgeFilterOptions, EdgeFilter,
-  NeighborGenerationOptions, NeighborGeneration,
-  GeoClusteringOptions, GeoClustering, NeighborMergingOptions,
-  NeighborMerging, NodeCollapsingOptions, NodeCollapsing, VirtualPropertiesOptions, VirtualProperties,
+import {
+  Ogma,
+  EdgeGrouping,
+  EdgeGroupingOptions,
+  NodeFilterOptions,
+  NodeGrouping,
+  NodeFilter,
+  NodeGroupingOptions,
+  Transformation,
+  EdgeFilterOptions,
+  EdgeFilter,
+  NeighborGenerationOptions,
+  NeighborGeneration,
+  GeoClusteringOptions,
+  GeoClustering,
+  NeighborMergingOptions,
+  NeighborMerging,
+  NodeCollapsingOptions,
+  NodeCollapsing,
+  VirtualPropertiesOptions,
+  VirtualProperties,
   // NodeClusteringOptions, NodeClustering,
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
@@ -13,12 +27,12 @@ import { defineComponent, PropType } from "vue";
 export type Events =
   | "all"
   | {
-    enabled?: boolean;
-    disabled?: boolean;
-    refreshed?: boolean;
-    indexChanged?: boolean;
-    destroyed?: boolean;
-  };
+      enabled?: boolean;
+      disabled?: boolean;
+      refreshed?: boolean;
+      indexChanged?: boolean;
+      destroyed?: boolean;
+    };
 export type PropsTransformations<O> = {
   enabled?: boolean;
   duration?: number;
@@ -37,44 +51,45 @@ export type EmitType<T> = {
   (e: "indexChanged", transformation: T, index: number): void;
   (e: "destroyed", transformation: T): void;
 };
-function useTransformations<O extends BaseOptions,
-  T extends Transformation<ND, ED, O>, ND = unknown, ED = unknown>(
-    create: string,
-  ) {
-
+function useTransformations<
+  O extends BaseOptions,
+  T extends Transformation<ND, ED>,
+  ND = unknown,
+  ED = unknown,
+>(create: string) {
   let transformation: T;
   const listenners: ((a: unknown) => unknown)[] = [];
   return defineComponent({
     inject: {
       ogma: {
-        default: () => undefined as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>,
       },
     },
     props: {
       enabled: {
         type: Boolean,
         default: true,
-        required: false
+        required: false,
       },
       duration: {
         type: Number,
         default: 0,
-        required: false
+        required: false,
       },
       index: {
         type: Number,
         default: 0,
-        required: false
+        required: false,
       },
       options: {
-        type: Object as PropType<Omit<O, 'enabled' | 'duration'>>,
+        type: Object as PropType<Omit<O, "enabled" | "duration">>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       events: {
         type: [Object, String] as PropType<Events>,
         default: "all",
-        required: false
+        required: false,
       },
     },
     emits: {
@@ -89,7 +104,7 @@ function useTransformations<O extends BaseOptions,
         const shouldEnable = curr && !old;
         const shouldDisable = !curr && old;
         const t = transformation;
-        let p = Promise.resolve();
+        let p: Promise<unknown> = Promise.resolve();
         if (shouldEnable) {
           p = p.then(() => t.enable(curr.duration || 0));
         }
@@ -108,7 +123,7 @@ function useTransformations<O extends BaseOptions,
       events(curr) {
         this.unRegisterEvents();
         this.registerEvents(curr || "all");
-      }
+      },
     },
     mounted() {
       this.createTranformation();
@@ -143,71 +158,142 @@ function useTransformations<O extends BaseOptions,
           indexChanged: "transformationSetIndex",
           destroyed: "transformationDestroyed",
         };
-        Object.keys(events === "all" ? validEvents : events).forEach((event) => {
-          // @ts-ignore
-          const ogmaEvent = validEvents[event];
-          if (!ogmaEvent) return;
-          // @ts-ignore
-          const listenner = ({ target, index }) => {
-            if (target !== transformation) return;
+        Object.keys(events === "all" ? validEvents : events).forEach(
+          (event) => {
             // @ts-ignore
-            this.$emit(event, transformation, index);
-          };
-          // @ts-ignore
-          listenners.push(listenner);
-          (this.ogma as Ogma).events.on(ogmaEvent, listenner);
-        });
+            const ogmaEvent = validEvents[event];
+            if (!ogmaEvent) return;
+            // @ts-ignore
+            const listenner = ({ target, index }) => {
+              if (target !== transformation) return;
+              // @ts-ignore
+              this.$emit(event, transformation, index);
+            };
+            // @ts-ignore
+            listenners.push(listenner);
+            (this.ogma as Ogma).events.on(ogmaEvent, listenner);
+          }
+        );
       },
       unRegisterEvents() {
         if (!this.ogma) return;
         listenners.forEach((listenner) => {
           (this.ogma as Ogma).events.off(listenner);
         });
-      }
+      },
     },
     render() {
       return null;
     },
-    
   });
 }
 
-export type NodeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<NodeGroupingOptions<ND, ED>>;
+export type NodeGroupingProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<NodeGroupingOptions<ND, ED>>;
 export function useNodeGrouping<ND = unknown, ED = unknown>() {
-  return useTransformations<NodeGroupingOptions<ND, ED>, NodeGrouping<ND, ED>, ND, ED>('addNodeGrouping');
+  return useTransformations<
+    NodeGroupingOptions<ND, ED>,
+    NodeGrouping<ND, ED>,
+    ND,
+    ED
+  >("addNodeGrouping");
 }
-export type EdgeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<EdgeGroupingOptions<ND, ED>>;
+export type EdgeGroupingProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<EdgeGroupingOptions<ND, ED>>;
 export function useEdgeGrouping<ND = unknown, ED = unknown>() {
-  return useTransformations<EdgeGroupingOptions<ND, ED>, EdgeGrouping<ND, ED>, ND, ED>('addEdgeGrouping');
+  return useTransformations<
+    EdgeGroupingOptions<ND, ED>,
+    EdgeGrouping<ED, ND>,
+    ND,
+    ED
+  >("addEdgeGrouping");
 }
-export type NodeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<NodeFilterOptions<ND, ED>>;
+export type NodeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<
+  NodeFilterOptions<ND, ED>
+>;
 export function useNodeFilter<ND = unknown, ED = unknown>() {
-  return useTransformations<NodeFilterOptions<ND, ED>, NodeFilter<ND, ED>, ND, ED>('addNodeFilter');
+  return useTransformations<
+    NodeFilterOptions<ND, ED>,
+    NodeFilter<ND, ED>,
+    ND,
+    ED
+  >("addNodeFilter");
 }
-export type EdgeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<EdgeFilterOptions<ND, ED>>;
+export type EdgeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<
+  EdgeFilterOptions<ND, ED>
+>;
 export function useEdgeFilter<ND = unknown, ED = unknown>() {
-  return useTransformations<EdgeFilterOptions<ND, ED>, EdgeFilter<ND, ED>, ND, ED>('addEdgeFilter');
+  return useTransformations<
+    EdgeFilterOptions<ND, ED>,
+    EdgeFilter<ND, ED>,
+    ND,
+    ED
+  >("addEdgeFilter");
 }
-export type NeighborGenerationProps<ND = unknown, ED = unknown> = PropsTransformations<NeighborGenerationOptions<ND, ED>>;
+export type NeighborGenerationProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<NeighborGenerationOptions<ND, ED>>;
 export function useNeighborGeneration<ND = unknown, ED = unknown>() {
-  return useTransformations<NeighborGenerationOptions<ND, ED>, NeighborGeneration<ND, ED>, ND, ED>('addNeighborGeneration');
+  return useTransformations<
+    NeighborGenerationOptions<ND, ED>,
+    NeighborGeneration<ND, ED>,
+    ND,
+    ED
+  >("addNeighborGeneration");
 }
-export type GeoClusteringProps<ND = unknown, ED = unknown> = PropsTransformations<GeoClusteringOptions<ND, ED>>;
+export type GeoClusteringProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<GeoClusteringOptions<ND, ED>>;
 export function useGeoClustering<ND = unknown, ED = unknown>() {
-  return useTransformations<GeoClusteringOptions<ND, ED>, GeoClustering<ND, ED>, ND, ED>('addGeoClustering');
+  return useTransformations<
+    GeoClusteringOptions<ND, ED>,
+    GeoClustering<ND, ED>,
+    ND,
+    ED
+  >("addGeoClustering");
 }
-export type NeighborMergingProps<ND = unknown, ED = unknown> = PropsTransformations<NeighborMergingOptions<ND, ED>>;
+export type NeighborMergingProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<NeighborMergingOptions<ND, ED>>;
 export function useNeighborMerging<ND = unknown, ED = unknown>() {
-  return useTransformations<NeighborMergingOptions<ND, ED>, NeighborMerging<ND, ED>, ND, ED>('addNeighborMerging');
+  return useTransformations<
+    NeighborMergingOptions<ND, ED>,
+    NeighborMerging<ND, ED>,
+    ND,
+    ED
+  >("addNeighborMerging");
 }
 // export function useNodeClustering<ND = unknown, ED = unknown>() {
 //   return useTransformations<NodeClusteringOptions<ND, ED>, NodeClustering<ND, ED>, ND, ED>('addNodeClustering');
 // }
-export type NodeCollapsingProps<ND = unknown, ED = unknown> = PropsTransformations<NodeCollapsingOptions<ND, ED>>;
+export type NodeCollapsingProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<NodeCollapsingOptions<ND, ED>>;
 export function useNodeCollapsing<ND = unknown, ED = unknown>() {
-  return useTransformations<NodeCollapsingOptions<ND, ED>, NodeCollapsing<ND, ED>, ND, ED>('addNodeCollapsing');
+  return useTransformations<
+    NodeCollapsingOptions<ND, ED>,
+    NodeCollapsing<ND, ED>,
+    ND,
+    ED
+  >("addNodeCollapsing");
 }
-export type VirtualPropertiesProps<ND = unknown, ED = unknown> = PropsTransformations<VirtualPropertiesOptions<ND, ED>>;
+export type VirtualPropertiesProps<
+  ND = unknown,
+  ED = unknown,
+> = PropsTransformations<VirtualPropertiesOptions<ND, ED>>;
 export function useVirtualProperties<ND = unknown, ED = unknown>() {
-  return useTransformations<VirtualPropertiesOptions<ND, ED>, VirtualProperties<ND, ED>, ND, ED>('addVirtualProperties');
+  return useTransformations<
+    VirtualPropertiesOptions<ND, ED>,
+    VirtualProperties<ND, ED>,
+    ND,
+    ED
+  >("addVirtualProperties");
 }

@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import Canvas from "../../../src/components/layers/Canvas.vue";
 import { CanvasLayerProps } from "../../../src/hooks/useLayer";
@@ -12,7 +12,7 @@ const mountLayer = createWrapper<CanvasLayerProps>(Canvas, {
     visible: true,
     level: 1,
     render: () => {
-      render.push('default');
+      render.push("default");
     },
     isStatic: false,
     noClear: false,
@@ -24,12 +24,16 @@ describe("Canvas.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [],
-      edges: []
+      edges: [],
     };
-    const div = document.createElement('div');
-    div.id = 'graph-container';
+    const div = document.createElement("div");
+    div.id = "graph-container";
     document.body.appendChild(div);
-    ogma = new Ogma({ renderer: "canvas", graph, container: 'graph-container' });
+    ogma = new Ogma({
+      renderer: "canvas",
+      graph,
+      container: "graph-container",
+    });
   });
   afterEach(() => {
     render = [];
@@ -41,60 +45,64 @@ describe("Canvas.vue", () => {
 
   it("Should re-render on render function change", () => {
     wrapper = mountLayer(ogma);
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
-        expect(render).toEqual(['default']);
+        expect(render).toEqual(["default"]);
         wrapper.setProps({
           render: () => {
-            render.push('new');
-          }
+            render.push("new");
+          },
         });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        expect(render).toEqual(['default', 'new']);
+        expect(render).toEqual(["default", "new"]);
       });
   });
-  it('Should re-render on opacity change', () => {
+  it("Should re-render on opacity change", () => {
     wrapper = mountLayer(ogma);
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
-        expect(render).toEqual(['default']);
+        expect(render).toEqual(["default"]);
         wrapper.setProps({
-          opacity: 0.5
+          opacity: 0.5,
         });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        expect(render).toEqual(['default', 'default']);
+        expect(render).toEqual(["default", "default"]);
       });
   });
-  it('Should re-render on isStatic change', () => {
+  it("Should re-render on isStatic change", () => {
     wrapper = mountLayer(ogma, { isStatic: false });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
-        expect(render).toEqual(['default']);
+        expect(render).toEqual(["default"]);
         wrapper.setProps({
-          isStatic: true
+          isStatic: true,
         });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        expect(render).toEqual(['default', 'default']);
+        expect(render).toEqual(["default", "default"]);
       });
   });
-  it('Should re-render on noClear change', () => {
+  it("Should re-render on noClear change", () => {
     wrapper = mountLayer(ogma, { noClear: false });
-    return ogma.view.afterNextFrame()
+    return ogma.view
+      .afterNextFrame()
       .then(() => {
-        expect(render).toEqual(['default']);
+        expect(render).toEqual(["default"]);
         wrapper.setProps({
-          noClear: true
+          noClear: true,
         });
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        expect(render).toEqual(['default', 'default']);
+        expect(render).toEqual(["default", "default"]);
       });
   });
 });

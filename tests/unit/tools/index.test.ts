@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { nextTick } from "vue";
 import {
@@ -49,7 +49,11 @@ toolsToTest.forEach(({ component, tool, name }) => {
     beforeEach(() => {
       graph = {
         nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
-        edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }, { id: 2, source: 2, target: 3 }]
+        edges: [
+          { id: 0, source: 0, target: 1 },
+          { id: 1, source: 1, target: 2 },
+          { id: 2, source: 2, target: 3 },
+        ],
       };
       ogma = new Ogma({ renderer: "canvas", graph });
     });
@@ -65,11 +69,11 @@ toolsToTest.forEach(({ component, tool, name }) => {
     });
     it("should be reactive to props change", () => {
       wrapper = mount(ogma, {
-        enabled: true
+        enabled: true,
       });
       expect(ogma.tools[tool].enabled()).to.equal(true);
       wrapper.setProps({
-        enabled: false
+        enabled: false,
       });
       return nextTick().then(() => {
         expect(ogma.tools[tool].enabled()).to.equal(false);
@@ -77,4 +81,3 @@ toolsToTest.forEach(({ component, tool, name }) => {
     });
   });
 });
-

@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { StyleClass } from "../../../src/components";
 import { StyleClassProps } from "../../../src/hooks";

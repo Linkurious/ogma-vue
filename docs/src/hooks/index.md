@@ -18,7 +18,7 @@ It also allows you to pass `ND` and `ED` generics so that every props and events
 <script setup lang="ts">
 
 import { useOgma, OgmaProps } from '@linkurious/vue-ogma';
-import Ogma  from 'ogma';
+import { Ogma }  from '@linkurious/ogma';
 
 const ogma = new Ogma();
 // here you can pass your own ogma instance
@@ -46,7 +46,7 @@ ogma.generate.random()
 <script setup lang="ts">
 
 import { useOgma, OgmaProps } from '@linkurious/vue-ogma';
-import Ogma  from 'ogma';
+import { Ogma }  from '@linkurious/ogma';
 
 type ND = { name: string, address: string, age: number };
 type ED = { weight: number, type: string };

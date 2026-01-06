@@ -1,7 +1,14 @@
-import Ogma, {
-  StyleRule, EdgeAttributesValue, NodeAttributesValue,
-  EdgeOutput, EdgeDependencies, NodeDependencies,
-  NodeOutput, Edge, Node
+import {
+  Ogma,
+  StyleRule,
+  EdgeAttributesValue,
+  NodeAttributesValue,
+  EdgeOutput,
+  EdgeDependencies,
+  NodeDependencies,
+  NodeOutput,
+  Edge,
+  Node,
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
@@ -20,49 +27,49 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => undefined as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>,
       },
     },
     props: {
       edgeAttributes: {
         type: Object as PropType<EdgeAttributesValue<ED, ND>>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       nodeAttributes: {
         type: Object as PropType<NodeAttributesValue<ND, ED>>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       edgeOutput: {
         type: Object as PropType<EdgeOutput>,
         default: () => undefined,
-        required: false
+        required: false,
       },
       nodeOutput: {
         type: Object as PropType<NodeOutput>,
         default: () => undefined,
-        required: false
+        required: false,
       },
       edgeSelector: {
         type: Function as PropType<(edge: Edge<ED>) => boolean>,
         default: () => true,
-        required: false
+        required: false,
       },
       nodeSelector: {
         type: Function as PropType<(node: Node<ND>) => boolean>,
         default: () => true,
-        required: false
+        required: false,
       },
       edgeDependencies: {
         type: Object as PropType<EdgeDependencies>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
       nodeDependencies: {
         type: Object as PropType<NodeDependencies>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
     },
     beforeUnmount() {
@@ -79,24 +86,36 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
         edgeDependencies: this.edgeDependencies,
         nodeDependencies: this.nodeDependencies,
       });
-      this.$watch((vm) => [vm.edgeAttributes, vm.nodeAttributes, vm.edgeOutput, vm.nodeOutput, vm.edgeSelector, vm.nodeSelector, vm.edgeDependencies, vm.nodeDependencies], () => {
-        styleRule.update({
-          edgeAttributes: this.edgeAttributes,
-          nodeAttributes: this.nodeAttributes,
-          edgeOutput: this.edgeOutput,
-          nodeOutput: this.nodeOutput,
-          edgeSelector: this.edgeSelector,
-          nodeSelector: this.nodeSelector,
-          edgeDependencies: this.edgeDependencies,
-          nodeDependencies: this.nodeDependencies,
-        });
-      }, {
-        deep: true
-      }
+      this.$watch(
+        (vm) => [
+          vm.edgeAttributes,
+          vm.nodeAttributes,
+          vm.edgeOutput,
+          vm.nodeOutput,
+          vm.edgeSelector,
+          vm.nodeSelector,
+          vm.edgeDependencies,
+          vm.nodeDependencies,
+        ],
+        () => {
+          styleRule.update({
+            edgeAttributes: this.edgeAttributes,
+            nodeAttributes: this.nodeAttributes,
+            edgeOutput: this.edgeOutput,
+            nodeOutput: this.nodeOutput,
+            edgeSelector: this.edgeSelector,
+            nodeSelector: this.nodeSelector,
+            edgeDependencies: this.edgeDependencies,
+            nodeDependencies: this.nodeDependencies,
+          });
+        },
+        {
+          deep: true,
+        }
       );
     },
     render() {
       return null;
-    }
+    },
   });
 }
