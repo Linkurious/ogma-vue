@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { mount } from "@vue/test-utils";
 import { describe, beforeEach, it, expect } from "vitest";
 import { nextTick } from "vue";

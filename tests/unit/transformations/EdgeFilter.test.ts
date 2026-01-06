@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { EdgeFilter } from "../../../src/components";
 import { EdgeFilterProps } from "../../../src/hooks";
@@ -12,7 +12,11 @@ describe("EdgeFilter.vue", () => {
   beforeEach(() => {
     graph = {
       nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
-      edges: [{ id: 0, source: 0, target: 1 }, { id: 1, source: 1, target: 2 }, { id: 2, source: 2, target: 3 }]
+      edges: [
+        { id: 0, source: 0, target: 1 },
+        { id: 1, source: 1, target: 2 },
+        { id: 2, source: 2, target: 3 },
+      ],
     };
     ogma = new Ogma({ renderer: "canvas", graph });
   });
@@ -31,7 +35,7 @@ describe("EdgeFilter.vue", () => {
   it("should respect passed options to transformation", () => {
     wrapper = mountEdgeFilter(ogma, {
       duration: 10,
-      enabled: false
+      enabled: false,
     });
     const transformation = ogma.transformations.getList()[0];
     expect(transformation.isEnabled()).to.equal(false);
@@ -43,17 +47,19 @@ describe("EdgeFilter.vue", () => {
       enabled: true,
       options: {
         criteria: () => true,
-      }
+      },
     });
     const transformation = ogma.transformations.getList()[0];
-    return transformation.whenApplied().then(() => {
-      expect(ogma.getEdges().size).to.equal(3);
-      wrapper.setProps({
-        options: {
-          criteria: () => false,
-        }
-      });
-    })
+    return transformation
+      .whenApplied()
+      .then(() => {
+        expect(ogma.getEdges().size).to.equal(3);
+        wrapper.setProps({
+          options: {
+            criteria: () => false,
+          },
+        });
+      })
       .then(() => ogma.transformations.afterNextUpdate())
       .then(() => {
         expect(transformation.isEnabled()).to.equal(true);
@@ -67,9 +73,8 @@ describe("EdgeFilter.vue", () => {
     wrapper = null;
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
-    return new Promise((resolve) => setTimeout(resolve, 200))
-      .then(() =>
-        expect(ogma.styles.getRuleList().length).to.equal(0)
-      );
+    return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
+      expect(ogma.styles.getRuleList().length).to.equal(0)
+    );
   });
 });

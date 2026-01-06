@@ -1,4 +1,4 @@
-import Ogma, { StyleRule, Node, NodeAttributesValue } from "@linkurious/ogma";
+import { Ogma, StyleRule, Node, NodeAttributesValue } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 
 export type NodeRuleProps<ND = unknown, ED = unknown> = {
@@ -10,19 +10,19 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => undefined as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>,
       },
     },
     props: {
       nodeAttributes: {
         type: Object as PropType<NodeAttributesValue<ND, ED>>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       selector: {
         type: Function as PropType<(node: Node<ND>) => boolean>,
         default: () => true,
-        required: false
+        required: false,
       },
     },
     beforeUnmount() {
@@ -31,18 +31,20 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
     mounted() {
       styleRule = (this.ogma as Ogma).styles.addNodeRule(
         this.selector,
-        this.nodeAttributes,
+        this.nodeAttributes
       );
-      this.$watch((vm) => [vm.selector, vm.nodeAttributes], () => {
-        styleRule.update({
-          nodeAttributes: this.nodeAttributes,
-          nodeSelector: this.selector,
-        });
-      }
+      this.$watch(
+        (vm) => [vm.selector, vm.nodeAttributes],
+        () => {
+          styleRule.update({
+            nodeAttributes: this.nodeAttributes,
+            nodeSelector: this.selector,
+          });
+        }
       );
     },
     render() {
       return null;
-    }
+    },
   });
 }

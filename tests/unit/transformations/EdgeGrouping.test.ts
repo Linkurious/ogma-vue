@@ -1,4 +1,4 @@
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { EdgeGrouping } from "../../../src/components";
 import { EdgeGroupingProps } from "../../../src/hooks";

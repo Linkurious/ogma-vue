@@ -1,8 +1,14 @@
-import Ogma, {
-  StyleClass, EdgeAttributesValue, NodeAttributesValue,
-  EdgeOutput, EdgeDependencies, NodeDependencies,
+import {
+  Ogma,
+  StyleClass,
+  EdgeAttributesValue,
+  NodeAttributesValue,
+  EdgeOutput,
+  EdgeDependencies,
+  NodeDependencies,
   NodeOutput,
-  NodeList, EdgeList
+  NodeList,
+  EdgeList,
 } from "@linkurious/ogma";
 import { defineComponent, PropType } from "vue";
 export type StyleClassProps<ND = unknown, ED = unknown> = {
@@ -28,53 +34,53 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
   return defineComponent({
     inject: {
       ogma: {
-        default: () => undefined as unknown as Ogma<ND, ED>
+        default: () => undefined as unknown as Ogma<ND, ED>,
       },
     },
     props: {
       nodes: {
         type: Object as PropType<NodeList<ND, ED>>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
       edges: {
         type: Object as PropType<EdgeList<ED, ND>>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
       edgeAttributes: {
         type: Object as PropType<EdgeAttributesValue<ED, ND>>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       nodeAttributes: {
         type: Object as PropType<NodeAttributesValue<ND, ED>>,
         default: () => ({}),
-        required: false
+        required: false,
       },
       edgeOutput: {
         type: Object as PropType<EdgeOutput>,
         default: () => undefined,
-        required: false
+        required: false,
       },
       nodeOutput: {
         type: Object as PropType<NodeOutput>,
         default: () => undefined,
-        required: false
+        required: false,
       },
       name: {
         type: String as PropType<string>,
-        required: true
+        required: true,
       },
       edgeDependencies: {
         type: Object as PropType<EdgeDependencies>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
       nodeDependencies: {
         type: Object as PropType<NodeDependencies>,
-        default: () => (undefined),
-        required: false
+        default: () => undefined,
+        required: false,
       },
     },
     watch: {
@@ -85,14 +91,14 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
       edges: function (next: EdgeList, prev: EdgeList) {
         // @ts-ignore
         assign(prev || this.ogma.edgeList(), next);
-      }
+      },
     },
     beforeUnmount() {
       // TODO: once 4.6.2 is shipped, uncomment this
       // styleClass.destroy();
     },
     mounted() {
-      const ogma = (this.ogma as Ogma);
+      const ogma = this.ogma as Ogma;
       styleClass = ogma.styles.createClass({
         name: this.name,
         edgeAttributes: this.edgeAttributes,
@@ -102,16 +108,28 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
         edgeDependencies: this.edgeDependencies,
         nodeDependencies: this.nodeDependencies,
       });
-      this.$watch((vm) => [vm.edgeAttributes, vm.nodeAttributes, vm.edgeOutput, vm.nodeOutput, vm.edgeSelector, vm.nodeSelector, vm.edgeDependencies, vm.nodeDependencies], () => {
-        styleClass.update({
-          edgeAttributes: this.edgeAttributes,
-          nodeAttributes: this.nodeAttributes,
-          edgeOutput: this.edgeOutput,
-          nodeOutput: this.nodeOutput,
-          edgeDependencies: this.edgeDependencies,
-          nodeDependencies: this.nodeDependencies,
-        });
-      });
+      this.$watch(
+        (vm) => [
+          vm.edgeAttributes,
+          vm.nodeAttributes,
+          vm.edgeOutput,
+          vm.nodeOutput,
+          vm.edgeSelector,
+          vm.nodeSelector,
+          vm.edgeDependencies,
+          vm.nodeDependencies,
+        ],
+        () => {
+          styleClass.update({
+            edgeAttributes: this.edgeAttributes,
+            nodeAttributes: this.nodeAttributes,
+            edgeOutput: this.edgeOutput,
+            nodeOutput: this.nodeOutput,
+            edgeDependencies: this.edgeDependencies,
+            nodeDependencies: this.nodeDependencies,
+          });
+        }
+      );
       // @ts-ignore
       assign(ogma.nodeList(), this.nodes || ogma.nodeList());
       // @ts-ignore
@@ -119,6 +137,6 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
     },
     render() {
       return null;
-    }
+    },
   });
 }

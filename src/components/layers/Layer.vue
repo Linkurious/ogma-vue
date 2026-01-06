@@ -25,5 +25,5 @@ const props = defineProps({
   level: { type: Number, default: 0 },
 });
 
-useLayer("layer", container, props as Required);
+useLayer("layer", container, props as Required<LayerProps>);
 </script>

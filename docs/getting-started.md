@@ -35,7 +35,7 @@ npm i @linkurious/ogma @linkurious/ogma-vue
 
 <script setup lang="ts">
 import { Ogma as OgmaVue, RawGraph } from "@linkurious/ogma-vue";
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 
 const graph = ref<RawGraph>({
   nodes: [{ id: 1 }, { id: 2 }],
@@ -173,7 +173,7 @@ Here is an example of a component that allows you to enable/disable node groupin
 </template>
 
 <script setup lang="ts">
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 import { inject, onMounted, provide, watch } from "vue";
 import { NodeFilterProps, StyleRuleProps } from "@linkurious/ogma-vue";
 
@@ -235,7 +235,7 @@ Which you can then use within your app:
 import { ref } from "vue";
 import { Ogma, StyleRule, NodeGrouping, StyleRuleProps, Layer } from "@linkurious/ogma-vue";
 import UX from './UX.vue';
-import Ogma from "@linkurious/ogma";
+import { Ogma } from "@linkurious/ogma";
 
 const graph = ref<RawGraph>({
   nodes: [{ id: 1 }, { id: 2 }],
