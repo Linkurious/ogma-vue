@@ -60,7 +60,7 @@
     "gh-pages": "6.1.1",
     "happy-dom": "^20.5.0",
     "jsdoc-to-markdown": "^8.0.0",
-    "jsdom": "^22.1.0",
+    "jsdom": "^28.1.0",
     "naive-ui": "2.35.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "5.5.3",
