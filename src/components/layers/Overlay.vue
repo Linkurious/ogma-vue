@@ -39,7 +39,7 @@ const props = withDefaults(
      * Infinity and -Infinity triggers moveToTop and moveToBottom.
      */
     level: 0,
-  }
+  },
 );
 useLayer("overlay", container, props as Required<OverlayProps>);
 </script>

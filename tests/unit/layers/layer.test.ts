@@ -18,9 +18,7 @@ const mountLayer = createWrapper<LayerProps>(Layer, {
 });
 let wrapper: ReturnType<typeof mountLayer>;
 function checkLayerContent(ogma: Ogma, index: number, expected = defaultSlot) {
-  return expect(
-    ogma.getContainer()!.children[0].children[index].innerHTML
-  ).toContain(expected);
+  return expect(ogma.getContainer()!.children[0].children[index].innerHTML).toContain(expected);
 }
 function checkLayerVisible(ogma: Ogma, visible: boolean, index = 1) {
   const layer = ogma.getContainer()!.children[0].children[index].innerHTML;

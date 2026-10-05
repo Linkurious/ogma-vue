@@ -8,7 +8,7 @@ import {
   useNeighborGeneration,
   useNeighborMerging,
   useNodeCollapsing,
-} from '../hooks';
+} from "../hooks";
 
 export const EdgeFilter = useEdgeFilter();
 export const EdgeGrouping = useEdgeGrouping();
@@ -19,4 +19,3 @@ export const GeoClustering = useGeoClustering();
 export const NeighborGeneration = useNeighborGeneration();
 export const NeighborMerging = useNeighborMerging();
 export const NodeCollapsing = useNodeCollapsing();
-

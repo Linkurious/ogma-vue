@@ -245,29 +245,19 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
       tooltipShow(_payload: EventTypes<ND, ED>["tooltipShow"]) {
         return true;
       },
-      transformationDestroyed(
-        _payload: EventTypes<ND, ED>["transformationDestroyed"]
-      ) {
+      transformationDestroyed(_payload: EventTypes<ND, ED>["transformationDestroyed"]) {
         return true;
       },
-      transformationDisabled(
-        _payload: EventTypes<ND, ED>["transformationDisabled"]
-      ) {
+      transformationDisabled(_payload: EventTypes<ND, ED>["transformationDisabled"]) {
         return true;
       },
-      transformationEnabled(
-        _payload: EventTypes<ND, ED>["transformationEnabled"]
-      ) {
+      transformationEnabled(_payload: EventTypes<ND, ED>["transformationEnabled"]) {
         return true;
       },
-      transformationRefresh(
-        _payload: EventTypes<ND, ED>["transformationRefresh"]
-      ) {
+      transformationRefresh(_payload: EventTypes<ND, ED>["transformationRefresh"]) {
         return true;
       },
-      transformationSetIndex(
-        _payload: EventTypes<ND, ED>["transformationSetIndex"]
-      ) {
+      transformationSetIndex(_payload: EventTypes<ND, ED>["transformationSetIndex"]) {
         return true;
       },
       updateEdgeData(_payload: EventTypes<ND, ED>["updateEdgeData"]) {
@@ -345,7 +335,7 @@ export function useOgma<ND = unknown, ED = unknown>(og?: Ogma<ND, ED>) {
           ref: "container",
           class: "ogma-container",
         },
-        this.$slots.default?.({})
+        this.$slots.default?.({}),
       );
     },
   });

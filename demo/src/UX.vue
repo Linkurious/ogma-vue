@@ -22,11 +22,7 @@
 <script setup lang="ts">
 import { Ogma } from "@linkurious/ogma";
 import { inject, onMounted, provide, watch } from "vue";
-import {
-  NodeGroupingProps,
-  NodeFilterProps,
-  StyleRuleProps,
-} from "../../src/main";
+import { NodeGroupingProps, NodeFilterProps, StyleRuleProps } from "../../src/main";
 
 const props = defineProps<{
   grouping: NodeGroupingProps;

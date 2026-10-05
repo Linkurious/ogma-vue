@@ -63,11 +63,7 @@ By default, `OgmaVue` will re-emit all of them, and you can register to them lik
 If you want to optimize performances, you can pass as a prop the list of events you want to register to:
 
 ```vue
-<OgmaVue
-  :events="[addNodes, addEdges]"
-  :@addNodes="onAddNodes"
-  :@addEdges="onAddEdges"
-/>
+<OgmaVue :events="[addNodes, addEdges]" :@addNodes="onAddNodes" :@addEdges="onAddEdges" />
 ```
 
 This way, the Ogma component will only register to `addNodes` and `addEdges` events, and will ignore all others.

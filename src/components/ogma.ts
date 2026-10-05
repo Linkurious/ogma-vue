@@ -1,3 +1,3 @@
-import { useOgma } from '../hooks';
+import { useOgma } from "../hooks";
 
 export const Ogma = useOgma();

@@ -1,18 +1,5 @@
-import {
-  Ogma,
-  Layer,
-  Overlay,
-  DrawingFunction,
-  CanvasLayer,
-} from "@linkurious/ogma";
-import {
-  watch,
-  onBeforeUnmount,
-  onMounted,
-  inject,
-  Ref,
-  watchEffect,
-} from "vue";
+import { Ogma, Layer, Overlay, DrawingFunction, CanvasLayer } from "@linkurious/ogma";
+import { watch, onBeforeUnmount, onMounted, inject, Ref, watchEffect } from "vue";
 
 type TypeMap<T, P> = {
   type: T;
@@ -44,26 +31,20 @@ type OverlayP = TypeMap<"overlay", OverlayProps>;
 type CanvasP = TypeMap<"canvas", CanvasLayerProps>;
 
 export type Layers = LayerP | OverlayP | CanvasP;
-function isLayer(type: string, props: Layers["props"]): props is LayerProps {
+function isLayer(type: string, _props: Layers["props"]): _props is LayerProps {
   return type === "layer";
 }
-function isOverlay(
-  type: string,
-  props: Layers["props"]
-): props is OverlayProps {
+function isOverlay(type: string, _props: Layers["props"]): _props is OverlayProps {
   return type === "overlay";
 }
-function isCanvas(
-  type: string,
-  props: Layers["props"]
-): props is CanvasLayerProps {
+function isCanvas(type: string, _props: Layers["props"]): _props is CanvasLayerProps {
   return type === "canvas";
 }
 
 export function useLayer<L extends Layers>(
   type: L["type"],
   container: Ref<HTMLElement | undefined>,
-  props: Required<L["props"]>
+  props: Required<L["props"]>,
 ) {
   // type of layer is Layer if type is 'layer' or Overlay if type is 'overlay'
   let layer: L["type"] extends "layer"
@@ -100,7 +81,7 @@ export function useLayer<L extends Layers>(
       options.noClear = props.noClear;
       const canvasLayer = ogma.layers.addCanvasLayer(
         props.render,
-        options as Required<CanvasLayerOptions>
+        options as Required<CanvasLayerOptions>,
       );
       canvasLayer.setOpacity(props.opacity === undefined ? 1 : props.opacity);
       return canvasLayer;
@@ -141,7 +122,7 @@ export function useLayer<L extends Layers>(
       options.isStatic = props.isStatic;
       options.noClear = props.noClear;
       (layer as CanvasLayer).refresh(props.render);
-    }
+    },
   );
   watch(
     () => {
@@ -154,7 +135,7 @@ export function useLayer<L extends Layers>(
       }
       layer.setPosition(props.position);
       layer.setSize(props.size);
-    }
+    },
   );
 
   onMounted(() => {

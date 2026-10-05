@@ -74,7 +74,7 @@ describe("NodeFilter.vue", () => {
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
     return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
-      expect(ogma.styles.getRuleList().length).to.equal(0)
+      expect(ogma.styles.getRuleList().length).to.equal(0),
     );
   });
 });

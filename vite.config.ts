@@ -6,16 +6,16 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      include: ['src/**/*.{vue,ts}'],
+      include: ["src/**/*.{vue,ts}"],
       staticImport: true,
-      outDir: 'dist/types',
-      clearPureImport: false
-    })
+      outDir: "dist/types",
+      clearPureImport: false,
+    }),
   ],
   build: {
     lib: {
       // src/indext.ts is where we have exported the component(s)
-      entry: resolve(__dirname, "src/main.ts"),
+      entry: resolve(import.meta.dirname, "src/main.ts"),
       name: "Ogma-vue",
       // the name of the output files when the build is run
       fileName: "ogma-vue",

@@ -111,7 +111,7 @@ export function useStyleRule<ND = unknown, ED = unknown>() {
         },
         {
           deep: true,
-        }
+        },
       );
     },
     render() {

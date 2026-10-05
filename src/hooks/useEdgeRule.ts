@@ -29,10 +29,7 @@ export function useEdgeRule<ND = unknown, ED = unknown>() {
       styleRule.destroy();
     },
     mounted() {
-      styleRule = (this.ogma as Ogma).styles.addEdgeRule(
-        this.selector,
-        this.edgeAttributes
-      );
+      styleRule = (this.ogma as Ogma).styles.addEdgeRule(this.selector, this.edgeAttributes);
       this.$watch(
         (vm) => [vm.selector, vm.edgeAttributes],
         () => {
@@ -40,7 +37,7 @@ export function useEdgeRule<ND = unknown, ED = unknown>() {
             edgeAttributes: this.edgeAttributes,
             edgeSelector: this.selector,
           });
-        }
+        },
       );
     },
     render() {

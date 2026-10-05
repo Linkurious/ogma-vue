@@ -1,0 +1,5 @@
+{
+  "extends": ["./node_modules/@linkurious/eslint-config-ogma/.oxfmtrc.json"],
+  "vueIndentScriptAndStyle": false,
+  "ignorePatterns": ["dist", "docs/.vitepress/dist", "reports", "coverage", "package-lock.json"]
+}

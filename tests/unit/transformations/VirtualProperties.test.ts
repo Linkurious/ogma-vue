@@ -6,10 +6,7 @@ import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountVirtualProperties = createWrapper<VirtualPropertiesProps>(
-  VirtualProperties,
-  {}
-);
+const mountVirtualProperties = createWrapper<VirtualPropertiesProps>(VirtualProperties, {});
 let wrapper: ReturnType<typeof mountVirtualProperties>;
 describe("VirtualProperties.vue", () => {
   beforeEach(() => {
@@ -48,12 +45,7 @@ describe("VirtualProperties.vue", () => {
       .then(() => {
         const transformation = ogma.transformations.getList()[0];
         expect(transformation.isEnabled()).to.equal(true);
-        expect(ogma.getNodes().getData()).toEqual([
-          undefined,
-          undefined,
-          { test: 1 },
-          undefined,
-        ]);
+        expect(ogma.getNodes().getData()).toEqual([undefined, undefined, { test: 1 }, undefined]);
         wrapper.setProps({
           options: {
             nodeSelector: (node) => node.getId() === 0,
@@ -62,12 +54,7 @@ describe("VirtualProperties.vue", () => {
         return ogma.transformations.afterNextUpdate();
       })
       .then(() => {
-        expect(ogma.getNodes().getData()).toEqual([
-          { test: 1 },
-          undefined,
-          undefined,
-          undefined,
-        ]);
+        expect(ogma.getNodes().getData()).toEqual([{ test: 1 }, undefined, undefined, undefined]);
       });
   });
 
@@ -97,7 +84,7 @@ describe("VirtualProperties.vue", () => {
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
     return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
-      expect(ogma.styles.getRuleList().length).to.equal(0)
+      expect(ogma.styles.getRuleList().length).to.equal(0),
     );
   });
 });
