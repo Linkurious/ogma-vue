@@ -2,7 +2,7 @@ import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { EdgeRule } from "../../../src/components";
 import { EdgeRuleProps } from "../../../src/hooks";
-import { createWrapper } from "../utils";
+import { createWrapper, DEFAULT_COLOR } from "../utils";
 
 let ogma: Ogma;
 let graph;
@@ -40,7 +40,7 @@ describe("EdgeRule.vue", () => {
     });
     return ogma.view.afterNextFrame().then(() => {
       const colors = ogma.getEdges().getAttribute("color");
-      expect(colors).to.have.same.members(["red", "grey"]);
+      expect(colors).to.have.same.members(["red", DEFAULT_COLOR]);
     });
   });
 
@@ -55,7 +55,7 @@ describe("EdgeRule.vue", () => {
       .afterNextFrame()
       .then(() => {
         const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(colors).to.have.same.members(["red", DEFAULT_COLOR]);
         wrapper.setProps({
           selector: (e) => e.getId() === 1,
         });
@@ -63,7 +63,7 @@ describe("EdgeRule.vue", () => {
       })
       .then(() => {
         const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(colors).to.have.same.members(["red", DEFAULT_COLOR]);
       });
   });
 
@@ -78,7 +78,7 @@ describe("EdgeRule.vue", () => {
       .afterNextFrame()
       .then(() => {
         const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["red", "grey"]);
+        expect(colors).to.have.same.members(["red", DEFAULT_COLOR]);
         wrapper.setProps({
           edgeAttributes: {
             color: "blue",
@@ -88,7 +88,7 @@ describe("EdgeRule.vue", () => {
       })
       .then(() => {
         const colors = ogma.getEdges().getAttribute("color");
-        expect(colors).to.have.same.members(["blue", "grey"]);
+        expect(colors).to.have.same.members(["blue", DEFAULT_COLOR]);
       });
   });
 

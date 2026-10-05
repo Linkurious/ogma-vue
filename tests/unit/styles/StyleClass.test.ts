@@ -2,7 +2,7 @@ import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { StyleClass } from "../../../src/components";
 import { StyleClassProps } from "../../../src/hooks";
-import { createWrapper } from "../utils";
+import { createWrapper, DEFAULT_COLOR } from "../utils";
 
 let ogma: Ogma;
 let graph;
@@ -83,9 +83,9 @@ describe("StyleClass.vue", () => {
       .then(() => ogma.view.afterNextFrame())
       .then(() => {
         const nodeColors = ogma.getNodes().getAttribute("color");
-        expect(nodeColors).to.have.same.members(["grey", "red", "red"]);
+        expect(nodeColors).to.have.same.members([DEFAULT_COLOR, "red", "red"]);
         const edgeColors = ogma.getNodes().getAttribute("color");
-        expect(edgeColors).to.have.same.members(["grey", "red", "red"]);
+        expect(edgeColors).to.have.same.members([DEFAULT_COLOR, "red", "red"]);
         wrapper.setProps({
           nodes: ogma.getNodes().slice(1, 2),
           edges: ogma.getEdges().slice(1, 2),
@@ -94,9 +94,9 @@ describe("StyleClass.vue", () => {
       })
       .then(() => {
         const nodeColors = ogma.getNodes().getAttribute("color");
-        expect(nodeColors).to.have.same.members(["grey", "red", "grey"]);
+        expect(nodeColors).to.have.same.members([DEFAULT_COLOR, "red", DEFAULT_COLOR]);
         const edgeColors = ogma.getNodes().getAttribute("color");
-        expect(edgeColors).to.have.same.members(["grey", "red", "grey"]);
+        expect(edgeColors).to.have.same.members([DEFAULT_COLOR, "red", DEFAULT_COLOR]);
       });
   });
 
@@ -127,9 +127,9 @@ describe("StyleClass.vue", () => {
       })
       .then(() => {
         const nodeColors = ogma.getNodes().getAttribute("color");
-        expect(nodeColors).to.have.same.members(["green", "grey", "grey"]);
+        expect(nodeColors).to.have.same.members(["green", DEFAULT_COLOR, DEFAULT_COLOR]);
         const edgeColors = ogma.getNodes().getAttribute("color");
-        expect(edgeColors).to.have.same.members(["green", "grey", "grey"]);
+        expect(edgeColors).to.have.same.members(["green", DEFAULT_COLOR, DEFAULT_COLOR]);
       });
   });
 

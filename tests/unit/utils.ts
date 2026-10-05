@@ -17,3 +17,6 @@ export function createWrapper<T>(component, options: ComponentMountingOptions<T>
       },
     });
 }
+
+/** Default node/edge color in Ogma's built-in theme */
+export const DEFAULT_COLOR = "#617083";

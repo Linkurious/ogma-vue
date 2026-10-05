@@ -2,7 +2,7 @@ import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { StyleRule } from "../../../src/components";
 import { StyleRuleProps } from "../../../src/hooks";
-import { createWrapper } from "../utils";
+import { createWrapper, DEFAULT_COLOR } from "../utils";
 
 let ogma: Ogma;
 let graph;
@@ -43,8 +43,12 @@ describe("StyleRule.vue", () => {
       },
     });
     return ogma.view.afterNextFrame().then(() => {
-      expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["red", "grey", "grey"]);
-      expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", "grey"]);
+      expect(ogma.getNodes().getAttribute("color")).to.have.same.members([
+        "red",
+        DEFAULT_COLOR,
+        DEFAULT_COLOR,
+      ]);
+      expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", DEFAULT_COLOR]);
     });
   });
 
@@ -62,8 +66,12 @@ describe("StyleRule.vue", () => {
     return ogma.view
       .afterNextFrame()
       .then(() => {
-        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["red", "grey", "grey"]);
-        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", "grey"]);
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members([
+          "red",
+          DEFAULT_COLOR,
+          DEFAULT_COLOR,
+        ]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", DEFAULT_COLOR]);
         wrapper.setProps({
           nodeSelector: (e) => e.getId() === 1,
           edgeSelector: (e) => e.getId() === 1,
@@ -71,8 +79,12 @@ describe("StyleRule.vue", () => {
         return ogma.view.afterNextFrame();
       })
       .then(() => {
-        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["grey", "red", "grey"]);
-        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["grey", "red"]);
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members([
+          DEFAULT_COLOR,
+          "red",
+          DEFAULT_COLOR,
+        ]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members([DEFAULT_COLOR, "red"]);
       });
   });
 
@@ -90,8 +102,12 @@ describe("StyleRule.vue", () => {
     return ogma.view
       .afterNextFrame()
       .then(() => {
-        expect(ogma.getNodes().getAttribute("color")).to.have.same.members(["red", "grey", "grey"]);
-        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", "grey"]);
+        expect(ogma.getNodes().getAttribute("color")).to.have.same.members([
+          "red",
+          DEFAULT_COLOR,
+          DEFAULT_COLOR,
+        ]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["red", DEFAULT_COLOR]);
         wrapper.setProps({
           nodeAttributes: {
             color: "blue",
@@ -105,10 +121,10 @@ describe("StyleRule.vue", () => {
       .then(() => {
         expect(ogma.getNodes().getAttribute("color")).to.have.same.members([
           "blue",
-          "grey",
-          "grey",
+          DEFAULT_COLOR,
+          DEFAULT_COLOR,
         ]);
-        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["blue", "grey"]);
+        expect(ogma.getEdges().getAttribute("color")).to.have.same.members(["blue", DEFAULT_COLOR]);
       });
   });
 
