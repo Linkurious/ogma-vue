@@ -52,7 +52,6 @@
     "@linkurious/eslint-config-ogma": "3.0.0-beta",
     "@vitejs/plugin-vue": "6.0.9",
     "@vue/test-utils": "^2.4.1",
-    "canvas": "2.11.2",
     "concurrently": "^7.1.0",
     "gh-pages": "6.1.1",
     "happy-dom": "^20.5.0",
