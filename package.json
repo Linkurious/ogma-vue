@@ -1,38 +1,10 @@
 {
   "name": "@linkurious/ogma-vue",
-  "description": "Vue 3 wrapper for Ogma",
-  "author": "Linkurious SAS",
   "version": "1.0.1",
+  "private": false,
+  "description": "Vue 3 wrapper for Ogma",
   "license": "Apache-2.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite -c demo/vite.config.ts",
-    "build": "vite build",
-    "test": "vitest -c tests/unit/vitest.config.ts",
-    "test:unit": "vitest run -c tests/unit/vitest.config.ts  --reporter=junit --reporter=default --outputFile reports/unit/junit-test-results.xml",
-    "lint:ci": "eslint -f checkstyle -o reports/checkstyle.xml --ext ts --ext js src ./tests/**/*.test.ts",
-    "lint": "eslint --ext ts --ext js src ./tests/**/*.test.ts",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "predocs:publish": "npm run docs:build",
-    "docs:publish": "gh-pages -t --nojekyll -d docs/.vitepress/dist",
-    "upload": "npm run docs:publish",
-    "postversion": "sync_versions",
-    "help": "vue-cli-service help build",
-    "prepack": "node scripts/clean-package.js",
-    "bump:patch": "npm version patch --no-git-tag-version"
-  },
-  "main": "dist/ogma-vue.js",
-  "types": "dist/types/main.d.ts",
-  "module": "dist/ogma-vue.js",
-  "exports": {
-    ".": {
-      "types": "./dist/types/main.d.ts",
-      "import": "./dist/ogma-vue.js",
-      "require": "./dist/ogma-vue.umd.cjs"
-    }
-  },
+  "author": "Linkurious SAS",
   "files": [
     "dist/ogma-vue.js",
     "dist/ogma-vue.umd.cjs",
@@ -40,45 +12,64 @@
     "README.md",
     "LICENSE"
   ],
+  "type": "module",
+  "main": "dist/ogma-vue.js",
+  "module": "dist/ogma-vue.js",
+  "types": "dist/types/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/main.d.ts",
+      "import": "./dist/ogma-vue.js",
+      "require": "./dist/ogma-vue.umd.cjs"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
-  "private": false,
-  "peerDependencies": {
-    "@linkurious/ogma": ">=5.3.8",
-    "vue": "3.4.7"
+  "scripts": {
+    "dev": "vite -c demo/vite.config.ts",
+    "build": "vite build",
+    "test": "vitest -c tests/unit/vitest.config.ts",
+    "test:unit": "vitest run -c tests/unit/vitest.config.ts  --reporter=junit --reporter=default --outputFile reports/unit/junit-test-results.xml",
+    "lint:ci": "mkdir -p reports/lint && oxlint -f checkstyle > reports/checkstyle.xml; oxlint -f junit > reports/lint/junit-lint-results.xml",
+    "lint": "oxlint",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "predocs:publish": "npm run docs:build",
+    "docs:publish": "gh-pages -t --nojekyll -d docs/.vitepress/dist",
+    "upload": "npm run docs:publish",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "postversion": "sync_versions",
+    "help": "vue-cli-service help build",
+    "prepack": "node scripts/clean-package.js",
+    "bump:patch": "npm version patch --no-git-tag-version",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check ."
   },
   "devDependencies": {
-    "@linkurious/code-tools": "0.0.14",
-    "@linkurious/eslint-config-ogma": "1.0.5",
-    "@typescript-eslint/eslint-plugin": "^8.52.0",
-    "@vitejs/plugin-vue": "^4.4.1",
+    "@linkurious/code-tools": "0.2.0",
+    "@linkurious/eslint-config-ogma": "3.0.0-beta",
+    "@vitejs/plugin-vue": "6.0.9",
     "@vue/test-utils": "^2.4.1",
-    "canvas": "^2.11.2",
+    "canvas": "2.11.2",
     "concurrently": "^7.1.0",
-    "eslint-plugin-vue": "^9.19.2",
     "gh-pages": "6.1.1",
     "happy-dom": "^20.5.0",
     "jsdoc-to-markdown": "^8.0.0",
     "jsdom": "^22.1.0",
     "naive-ui": "2.35.0",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "5.5.3",
-    "vite": "4.5.3",
+    "vite": "8.3.1",
     "vite-plugin-dts": "^3.7.0",
     "vitepress": "^1.0.0-rc.32",
-    "vitest": "^3.2.6"
+    "vitest": "5.0.2"
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "@linkurious/eslint-config-ogma",
-      "plugin:vue/vue3-recommended"
-    ],
-    "rules": {
-      "@typescript-eslint/ban-ts-comment": 0,
-      "promise/catch-or-return": 0,
-      "promise/always-return": 0
-    }
+  "peerDependencies": {
+    "@linkurious/ogma": ">=5.3.8",
+    "vue": "3.4.7"
   }
 }

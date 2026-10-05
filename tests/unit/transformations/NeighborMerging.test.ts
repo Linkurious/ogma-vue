@@ -6,10 +6,7 @@ import { createWrapper } from "../utils";
 
 let ogma: Ogma;
 let graph;
-const mountNeighborMerging = createWrapper<NeighborMergingProps>(
-  NeighborMerging,
-  {}
-);
+const mountNeighborMerging = createWrapper<NeighborMergingProps>(NeighborMerging, {});
 let wrapper: ReturnType<typeof mountNeighborMerging>;
 describe("NeighborMerging.vue", () => {
   beforeEach(() => {
@@ -78,7 +75,7 @@ describe("NeighborMerging.vue", () => {
     // seems like tere is no other option: nextTick or ogma.view.afterNextFrame
     // timeouts.
     return new Promise((resolve) => setTimeout(resolve, 200)).then(() =>
-      expect(ogma.styles.getRuleList().length).to.equal(0)
+      expect(ogma.styles.getRuleList().length).to.equal(0),
     );
   });
 });

@@ -1,8 +1,12 @@
 import {
-  useConnectNodes, useLasso,
-  useLegend, useRectangleSelect,
-  useResize, useRewire, useSnapping
-} from '../hooks';
+  useConnectNodes,
+  useLasso,
+  useLegend,
+  useRectangleSelect,
+  useResize,
+  useRewire,
+  useSnapping,
+} from "../hooks";
 
 export const Snapping = useSnapping();
 export const ConnectNodes = useConnectNodes();

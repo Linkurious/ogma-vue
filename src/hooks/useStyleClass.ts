@@ -128,7 +128,7 @@ export function useStyleClass<ND = unknown, ED = unknown>() {
             edgeDependencies: this.edgeDependencies,
             nodeDependencies: this.nodeDependencies,
           });
-        }
+        },
       );
       // @ts-ignore
       assign(ogma.nodeList(), this.nodes || ogma.nodeList());

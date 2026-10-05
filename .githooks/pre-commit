@@ -1,0 +1,7 @@
+#!/bin/sh
+# Format and lint staged files (oxfmt + oxlint).
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|js|vue|json|md)$' | grep -v package-lock.json)
+[ -z "$files" ] && exit 0
+echo "$files" | xargs npx oxfmt --write && echo "$files" | xargs git add
+lint=$(echo "$files" | grep -E '\.(ts|js|vue)$')
+[ -n "$lint" ] && echo "$lint" | xargs npx oxlint

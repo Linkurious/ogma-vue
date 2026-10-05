@@ -29,10 +29,7 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
       styleRule.destroy();
     },
     mounted() {
-      styleRule = (this.ogma as Ogma).styles.addNodeRule(
-        this.selector,
-        this.nodeAttributes
-      );
+      styleRule = (this.ogma as Ogma).styles.addNodeRule(this.selector, this.nodeAttributes);
       this.$watch(
         (vm) => [vm.selector, vm.nodeAttributes],
         () => {
@@ -40,7 +37,7 @@ export function useNodeRule<ND = unknown, ED = unknown>() {
             nodeAttributes: this.nodeAttributes,
             nodeSelector: this.selector,
           });
-        }
+        },
       );
     },
     render() {

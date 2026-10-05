@@ -18,11 +18,8 @@ const mountLayer = createWrapper<OverlayProps>(Overlay, {
 });
 let wrapper: ReturnType<typeof mountLayer>;
 function getTranslation() {
-  const transform =
-    ogma.getContainer()!.children[0].children[1].style.transform;
-  const [_, x, y] = transform.match(
-    /rotate\(\d+rad\) translate\((\d+)px, (\d+)px\)/
-  );
+  const transform = ogma.getContainer()!.children[0].children[1].style.transform;
+  const [, x, y] = transform.match(/rotate\(\d+rad\) translate\((\d+)px, (\d+)px\)/);
   return { x: parseInt(x), y: parseInt(y) };
 }
 

@@ -158,22 +158,20 @@ function useTransformations<
           indexChanged: "transformationSetIndex",
           destroyed: "transformationDestroyed",
         };
-        Object.keys(events === "all" ? validEvents : events).forEach(
-          (event) => {
+        Object.keys(events === "all" ? validEvents : events).forEach((event) => {
+          // @ts-ignore
+          const ogmaEvent = validEvents[event];
+          if (!ogmaEvent) return;
+          // @ts-ignore
+          const listenner = ({ target, index }) => {
+            if (target !== transformation) return;
             // @ts-ignore
-            const ogmaEvent = validEvents[event];
-            if (!ogmaEvent) return;
-            // @ts-ignore
-            const listenner = ({ target, index }) => {
-              if (target !== transformation) return;
-              // @ts-ignore
-              this.$emit(event, transformation, index);
-            };
-            // @ts-ignore
-            listenners.push(listenner);
-            (this.ogma as Ogma).events.on(ogmaEvent, listenner);
-          }
-        );
+            this.$emit(event, transformation, index);
+          };
+          // @ts-ignore
+          listenners.push(listenner);
+          (this.ogma as Ogma).events.on(ogmaEvent, listenner);
+        });
       },
       unRegisterEvents() {
         if (!this.ogma) return;
@@ -188,112 +186,74 @@ function useTransformations<
   });
 }
 
-export type NodeGroupingProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<NodeGroupingOptions<ND, ED>>;
+export type NodeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<
+  NodeGroupingOptions<ND, ED>
+>;
 export function useNodeGrouping<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    NodeGroupingOptions<ND, ED>,
-    NodeGrouping<ND, ED>,
-    ND,
-    ED
-  >("addNodeGrouping");
+  return useTransformations<NodeGroupingOptions<ND, ED>, NodeGrouping<ND, ED>, ND, ED>(
+    "addNodeGrouping",
+  );
 }
-export type EdgeGroupingProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<EdgeGroupingOptions<ND, ED>>;
+export type EdgeGroupingProps<ND = unknown, ED = unknown> = PropsTransformations<
+  EdgeGroupingOptions<ND, ED>
+>;
 export function useEdgeGrouping<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    EdgeGroupingOptions<ND, ED>,
-    EdgeGrouping<ED, ND>,
-    ND,
-    ED
-  >("addEdgeGrouping");
+  return useTransformations<EdgeGroupingOptions<ND, ED>, EdgeGrouping<ED, ND>, ND, ED>(
+    "addEdgeGrouping",
+  );
 }
 export type NodeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<
   NodeFilterOptions<ND, ED>
 >;
 export function useNodeFilter<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    NodeFilterOptions<ND, ED>,
-    NodeFilter<ND, ED>,
-    ND,
-    ED
-  >("addNodeFilter");
+  return useTransformations<NodeFilterOptions<ND, ED>, NodeFilter<ND, ED>, ND, ED>("addNodeFilter");
 }
 export type EdgeFilterProps<ND = unknown, ED = unknown> = PropsTransformations<
   EdgeFilterOptions<ND, ED>
 >;
 export function useEdgeFilter<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    EdgeFilterOptions<ND, ED>,
-    EdgeFilter<ND, ED>,
-    ND,
-    ED
-  >("addEdgeFilter");
+  return useTransformations<EdgeFilterOptions<ND, ED>, EdgeFilter<ND, ED>, ND, ED>("addEdgeFilter");
 }
-export type NeighborGenerationProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<NeighborGenerationOptions<ND, ED>>;
+export type NeighborGenerationProps<ND = unknown, ED = unknown> = PropsTransformations<
+  NeighborGenerationOptions<ND, ED>
+>;
 export function useNeighborGeneration<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    NeighborGenerationOptions<ND, ED>,
-    NeighborGeneration<ND, ED>,
-    ND,
-    ED
-  >("addNeighborGeneration");
+  return useTransformations<NeighborGenerationOptions<ND, ED>, NeighborGeneration<ND, ED>, ND, ED>(
+    "addNeighborGeneration",
+  );
 }
-export type GeoClusteringProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<GeoClusteringOptions<ND, ED>>;
+export type GeoClusteringProps<ND = unknown, ED = unknown> = PropsTransformations<
+  GeoClusteringOptions<ND, ED>
+>;
 export function useGeoClustering<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    GeoClusteringOptions<ND, ED>,
-    GeoClustering<ND, ED>,
-    ND,
-    ED
-  >("addGeoClustering");
+  return useTransformations<GeoClusteringOptions<ND, ED>, GeoClustering<ND, ED>, ND, ED>(
+    "addGeoClustering",
+  );
 }
-export type NeighborMergingProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<NeighborMergingOptions<ND, ED>>;
+export type NeighborMergingProps<ND = unknown, ED = unknown> = PropsTransformations<
+  NeighborMergingOptions<ND, ED>
+>;
 export function useNeighborMerging<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    NeighborMergingOptions<ND, ED>,
-    NeighborMerging<ND, ED>,
-    ND,
-    ED
-  >("addNeighborMerging");
+  return useTransformations<NeighborMergingOptions<ND, ED>, NeighborMerging<ND, ED>, ND, ED>(
+    "addNeighborMerging",
+  );
 }
 // export function useNodeClustering<ND = unknown, ED = unknown>() {
 //   return useTransformations<NodeClusteringOptions<ND, ED>, NodeClustering<ND, ED>, ND, ED>('addNodeClustering');
 // }
-export type NodeCollapsingProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<NodeCollapsingOptions<ND, ED>>;
+export type NodeCollapsingProps<ND = unknown, ED = unknown> = PropsTransformations<
+  NodeCollapsingOptions<ND, ED>
+>;
 export function useNodeCollapsing<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    NodeCollapsingOptions<ND, ED>,
-    NodeCollapsing<ND, ED>,
-    ND,
-    ED
-  >("addNodeCollapsing");
+  return useTransformations<NodeCollapsingOptions<ND, ED>, NodeCollapsing<ND, ED>, ND, ED>(
+    "addNodeCollapsing",
+  );
 }
-export type VirtualPropertiesProps<
-  ND = unknown,
-  ED = unknown,
-> = PropsTransformations<VirtualPropertiesOptions<ND, ED>>;
+export type VirtualPropertiesProps<ND = unknown, ED = unknown> = PropsTransformations<
+  VirtualPropertiesOptions<ND, ED>
+>;
 export function useVirtualProperties<ND = unknown, ED = unknown>() {
-  return useTransformations<
-    VirtualPropertiesOptions<ND, ED>,
-    VirtualProperties<ND, ED>,
-    ND,
-    ED
-  >("addVirtualProperties");
+  return useTransformations<VirtualPropertiesOptions<ND, ED>, VirtualProperties<ND, ED>, ND, ED>(
+    "addVirtualProperties",
+  );
 }

@@ -3,9 +3,17 @@
     <Ogma :graph="graph" :width="width" :height="height">
       <template>
         <StyleRule :node-attributes="rule.nodeAttributes" />
-        <NodeGrouping :options="grouping.options" :enabled="grouping.enabled" @enabled="onGroupingEnabled"
-          @disabled="onGroupingDisabled" />
-        <NodeFilter :options="filter.options" :enabled="filter.enabled" @enabled="onFilterEnabled" />-->
+        <NodeGrouping
+          :options="grouping.options"
+          :enabled="grouping.enabled"
+          @enabled="onGroupingEnabled"
+          @disabled="onGroupingDisabled"
+        />
+        <NodeFilter
+          :options="filter.options"
+          :enabled="filter.enabled"
+          @enabled="onFilterEnabled"
+        />-->
         <Layer>
           <UX v-model:grouping="grouping" v-model:filter="filter" v-model:rule="rule" />
         </Layer>
@@ -29,8 +37,8 @@ import O from "@linkurious/ogma/dev";
 import UX from "./UX.vue";
 import { ref, watch } from "vue";
 
-type ND = { id: number; };
-type ED = { source: number; target: number; };
+type ND = { id: number };
+type ED = { source: number; target: number };
 
 const NodeGrouping = useNodeGrouping<ND, ED>();
 const NodeFilter = useNodeFilter<ND, ED>();
@@ -51,7 +59,7 @@ const filter = ref<NodeFilterProps<ND, ED>>({
 const rule = ref<StyleRuleProps>({
   nodeAttributes: {
     color: "rgba(74, 160, 100, 1)",
-    opacity: node => node.isVirtual() ? 0.5 : 1,
+    opacity: (node) => (node.isVirtual() ? 0.5 : 1),
   },
 });
 
@@ -66,16 +74,15 @@ const grouping = ref<NodeGroupingProps<ND, ED>>({
 });
 
 watch([filter], ([n]) => {
-  console.log('filter', n);
+  console.log("filter", n);
 });
 function onGroupingEnabled() {
   ogma.layouts.force({ duration: 1000, locate: true });
 }
 function onGroupingDisabled() {
-  ogma.transformations.afterNextUpdate()
-    .then(() => {
-      ogma.layouts.force({ duration: 1000, locate: true });
-    });
+  ogma.transformations.afterNextUpdate().then(() => {
+    ogma.layouts.force({ duration: 1000, locate: true });
+  });
 }
 function onFilterEnabled(filter) {
   console.log("filter enabled", filter);
@@ -83,7 +90,6 @@ function onFilterEnabled(filter) {
 </script>
 
 <style scoped></style>
-
 
 <style>
 body {

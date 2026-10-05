@@ -1,13 +1,7 @@
 import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect } from "vitest";
 import { nextTick } from "vue";
-import {
-  ConnectNodes,
-  Lasso,
-  Legend,
-  Rewire,
-  Snapping,
-} from "../../../src/components";
+import { ConnectNodes, Lasso, Legend, Rewire, Snapping } from "../../../src/components";
 import { createWrapper } from "../utils";
 
 const toolsToTest = [

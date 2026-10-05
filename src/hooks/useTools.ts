@@ -42,7 +42,7 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string): Component
           if (isEnabled) {
             this.enable();
           }
-        }
+        },
       );
     },
     beforeUnmount() {
@@ -68,15 +68,11 @@ export function useTools<O, ND = unknown, ED = unknown>(name: string): Component
 export function useSnapping() {
   return useTools("snapping");
 }
-export type ConnectNodeProps<ND = unknown, ED = unknown> = ToolProps<
-  ConnectNodesOptions<ND, ED>
->;
+export type ConnectNodeProps<ND = unknown, ED = unknown> = ToolProps<ConnectNodesOptions<ND, ED>>;
 export function useConnectNodes<ND = unknown, ED = unknown>() {
   return useTools<ConnectNodesOptions<ND, ED>, ND, ED>("connectNodes");
 }
-export type LassoProps<ND = unknown, ED = unknown> = ToolProps<
-  LassoOptions<ND, ED>
->;
+export type LassoProps<ND = unknown, ED = unknown> = ToolProps<LassoOptions<ND, ED>>;
 export function useLasso<ND = unknown, ED = unknown>() {
   return useTools<LassoOptions<ND, ED>, ND, ED>("lasso");
 }

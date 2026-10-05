@@ -40,7 +40,7 @@ const props = withDefaults(
     noClear: false,
     opacity: 1,
     visible: true,
-  }
+  },
 );
 useLayer("canvas", container, props as Required<CanvasLayerProps>);
 </script>
