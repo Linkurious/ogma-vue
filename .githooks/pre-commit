@@ -4,4 +4,4 @@ files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|js|vue|
 [ -z "$files" ] && exit 0
 echo "$files" | xargs npx oxfmt --write && echo "$files" | xargs git add
 lint=$(echo "$files" | grep -E '\.(ts|js|vue)$')
-[ -n "$lint" ] && echo "$lint" | xargs npx oxlint
+if [ -n "$lint" ]; then echo "$lint" | xargs npx oxlint; fi
