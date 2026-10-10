@@ -54,7 +54,7 @@
     "@vue/test-utils": "^2.4.1",
     "canvas": "3.2.3",
     "concurrently": "^7.1.0",
-    "gh-pages": "6.1.1",
+    "gh-pages": "6.3.0",
     "happy-dom": "^20.5.0",
     "jsdoc-to-markdown": "^8.0.0",
     "jsdom": "^22.1.0",
