@@ -59,7 +59,7 @@
     "jsdoc-to-markdown": "^8.0.0",
     "jsdom": "^22.1.0",
     "naive-ui": "2.35.0",
-    "oxfmt": "0.70.0",
+    "oxfmt": "0.72.0",
     "oxlint": "1.85.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "5.5.3",
