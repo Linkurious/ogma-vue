@@ -23,14 +23,13 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["vue", "@linkurious/ogma", "@linkurious/ogma/geo"],
+      external: ["vue", "@linkurious/ogma"],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
           vue: "Vue",
           "@linkurious/ogma": "Ogma",
-          "@linkurious/ogma/geo": "OgmaGeo",
         },
       },
     },

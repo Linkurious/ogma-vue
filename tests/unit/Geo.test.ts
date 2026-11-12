@@ -1,6 +1,7 @@
 import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect, vi } from "vitest";
 import { flushPromises, mount } from "@vue/test-utils";
+import * as geoModule from "@linkurious/ogma/geo";
 import { Geo, GeoMap } from "../../src/components";
 
 // oxlint-disable-next-line typescript/no-explicit-any
@@ -58,7 +59,7 @@ describe("Geo / GeoMap", () => {
     return wrapper;
   };
   const mountGeo = (props = {}) => mountWith(Geo, props);
-  const mountMap = (props = {}) => mountWith(GeoMap, props);
+  const mountMap = (props = {}) => mountWith(GeoMap, { module: () => geoModule, ...props });
   /** Provider mode loads the geo entry point lazily. */
   const ready = (count = 1) => vi.waitFor(() => expect(created).toHaveLength(count));
 
@@ -151,6 +152,31 @@ describe("Geo / GeoMap", () => {
       await ready();
       await flushPromises();
       expect(created[0].enabled()).toBe(false);
+    });
+
+    it("accepts a lazy module loader", async () => {
+      mountMap({ map: {}, provider: "deck", module: () => Promise.resolve(geoModule) });
+      await ready();
+    });
+
+    it("reports a missing module", async () => {
+      const wrapper = mountMap({ map: {}, provider: "deck", module: undefined });
+      await flushPromises();
+      expect(wrapper.emitted("error")).toHaveLength(1);
+    });
+
+    it("does not bind when unmounted while the module loads", async () => {
+      let resolveModule!: (m: typeof geoModule) => void;
+      const wrapper = mountMap({
+        map: {},
+        provider: "deck",
+        module: () => new Promise<typeof geoModule>((resolve) => (resolveModule = resolve)),
+      });
+      await flushPromises();
+      wrapper.unmount();
+      resolveModule(geoModule);
+      await flushPromises();
+      expect(created).toHaveLength(0);
     });
 
     it("reports a missing provider", async () => {

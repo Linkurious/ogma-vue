@@ -9,6 +9,7 @@ until `map` is defined. For the legacy Leaflet based mode, use [Geo](./Geo.md).
 ```vue
 <script setup lang="ts">
 import maplibregl from "maplibre-gl";
+import * as geoModule from "@linkurious/ogma/geo";
 import { onMounted, shallowRef } from "vue";
 import { Ogma, GeoMap } from "@linkurious/ogma-vue";
 
@@ -27,6 +28,7 @@ onMounted(() => {
   <Ogma :graph="graph">
     <GeoMap
       provider="maplibre"
+      :module="geoModule"
       :map="map"
       :enabled="geo"
       :options="{ latitudePath: 'lat', longitudePath: 'lng' }"
@@ -49,6 +51,14 @@ onMounted(() => {
 - type: `object`
 
   The map instance (for deck.gl, the `Deck` instance). Use `shallowRef` rather than `ref`. Changing it rebuilds the binding.
+
+### module
+
+- type: `typeof import('@linkurious/ogma/geo') | (() => Promise<module>)`
+
+  The `@linkurious/ogma/geo` module, or a loader such as `() => import("@linkurious/ogma/geo")`. It is passed explicitly so
+  that `@linkurious/ogma-vue` never imports it and still builds with Ogma < 6.1. With the UMD build, pass the global that
+  exposes the geo module.
 
 ### adapter
 

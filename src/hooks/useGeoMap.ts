@@ -45,6 +45,12 @@ export interface GeoMapProps {
   provider?: GeoMapProvider;
   /** The map instance, created and owned by the caller. Nothing is bound until it is defined. */
   map?: object;
+  /**
+   * The `@linkurious/ogma/geo` module (Ogma >= 6.1), or a function returning it, e.g.
+   * `() => import("@linkurious/ogma/geo")`. Passed explicitly so this package never imports
+   * it and stays buildable with older Ogma versions (in a UMD build, pass the `OgmaGeo` global).
+   */
+  module?: GeoModuleSource;
   /** A ready-made adapter, used instead of `provider` + `map`. */
   adapter?: object;
   /** Whether geo mode is on. */
@@ -68,15 +74,16 @@ const factories = {
   google: "createGoogleAdapter",
 } as const;
 
-let geoModule: Promise<GeoModule> | undefined;
-/** Loaded lazily, the entry point only exists in Ogma >= 6.1. */
-function loadGeoModule(): Promise<GeoModule> {
-  return (geoModule ??= (import("@linkurious/ogma/geo") as unknown as Promise<GeoModule>).catch(
-    (e) => {
-      geoModule = undefined;
-      throw new Error(`[ogma-vue] GeoMap requires @linkurious/ogma >= 6.1 (${e?.message ?? e})`);
-    },
-  ));
+/** The `@linkurious/ogma/geo` module, or a function returning it (e.g. a dynamic import). */
+export type GeoModuleSource = GeoModule | (() => GeoModule | Promise<GeoModule>);
+
+async function resolveModule(source: GeoModuleSource | undefined): Promise<GeoModule> {
+  if (!source) {
+    throw new Error(
+      '[ogma-vue] GeoMap: pass the "module" prop (`import * as geo from "@linkurious/ogma/geo"`, Ogma >= 6.1)',
+    );
+  }
+  return typeof source === "function" ? await source() : toRaw(source);
 }
 
 /**
@@ -93,6 +100,11 @@ export function useGeoMap<ND = unknown, ED = unknown>() {
     props: {
       provider: { type: String as PropType<GeoMapProvider>, required: false },
       map: { type: Object as PropType<object>, required: false, default: undefined },
+      module: {
+        type: [Object, Function] as PropType<GeoModuleSource>,
+        required: false,
+        default: undefined,
+      },
       adapter: { type: Object as PropType<object>, required: false, default: undefined },
       enabled: { type: Boolean, default: false, required: false },
       options: {
@@ -130,7 +142,7 @@ export function useGeoMap<ND = unknown, ED = unknown>() {
     },
     mounted() {
       this.$watch(
-        () => [this.provider, this.map, this.adapter],
+        () => [this.provider, this.map, this.adapter, this.module],
         () => this.rebuild(),
       );
       this.$watch(
@@ -177,7 +189,7 @@ export function useGeoMap<ND = unknown, ED = unknown>() {
         return this.state.queue;
       },
       rebuild() {
-        this.state.generation++;
+        const gen = ++this.state.generation;
         return this.run(async () => {
           const previous = this.state.binding;
           this.state.binding = null;
@@ -186,7 +198,9 @@ export function useGeoMap<ND = unknown, ED = unknown>() {
           let adapter = this.adapter && toRaw(this.adapter);
           const map = this.map && toRaw(this.map);
           if (!adapter && !map) return; // nothing to bind yet
-          const mod = await loadGeoModule();
+          const mod = await resolveModule(this.module);
+          // the component was unmounted or rebuilt while the module was loading
+          if (gen !== this.state.generation) return;
           if (!adapter) {
             const factory = this.provider && factories[this.provider];
             if (!factory) {
