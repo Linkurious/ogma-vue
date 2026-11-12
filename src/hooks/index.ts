@@ -6,3 +6,5 @@ export * from "./useOgma";
 export * from "./useLayer";
 export * from "./useTransformations";
 export * from "./useTools";
+export * from "./useGeo";
+export * from "./useGeoMap";
