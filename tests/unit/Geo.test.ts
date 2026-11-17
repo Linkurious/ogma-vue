@@ -1,12 +1,13 @@
 import { Ogma } from "@linkurious/ogma";
 import { describe, beforeEach, afterEach, it, expect, vi } from "vitest";
 import { flushPromises, mount } from "@vue/test-utils";
-import * as geoModule from "@linkurious/ogma/geo";
 import { Geo, GeoMap } from "../../src/components";
 
 // oxlint-disable-next-line typescript/no-explicit-any
 const created: any[] = [];
-vi.mock("@linkurious/ogma/geo", () => {
+// Fake of `@linkurious/ogma/geo`, defined inline: that entry point does not exist in the
+// Ogma version pinned by the lockfile (< 6.1), so the tests must not resolve the real one.
+const geoModule = (() => {
   class FakeGeo {
     isOn = false;
     listeners: Record<string, (() => void)[]> = {};
@@ -48,7 +49,7 @@ vi.mock("@linkurious/ogma/geo", () => {
     createDeckAdapter: factory("deck"),
     createGoogleAdapter: factory("google"),
   };
-});
+})();
 
 describe("Geo / GeoMap", () => {
   let ogma: Ogma;
