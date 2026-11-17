@@ -5,3 +5,4 @@ export * from "./styles";
 export { default as Layer } from "./layers/Layer.vue";
 export { default as Overlay } from "./layers/Overlay.vue";
 export { default as Canvas } from "./layers/Canvas.vue";
+export * from "./geo";
